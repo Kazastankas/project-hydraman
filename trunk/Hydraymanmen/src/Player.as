@@ -264,23 +264,24 @@ public class Player extends FlxSprite
 			}
 		}
 		
-		// no movement when performing special animation (death, splitting)
+		// can't control sick dudes
+		if (!onDisease)
+		{	
+			if (FlxG.keys.LEFT)
+			{
+				facing = LEFT;
+				acceleration.x -= drag.x;
+			}
+			else if (FlxG.keys.RIGHT)
+			{
+				facing = RIGHT;
+				acceleration.x += drag.x;
+			}
+		}
+		
+		// no movement when performing special animation (death, YES splitting)
 		if (animationTime <= 0)
 		{
-			// can't control sick dudes
-			if (!onDisease)
-			{	
-				if (FlxG.keys.LEFT)
-				{
-					facing = LEFT;
-					acceleration.x -= drag.x;
-				}
-				else if (FlxG.keys.RIGHT)
-				{
-					facing = RIGHT;
-					acceleration.x += drag.x;
-				}
-			}
 			
 			if (velocity.y > 0)
 			{
