@@ -416,7 +416,7 @@ package
 		}
 		protected function resetLevel():void
 		{
-			FlxG.state = new PlayState();
+			_updateCount = 0;
 		}
 		
 		protected function checkForExtinction():void
