@@ -25,6 +25,7 @@ package levels
 			addEnemy(613, 1263);
 			addEnemy(1393, 1031);
 			addEnemy(1121, 1223);
+			addEnemy(999, 1102);
 			
 			/*addWater(5, 6, 4, 3);
 			
