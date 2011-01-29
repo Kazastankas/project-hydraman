@@ -4,9 +4,9 @@ package
 	[SWF(width="640", height="480", backgroundColor="#000000")]
 	[Frame(factoryClass="Preloader")]
 
-	public class Hydramanmen extends FlxGame
+	public class Main extends FlxGame
 	{
-		public function Hydramanmen()
+		public function Main()
 		{
 			super(320,240,PlayState);
 			//showLogo = false;

@@ -6,7 +6,7 @@
 	{
 		public function Preloader()
 		{
-			className = "Hydramanmen";
+			className = "Main";
 			super();
 		}
 	}
