@@ -102,17 +102,6 @@ package
 			add(_goal);
 			
 			_waters = new FlxGroup();
-			for (i = 5; i <= 8; i++ )
-			{
-				_waters.add(new Water(i, 6,true));
-			}
-			for (i = 5; i <= 8; i++ )
-			{
-				for (var j:int = 7; j <= 8; j++ )
-				{
-					_waters.add(new Water(i, j));
-				}
-			}
 			
 			_cosmetic_fires = new FlxGroup();
 			
@@ -381,6 +370,47 @@ package
 		protected function nextLevel():void
 		{
 			FlxG.state = new PlayState();
+		}
+		
+		protected function addQuake(x:Number,y:Number):void
+		{
+			_changes[int(_timer + 1)].push(new Change(Math.floor(x/32), Math.floor(y/32), 0));
+		}
+		protected function addTornado(x:Number, y:Number, dir:Number):void
+		{
+			var s:Tornado;
+			s = (_tornados.getFirstAvail() as Tornado);
+			if (s != null)
+			{
+				s.create(x,y,dir);
+			}
+		}
+		protected function addEnemy(x:Number, y:Number):void
+		{
+			var x:Enemy;
+			x = (_enemies.getFirstAvail() as Enemy);
+			if (x != null)
+			{
+				x.create(x,y);
+			}
+		}
+		protected function addDino(x:Number, y:Number):void
+		{
+			var d:Dino;
+			d = (_dinos.getFirstAvail() as Dino);
+			if (d != null)
+			{
+				d.create(x,y);
+			}
+		}
+		protected function addMeteor(x:Number, y:Number, dir:Number):void
+		{
+			var y:Meteor;
+			y = (_meteors.getFirstAvail() as Meteor);
+			if (y != null)
+			{
+				y.create(x,y,dir);
+			}
 		}
 	}
 }
