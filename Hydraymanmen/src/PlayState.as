@@ -103,17 +103,20 @@ package
 			_waters = new FlxGroup();
 			for (i = 5; i <= 8; i++ )
 			{
+				_waters.add(new Water(i, 6,true));
+			}
+			for (i = 5; i <= 8; i++ )
+			{
 				for (var j:int = 7; j <= 8; j++ )
 				{
 					_waters.add(new Water(i, j));
 				}
 			}
-			add(_waters);
 			
 			_cosmetic_fires = new FlxGroup();
 			
 			_players = new FlxGroup();
-			for(i = 0; i < 64; i++)
+			for(i = 0; i < 32; i++)
 			{
 				s = new Player(100, 100, _players, _cosmetic_fires);
 				if (i >= PlayState.numHydra)
@@ -131,6 +134,8 @@ package
 				_enemies.add(s);
 			}
 			add(_enemies);
+			
+			add(_waters);
 			
 			_camMan = new CameraMan(_players);
 			add(_camMan);
