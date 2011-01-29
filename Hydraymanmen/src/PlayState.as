@@ -26,6 +26,8 @@ package
 		protected var _enemies:FlxGroup;
 		protected var _tornados:FlxGroup;
 		protected var _fires:FlxGroup;
+		
+		protected var _block:Block;
 
 		override public function create():void
 		{
@@ -116,6 +118,9 @@ package
 			add(_camMan);
 			
 			FlxG.follow(_camMan, 1);
+			_block = new Block(50, 50, 5);
+			_players.add(_block);
+			
 			FlxG.followAdjust(.1, .1);
 			FlxG.followBounds(-2000, -2000, 2000,2000);
 		}

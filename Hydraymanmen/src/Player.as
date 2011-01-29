@@ -13,6 +13,8 @@ public class Player extends FlxSprite
 	private var players:FlxGroup;
 	protected var aliveCount:int = 0;
 	
+	public var pushing:Boolean;
+	
 	public function Player(X:int,Y:int,players:FlxGroup)
 	{
 		super(X, Y);
@@ -69,6 +71,9 @@ public class Player extends FlxSprite
 	
 	private function makePlayer(x:Number,y:Number):void
 	{
+		if (pushing)
+			return;
+			
 		var s:Player;
 		s = (players.getFirstAvail() as Player);
 		if (s != null)
@@ -147,6 +152,33 @@ public class Player extends FlxSprite
 		else
 			collideTop = true;
 	}
+	
+	override public function hitRight(Contact:FlxObject, Velocity:Number):void 
+	{
+		if (Contact is Player)
+		{
+			if (pushing)
+			{
+				Contact.x = x;
+				return;
+			}
+		}
+		super.hitRight(Contact, Velocity);
+	}
+	
+	override public function hitLeft(Contact:FlxObject, Velocity:Number):void 
+	{
+		if (Contact is Player)
+		{
+			if (pushing)
+			{
+				Contact.x = x;
+				return;
+			}
+		}
+		super.hitLeft(Contact, Velocity);
+	}
+	
 	
 }
 }
