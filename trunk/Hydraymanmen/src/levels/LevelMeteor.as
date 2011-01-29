@@ -18,9 +18,14 @@ package levels
 			_goalPos = new FlxPoint(200, 100);
 			super.create();
 			
+<<<<<<< .mine
+			addWater(5, 6, 4, 3);
+			
+=======
 			addEnemy(1277, 1480);
 
 			
+>>>>>>> .r46
 			//add the top layer of water
 			for (i = 5; i <= 8; i++ )
 			{
