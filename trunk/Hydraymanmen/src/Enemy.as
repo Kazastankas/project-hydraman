@@ -4,7 +4,7 @@ package
 	
 	public class Enemy extends FlxSprite
 	{
-		[Embed(source = "data/doom.png")] protected var myImage:Class;
+		[Embed(source = "data/hydra-trilobite.png")] protected var myImage:Class;
 		public var AItimer:Number;
 		public var AImode:int;
 		public var moving:uint;
@@ -15,13 +15,15 @@ package
 			super(X, Y);
 			loadGraphic(myImage,true,true);
 			addAnimation("idle", [0], 5, true);
-			addAnimation("go", [0], 10, true);
+			addAnimation("go", [0,1,2,3], 10, true);
 			play("idle");
 			drag.x = runSpeed * 8;
 			drag.y = runSpeed * 8;
 			acceleration.y = 420;
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = 200;
+			offset.y = 10;
+			height -= 10;
 			AImode = 1;
 			AItimer = 1;
 			health = 10;
