@@ -19,7 +19,7 @@ package
 		public function Human(X:Number, Y:Number,fires:FlxGroup,target:FlxObject)
 		{
 			super(X, Y);
-			runSpeed = Math.random() * 10 + 40;
+			runSpeed = Math.random() * 10 + 30;
 			loadGraphic(myImage,true,true);
 			addAnimation("idle", [0,1,2,3], 5, true);
 			addAnimation("go", [0, 1, 2, 3], 10, true);
@@ -107,9 +107,9 @@ package
 			
 			if (target.x - x > 10 && target.x - x < 150 )
 			{
-				moving = 2;
+				moving = 1;
 			}
-			if (target.x - x < -10 && target.x - x < -150 )
+			if (target.x - x < -10 && target.x - x > -150 )
 			{
 				moving = 2;
 			}

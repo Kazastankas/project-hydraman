@@ -173,6 +173,11 @@ package
 			}
 			add(_bubbles);
 			
+			_camMan = new CameraMan(_players);
+			add(_camMan);
+			
+			FlxG.follow(_camMan, 1);
+			
 			_cavemen = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
@@ -182,10 +187,6 @@ package
 			}
 			add(_cavemen);
 			
-			_camMan = new CameraMan(_players);
-			add(_camMan);
-			
-			FlxG.follow(_camMan, 1);
 			_block = new Block(50, 50, 5);
 			_players.add(_block);
 			
