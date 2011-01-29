@@ -156,7 +156,7 @@ public class Player extends FlxSprite
 		}
 		aliveCount++;
 		splitTimer -= FlxG.elapsed;
-		if (!onFire)
+		if (!onFire && !velocity.y)
 		{
 			if (splitTimer < 0)
 			{	if (!pushing)
