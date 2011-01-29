@@ -20,13 +20,13 @@ package
 			play("idle");
 			drag.x = runSpeed * 8;
 			drag.y = runSpeed * 8;
-			acceleration.y = 420;
+			acceleration.y = 300;
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = 200;
 			offset.y = 10;
 			height -= 10;
 			AImode = 1;
-			AItimer = 1;
+			AItimer = 2;
 			health = 10;
 		}
 		
@@ -37,7 +37,7 @@ package
 			{
 				if (AItimer < 0)
 				{
-					AItimer = 1;
+					AItimer = 2;
 					if (moving == 1)
 					{
 						moving = 2;
