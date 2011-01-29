@@ -6,12 +6,14 @@ package
 	{
 		[Embed(source = "data/tiles.png")] private var ImgTiles:Class;
 		[Embed(source = "data/goal.png")] private var goalImg:Class;
+		[Embed(source = "data/fire.png")] private var fireImg:Class;
 		[Embed(source = 'data/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		protected var _players:FlxGroup;//the players
 		protected var _camMan:CameraMan;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
 		protected var _goal:FlxSprite;//the goal
 		protected var _doom:FlxSprite;//the doom
+		protected var _fire:FlxSprite;//the fire
 		protected var _goalCounter:int = 0;//how many players are on the goal
 		protected var _explodes:FlxGroup;
 		protected var _meteors:FlxGroup;
@@ -66,6 +68,10 @@ package
 			_players.add(new Player( 100, 100,_players));
 			add(_players);
 			
+			_fire = new FlxSprite(150, 200, fireImg);
+			_fire.fixed = true;
+			add(_fire);
+			
 			_enemies = new FlxGroup();
 			for(i = 0; i < 64; i++)
 			{
@@ -79,10 +85,6 @@ package
 			add(_camMan);
 			
 			FlxG.follow(_camMan, 1);
-			_doom = new DeathZone(150, 200);
-			_doom.fixed = true;
-			add(_doom);
-			
 			FlxG.followAdjust(.1, .1);
 			FlxG.followBounds(-2000, -2000, 2000,2000);
 		}
@@ -92,8 +94,8 @@ package
 			_goalCounter = 0;
 			//FlxU.overlap(_players, _floor,canJump);
 			FlxU.overlap(_players, _goal, hitGoal);
+			FlxU.overlap(_players, _fire, setOnFire);
 			FlxU.collide(_players, _goal);
-			FlxU.collide(_players, _doom);
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_enemies, _tileMap);
 			FlxU.collide(_players, _players);
@@ -160,11 +162,43 @@ package
 			_goalCounter += 1;
 		}
 		
+		private function setOnFire(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Player)
+			{
+				Player(a).ignite();
+			}
+			else if (b is Player)
+			{
+				Player(b).ignite();
+			}
+		}
+		
+		protected function calcCenter(group:FlxGroup):FlxPoint
+		{
+			var avgPos:FlxPoint = new FlxPoint(0, 0);
+			var numExists:int = 0;
+			for each(var member:FlxObject in group.members)
+			{
+				var player:Player = member as Player;
+				if (player && !player.dead && player.active && player.exists)
+				{
+					//trace("Player pos: " + member.x + ", " + member.y);
+					avgPos.x += member.x;
+					avgPos.y += member.y;
+					numExists++;
+				}
+			}
+			avgPos.x /= numExists;
+			avgPos.y /= numExists;
+			//trace("Avg pos: " + avgPos.x + ", " + avgPos.y + ", length: " + group.members.length);
+			return avgPos;
+		}
+		
 		private function playerHit(a:FlxObject, b:FlxObject):void
 		{
 			a.kill();
 		}
-		
 	}
 }
 
