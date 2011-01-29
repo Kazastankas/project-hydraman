@@ -18,12 +18,22 @@ package
 		protected var _explodes:FlxGroup;
 		protected var _meteors:FlxGroup;
 		protected var _enemies:FlxGroup;
+		protected var _tornados:FlxGroup;
 
 		override public function create():void
 		{
 			FlxG.mouse.hide();
 			var i:int;
 			var s:FlxSprite;
+			
+			_tornados = new FlxGroup();
+			for(i = 0; i < 64; i++)
+			{
+				s = new Tornado( -100, -100);
+				s.exists = false;
+				_tornados.add(s);
+			}
+			add(_tornados);
 			
 			_explodes = new FlxGroup();
 			for(i = 0; i < 64; i++)
@@ -100,6 +110,7 @@ package
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_enemies, _tileMap);
 			FlxU.collide(_players, _players);
+			FlxU.overlap(_players, _tornados, blowAway);
 			
 			FlxU.collide(_meteors, _tileMap);
 			
@@ -130,11 +141,11 @@ package
 			
 			if (FlxG.keys.justPressed('S'))
 			{
-				var s:Meteor;
-				s = (_meteors.getFirstAvail() as Meteor);
+				var s:Tornado;
+				s = (_tornados.getFirstAvail() as Tornado);
 				if (s != null)
 				{
-					s.create(100,0,Math.random()*50-25);
+					s.create(100,100,Math.random()*50-25);
 				}
 			}
 			if (FlxG.keys.justPressed('D'))
@@ -153,14 +164,18 @@ package
 			}
 			*/
 			
-			
 			super.update();
-		
 		}
 		
 		private function hitGoal(a:FlxObject, b:FlxObject):void
 		{
 			_goalCounter += 1;
+		}
+		
+		private function blowAway(a:FlxObject, b:FlxObject):void
+		{
+			a.velocity.x += a.velocity.x + Math.random() * 50;
+			a.velocity.y = Math.random() * a.maxVelocity.y * 2 - a.maxVelocity.y;
 		}
 		
 		private function setOnFire(a:FlxObject, b:FlxObject):void
