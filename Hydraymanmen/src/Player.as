@@ -162,7 +162,7 @@ public class Player extends FlxSprite
 			
 			if (FlxG.keys.justPressed("X") && !velocity.y && animationTime <= 0)
 			{
-				velocity.y = -maxVelocity.y;
+				velocity.y = -maxVelocity.y * (1.0 + (Math.random()-0.5)*0.2);
 			}
 		}
 		

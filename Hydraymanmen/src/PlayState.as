@@ -30,6 +30,7 @@ package
 		protected var _timer:Number = 0;
 		protected var _playerStart:FlxPoint;
 		protected var _goalPos:FlxPoint;
+		protected var _changingLevel:Boolean = false;
 		
 		public static var numHydra:int = 1;
 		protected var _enemies:FlxGroup;
@@ -113,10 +114,10 @@ package
 			for(i = 0; i < 32; i++)
 			{
 				s = new Player(_playerStart.x,_playerStart.y, _players, _cosmetic_fires);
-				if (i >= PlayState.numHydra)
 					s.exists = false;
 				_players.add(s);
 			}
+			activatePlayers(numHydra);
 			add(_players);
 			add(_cosmetic_fires);
 			
@@ -149,6 +150,15 @@ package
 			
 			add(_waters);
 			
+			_bubbles = new FlxGroup();
+			for(i = 0; i < 32; i++)
+			{
+				s = new Bubble( -100, -100);
+				s.exists = false;
+				_bubbles.add(s);
+			}
+			add(_bubbles);
+			
 			_cavemen = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
@@ -167,6 +177,20 @@ package
 			
 			FlxG.followAdjust(.1, .1);
 			FlxG.followBounds(-32, -32, _tileMap.width+32,_tileMap.height+32);
+		}
+		
+		protected function activatePlayers(num:int):void
+		{
+			for(var i:int = 0; i < numHydra; i++)
+			{
+				var player:Player = _players.getFirstAvail() as Player;
+				if (player)
+				{
+					player.exists = true;
+					player.x = _playerStart.x + numHydra * (Math.random() - 0.5);
+					player.y = _playerStart.x + 4 * Math.random();
+				}
+			}
 		}
 
 		override public function update():void
@@ -400,8 +424,12 @@ package
 					numAlive++;
 				}
 			}
+			PlayState.numHydra = numAlive;
 			if (numAlive == 0)
+			{
 				resetLevel();
+				PlayState.numHydra = 1;
+			}
 		}
 		
 		protected function nextLevel():void

@@ -33,8 +33,12 @@ package levels
 		
 		override protected function nextLevel():void
 		{
-			trace("Changing to levelIce");
-			FlxG.state = new LevelIce();
+			if (!_changingLevel)
+			{
+				trace("Changing to levelIce");
+				_changingLevel = true;
+				FlxG.fade.start(0xff000000, 0.4, function():void { _changingLevel = false; FlxG.state = new LevelIce(); } );
+			}
 		}
 	}
 
