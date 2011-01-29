@@ -6,11 +6,12 @@ public class Player extends FlxSprite
 {
 	[Embed(source = "data/hydra.png")] private var Img:Class;
 	private var runSpeed:Number = 100;
+	private var splitTimer:Number = 0;
 	
 	public function Player(X:int,Y:int)
 	{
 		super(X, Y);
-		loadGraphic(Img);
+		loadGraphic(Img,true,true);
 
 		drag.x = runSpeed * 8;
 		drag.y = runSpeed*8;
@@ -18,12 +19,13 @@ public class Player extends FlxSprite
 		maxVelocity.x = runSpeed;
 		maxVelocity.y = 200;
 		health = 200;
+		splitTimer = Math.random() * 3+2;
 
 		//animations
 		addAnimation("idle", [0,1,2,3,4,5,6,7],5);
 		addAnimation("run", [0,1], 12);
 		addAnimation("jump", [0]);
-
+		play("idle");
 	}
 
 	override public function update():void
