@@ -4,6 +4,8 @@ package
 
 	public class PlayState extends FlxState
 	{
+		[Embed(source = "data/tribalthing.mp3")] private var Music:Class;
+		[Embed(source = "data/jump.mp3")] private var JumpSnd:Class;
 		[Embed(source = "data/tiles.png")] private var ImgTiles:Class;
 		[Embed(source = "data/goal.png")] private var goalImg:Class;
 		[Embed(source = "data/fire.png")] private var fireImg:Class;
@@ -22,6 +24,7 @@ package
 
 		override public function create():void
 		{
+			FlxG.playMusic(Music);
 			FlxG.mouse.hide();
 			var i:int;
 			var s:FlxSprite;
@@ -138,6 +141,10 @@ package
 			}
 			*/
 			
+			if (FlxG.keys.justPressed('X'))
+			{
+				FlxG.play(JumpSnd);
+			}
 			
 			if (FlxG.keys.justPressed('S'))
 			{
