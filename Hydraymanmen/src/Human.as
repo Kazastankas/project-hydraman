@@ -14,10 +14,12 @@ package
 		protected var runSpeed:Number = 50;
 		private var animationTime:Number = 0;
 		protected var fires:FlxGroup;
+		protected var target:FlxObject;
 		
-		public function Human(X:Number, Y:Number,fires:FlxGroup)
+		public function Human(X:Number, Y:Number,fires:FlxGroup,target:FlxObject)
 		{
 			super(X, Y);
+			runSpeed = Math.random() * 10 + 40;
 			loadGraphic(myImage,true,true);
 			addAnimation("idle", [0,1,2,3], 5, true);
 			addAnimation("go", [0, 1, 2, 3], 10, true);
@@ -33,6 +35,7 @@ package
 			fireTimer = 2;
 			AItimer = 2;
 			health = 10;
+			this.target = target;
 			this.fires = fires;
 		}
 		
