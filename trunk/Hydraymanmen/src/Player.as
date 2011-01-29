@@ -5,7 +5,7 @@ import org.flixel.*;
 public class Player extends FlxSprite
 {
 	[Embed(source = "data/split4.mp3")] protected var SplitSnd:Class;
-	[Embed(source = "data/hydra.png")] protected var Img:Class;
+	[Embed(source = "data/hydra-all.png")] protected var Img:Class;
 	[Embed(source = "data/fire.png")] protected var FireImg:Class;
 	protected var runSpeed:Number = 100;
 	protected var splitTimer:Number = 0;
@@ -17,6 +17,7 @@ public class Player extends FlxSprite
 	protected var aliveCount:int = 0;
 	public var floating:Boolean = false;
 	protected var landVelocity:FlxPoint;
+	protected var animationTime:Number = 0;
 	
 	public var pushing:Boolean;
 
@@ -45,10 +46,12 @@ public class Player extends FlxSprite
 		onFire = false;
 
 		//animations
-		addAnimation("idle", [0,1,2,3,4,5,6,7],Math.random()*5);
-		addAnimation("run", [0,1], 12);
-		addAnimation("jump", [0]);
-		addAnimation("split", [0]);
+		addAnimation("idle", [4,5,6,7,8,9,10,11],Math.random()*5+5);
+		addAnimation("run", [12,13,14,15], 12);
+		addAnimation("jump", [16, 17], 8);
+		addAnimation("fall", [18,19],8);
+		addAnimation("split", [20,21,22,23,24,25],12,false);
+		addAnimation("grow", [0, 1, 2, 3],8,false);
 		play("idle");
 		
 	}
@@ -79,6 +82,8 @@ public class Player extends FlxSprite
 		onFire = false;
 		color = 0xFFFFFF;
 		reset(x, y);
+		play("grow");
+		animationTime = .5;
 	}
 	
 	protected function makePlayer(x:Number,y:Number):void
@@ -96,6 +101,10 @@ public class Player extends FlxSprite
 	
 	override public function update():void
 	{
+		if (animationTime > 0)
+		{
+			animationTime -= FlxG.elapsed;
+		}
 		if (floating)
 		{
 			fireTimer = 0;
@@ -103,11 +112,12 @@ public class Player extends FlxSprite
 			color = 0xFFFFFF;
 			maxVelocity.x = 100;
 			maxVelocity.y = 100;
-			if (FlxG.keys.UP)
+			acceleration.y = 0;
+			if (FlxG.keys.X)
 			{
 				acceleration.y -= drag.x;
 			}
-			else if (FlxG.keys.DOWN)
+			else
 			{
 				acceleration.y += drag.x;
 			}
@@ -118,10 +128,15 @@ public class Player extends FlxSprite
 			acceleration.y = 420;
 			maxVelocity.x = landVelocity.x;
 			maxVelocity.y = landVelocity.y;
+			
+			if (FlxG.keys.justPressed("X") && !velocity.y)
+			{
+				velocity.y = -maxVelocity.y;
+			}
 		}
 		aliveCount++;
 		splitTimer -= FlxG.elapsed;
-		if (!onFire && !velocity.y)
+		if (!onFire)
 		{
 			if (splitTimer < 0)
 			{
@@ -130,9 +145,10 @@ public class Player extends FlxSprite
 				kill();
 				FlxG.play(SplitSnd);
 			}
-			else if (splitTimer < .2)
+			else if (splitTimer < .5)
 			{
 				play("split");
+				animationTime = 1;
 			}
 		}
 		else if (onFire)
@@ -160,24 +176,25 @@ public class Player extends FlxSprite
 			acceleration.x += drag.x;
 		}
 		
-		if (FlxG.keys.justPressed("X") && !velocity.y)
+		if (animationTime <= 0)
 		{
-			velocity.y = -maxVelocity.y;
+			if (velocity.y > 0)
+			{
+				play("fall");
+			}
+			else if (velocity.y < 0)
+			{
+				play("jump");
+			}
+			else if (velocity.x == 0)
+			{
+				play("idle");
+			}
+			else
+			{
+				play("run");
+			}
 		}
-		
-		if (velocity.y != 0)
-		{
-			play("jump");
-		}
-		else if (velocity.x == 0)
-		{
-			play("idle");
-		}
-		else
-		{
-			play("run");
-		}
-		
 
 		super.update();
 	}

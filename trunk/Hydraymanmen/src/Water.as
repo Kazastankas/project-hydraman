@@ -4,15 +4,24 @@ import org.flixel.*;
 
 public class Water extends FlxSprite
 {
-	[Embed(source = "data/doom.png")] protected var Img:Class;
+	[Embed(source = "data/watertop.png")] protected var Img:Class;
+	[Embed(source = "data/waterstill.png")] protected var Img2:Class;
 	
-	public function Water(X:int,Y:int)
+	public function Water(X:int,Y:int,top:Boolean=false)
 	{
-		super(X*32, Y*32);
-		loadGraphic(Img, true, true);
-		alpha = 0.3;
+		super(X * 32, Y * 32);
+		if (top)
+		{
+			loadGraphic(Img, true, true);
+			addAnimation("idle", [0,1,2,3,4,5,6,7], 5);
+		}
+		else
+		{
+			loadGraphic(Img2, true, true);
+			addAnimation("idle", [0], 5);
+		}
+		alpha = 0.5;
 		fixed = true;
-		addAnimation("idle", [0], 5);
 		play("idle");
 		
 	}
