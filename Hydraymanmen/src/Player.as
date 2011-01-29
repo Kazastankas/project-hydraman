@@ -4,7 +4,7 @@ import org.flixel.*;
 
 public class Player extends FlxSprite
 {
-	[Embed(source = "data/split.mp3")] private var SplitSnd:Class;
+	[Embed(source = "data/split4.mp3")] private var SplitSnd:Class;
 	[Embed(source = "data/hydra.png")] private var Img:Class;
 	private var runSpeed:Number = 100;
 	private var splitTimer:Number = 0;
@@ -34,7 +34,7 @@ public class Player extends FlxSprite
 		onFire = false;
 
 		//animations
-		addAnimation("idle", [0,1,2,3,4,5,6,7],5);
+		addAnimation("idle", [0,1,2,3,4,5,6,7],Math.random()*5);
 		addAnimation("run", [0,1], 12);
 		addAnimation("jump", [0]);
 		addAnimation("split", [0]);
