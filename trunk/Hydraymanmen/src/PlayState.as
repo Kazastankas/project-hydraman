@@ -22,6 +22,7 @@ package
 		protected var _meteor_fires:FlxGroup;
 		protected var _cosmetic_fires:FlxGroup;
 		protected var _waters:FlxGroup;
+		protected var _bubbles:FlxGroup;
 		protected var _dinos:FlxGroup;
 		protected var _changes:Array;
 		protected var _changeIndex:int;
@@ -58,7 +59,7 @@ package
 			
 			var c:Change;
 			_changes = new Array();
-			for (i = 0; i < 100; i++ )
+			for (i = 0; i < 10000; i++ )
 			{
 				_changes.push(new Array());
 			}
@@ -137,6 +138,15 @@ package
 			add(_dinos);
 			
 			add(_waters);
+			
+			_bubbles = new FlxGroup();
+			for(i = 0; i < 32; i++)
+			{
+				s = new Bubble( -100, -100);
+				s.exists = false;
+				_bubbles.add(s);
+			}
+			add(_bubbles);
 			
 			_camMan = new CameraMan(_players);
 			add(_camMan);
@@ -318,9 +328,18 @@ package
 		
 		protected function playerFloat(a:FlxObject, b:FlxObject):void
 		{
+			inWater(a, b);
 			if (!Player(a).floating)
 			{
 				Player(a).floating = true;
+			}
+		}
+		
+		protected function inWater(a:FlxObject, b:FlxObject):void
+		{
+			if (Math.random() < .1)
+			{
+				addBubble(a.x, a.y);
 			}
 		}
 		
@@ -347,7 +366,7 @@ package
 		
 		protected function playerHit(a:FlxObject, b:FlxObject):void
 		{
-			a.kill();
+			Player(a).die();
 		}
 		protected function resetLevel():void
 		{
@@ -385,6 +404,15 @@ package
 			if (s != null)
 			{
 				s.create(x,y,dir);
+			}
+		}
+		protected function addBubble(x:Number, y:Number):void
+		{
+			var s:Bubble;
+			s = (_bubbles.getFirstAvail() as Bubble);
+			if (s != null)
+			{
+				s.create(x,y);
 			}
 		}
 		protected function addEnemy(x:Number, y:Number):void
