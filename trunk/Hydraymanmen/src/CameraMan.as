@@ -23,6 +23,7 @@ package
 		{
 			this.group = group;
 			offset = new FlxPoint(0, 0);
+			calcCenter();
 		}
 		
 		override public function update():void
