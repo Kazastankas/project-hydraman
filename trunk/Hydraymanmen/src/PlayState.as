@@ -6,7 +6,7 @@ package
 	{
 		[Embed(source = "data/tribalthing.mp3")] private var Music:Class;
 		[Embed(source = "data/jump.mp3")] private var JumpSnd:Class;
-		[Embed(source = "data/tiles.png")] private var ImgTiles:Class;
+		[Embed(source = "data/icetiles.png")] private var ImgTiles:Class;
 		[Embed(source = "data/goal.png")] private var goalImg:Class;
 		[Embed(source = "data/fire.png")] private var fireImg:Class;
 		[Embed(source = 'data/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
@@ -57,7 +57,7 @@ package
 			add(_meteors);
 			
 			_tileMap = new FlxTilemap();
-			_tileMap.loadMap(new Map,ImgTiles,16,16);
+			_tileMap.loadMap(new Map,ImgTiles,32,32);
 			_tileMap.follow();
 			add(_tileMap);
 			/*
