@@ -4,6 +4,7 @@ import org.flixel.*;
 
 public class Player extends FlxSprite
 {
+	[Embed(source = "data/split.mp3")] private var SplitSnd:Class;
 	[Embed(source = "data/hydra.png")] private var Img:Class;
 	private var runSpeed:Number = 100;
 	private var splitTimer:Number = 0;
@@ -84,6 +85,7 @@ public class Player extends FlxSprite
 				makePlayer(x - width / 2, y);
 				makePlayer(x + width / 2, y);
 				kill();
+				FlxG.play(SplitSnd);
 			}
 			else if (splitTimer < .2)
 			{
