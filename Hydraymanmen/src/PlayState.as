@@ -10,6 +10,7 @@ package
 		[Embed(source = "data/goal.png")] protected var goalImg:Class;
 		[Embed(source = "data/fire.png")] protected var fireImg:Class;
 		[Embed(source = 'levels/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
+		[Embed(source = "data/cambrian-bg.png")] private var bgImg:Class;
 		protected var _players:FlxGroup;//the players
 		protected var _camMan:CameraMan;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
