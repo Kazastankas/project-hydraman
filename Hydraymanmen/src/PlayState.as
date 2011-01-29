@@ -15,12 +15,12 @@ package
 		protected var _tileMap:FlxTilemap;//the tile
 		protected var _goal:FlxSprite;//the goal
 		protected var _doom:FlxSprite;//the doom
-		protected var _fire:FlxSprite;//the fire
 		protected var _goalCounter:int = 0;//how many players are on the goal
 		protected var _explodes:FlxGroup;
 		protected var _meteors:FlxGroup;
 		protected var _enemies:FlxGroup;
 		protected var _tornados:FlxGroup;
+		protected var _fires:FlxGroup;
 
 		override public function create():void
 		{
@@ -81,9 +81,11 @@ package
 			_players.add(new Player( 100, 100,_players));
 			add(_players);
 			
-			_fire = new FlxSprite(150, 200, fireImg);
-			_fire.fixed = true;
-			add(_fire);
+			_fires = new FlxGroup();
+			s = new Fire(150, 200);
+			s.fixed = true;
+			_fires.add(s);
+			add(_fires);
 			
 			_enemies = new FlxGroup();
 			for(i = 0; i < 64; i++)
@@ -107,7 +109,7 @@ package
 			_goalCounter = 0;
 			//FlxU.overlap(_players, _floor,canJump);
 			FlxU.overlap(_players, _goal, hitGoal);
-			FlxU.overlap(_players, _fire, setOnFire);
+			FlxU.overlap(_players, _fires, setOnFire);
 			FlxU.overlap(_players, _players, playerSetOnFire);
 			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _tileMap);

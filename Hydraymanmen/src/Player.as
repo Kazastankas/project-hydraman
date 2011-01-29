@@ -52,7 +52,7 @@ public class Player extends FlxSprite
 	public function ignite():void
 	{
 		onFire = true;
-		color = 0xFF0000;
+		color = 0xef3528;
 	}
 		
 	public function create(x:Number,y:Number):void
