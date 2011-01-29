@@ -27,8 +27,9 @@ public class Player extends FlxSprite
 		health = 200;
 		splitTimer = Math.random() * 3 + 2;
 		offset.x = 8;
-		offset.y = 5;
+		offset.y = 6;
 		width = 8;
+		height = 18;
 		
 		fireTimer = 0;
 		onFire = false;
