@@ -105,13 +105,13 @@ package
 				}
 			}
 			
-			if (target.x - x )
+			if (target.x - x > 10 && target.x - x < 150 )
 			{
 				moving = 2;
 			}
-			else if (target.x > x)
+			if (target.x - x < -10 && target.x - x < -150 )
 			{
-				moving = 1;
+				moving = 2;
 			}
 			
 			if (animationTime <= 0)
