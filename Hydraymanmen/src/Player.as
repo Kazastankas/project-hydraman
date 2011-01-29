@@ -151,7 +151,7 @@ public class Player extends FlxSprite
 		{
 			kill();
 		}
-	
+		
 		// all other special animations
 		if (animationTime > 0)
 		{
@@ -193,11 +193,16 @@ public class Player extends FlxSprite
 			maxVelocity.y = landVelocity.y;
 			
 			// misplaced jump code lolol
-			if (animationTime <= 0 && !onDisease)
+			if (!onDisease)
 			{
 				if (FlxG.keys.justPressed("X") && !velocity.y)
 				{
 					velocity.y = -maxVelocity.y * (1.0 + (Math.random() - 0.5) * 0.2);
+					if (splitTimer < .5)
+					{
+						splitTimer += .5;
+					}
+					play("jump");
 				}
 			}
 		}
