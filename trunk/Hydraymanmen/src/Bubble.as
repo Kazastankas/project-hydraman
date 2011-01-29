@@ -4,7 +4,7 @@ import org.flixel.*;
 
 public class Bubble extends FlxSprite
 {
-	[Embed(source = "data/fire.png")] protected var Img:Class;
+	[Embed(source = "data/bubble.png")] protected var Img:Class;
 	protected var animationTime:Number = .5;
 	
 	public function Bubble(X:int,Y:int)
@@ -12,10 +12,10 @@ public class Bubble extends FlxSprite
 		super(X, Y);
 		loadGraphic(Img, true, true);
 		
-		velocity.y = -20;
+		velocity.y = -Math.random()*20;
 		maxVelocity.x = maxVelocity.y = 200;
 		
-		addAnimation("idle", [0,1,2], Math.random()*5+5,false);
+		addAnimation("idle", [0,1,2,3], Math.random()*5+5,false);
 		play("idle");
 		
 	}
