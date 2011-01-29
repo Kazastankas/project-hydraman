@@ -51,7 +51,9 @@ package
 			{
 				_changes.push(null);
 			}
-			_changes[10] = new Change(10, 5, 0);
+			_changes[1] = new Change(5, 10, 2);
+			_changes[2] = new Change(5, 11, 2);
+			_changes[3] = new Change(5, 9, 2);
 			_changeIndex = 0;
 			
 			_explodes = new FlxGroup();
@@ -133,7 +135,8 @@ package
 				_changeIndex = _timer;
 				if (_changes[_changeIndex] != null)
 				{
-					_tileMap.setTile(_changes[_changeIndex].pos.x, _changes[_changeIndex].pos.y, _changes[_changeIndex].type, true);
+					_tileMap.setTile(_changes[_changeIndex].pos.x, _changes[_changeIndex].pos.y, _changes[_changeIndex].tile, true);
+					FlxG.log("changes");
 				}
 			}
 			_goalCounter = 0;
