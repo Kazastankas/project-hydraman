@@ -4,15 +4,22 @@ package
 
 	public class PlayState extends FlxState
 	{
+		[Embed(source = "data/tiles.png")] private var ImgTiles:Class;
+		[Embed(source = 'data/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		protected var _players:FlxGroup;//the players
 		protected var _center:FlxObject;//what the camera centers on
+		protected var _tileMap:FlxTilemap;//the tile
 
 		override public function create():void
 		{
 			FlxG.mouse.hide();
 			var i:int;
-			_center = new FlxObject(0, 0);
+			_center = new FlxObject(100, 100);
 			
+			_tileMap = new FlxTilemap();
+			_tileMap.loadMap(new Map,ImgTiles,16,16);
+			_tileMap.follow();
+			add(_tileMap);
 			/*
 			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
 			bg.scrollFactor.x = bg.scrollFactor.y = 0;
@@ -39,7 +46,8 @@ package
 		{
 			
 			//FlxU.overlap(_players, _floor,canJump);
-			//FlxU.collide(_players, _floor);
+			FlxU.collide(_players, _tileMap);
+			FlxU.collide(_players, _players);
 			
 			//FlxU.collide(_players, _floor);
 			
@@ -80,11 +88,11 @@ package
 		{
 			var i:int;
 			var s:Player;
-				s = (_players.getFirstAvail() as Player);
-				if (s != null)
-				{
-					s.create(x,y);
-				}
+			s = (_players.getFirstAvail() as Player);
+			if (s != null)
+			{
+				s.create(x,y);
+			}
 		}
 
 	}
