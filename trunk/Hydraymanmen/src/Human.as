@@ -144,11 +144,11 @@ package
 			}
 			else if (AImode == 2)
 			{
-				loadGraphic(myImage2,true,true);
+				loadGraphic(myImage1,true,true);
 			}
 			else if (AImode == 3)
 			{
-				loadGraphic(myImage3,true,true);
+				loadGraphic(myImage2,true,true);
 			}
 			velocity.x = velocity.y = 0;
 			health = 20;
