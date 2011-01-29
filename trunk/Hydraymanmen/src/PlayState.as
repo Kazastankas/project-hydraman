@@ -31,10 +31,11 @@ package
 			_players = new FlxGroup();
 			for(i = 0; i < 64; i++)
 			{
-				s = new Player( -100, -100);
+				s = new Player( -100, -100,_players);
 				s.exists = false;
 				_players.add(s);
 			}
+			_players.add(new Player( _center.x, _center.y,_players));
 			add(_players);
 			
 			FlxG.follow(_center, 1);
@@ -64,11 +65,6 @@ package
 			}
 			*/
 			
-			
-			if (FlxG.keys.justPressed('A'))
-			{
-				makePlayer(_center.x,_center.y);
-			}
 			/*
 			if (FlxG.keys.justPressed('S'))
 			{
@@ -82,17 +78,6 @@ package
 			
 			super.update();
 		
-		}
-		
-		private function makePlayer(x:Number,y:Number):void
-		{
-			var i:int;
-			var s:Player;
-			s = (_players.getFirstAvail() as Player);
-			if (s != null)
-			{
-				s.create(x,y);
-			}
 		}
 
 	}
