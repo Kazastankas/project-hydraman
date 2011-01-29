@@ -11,8 +11,9 @@ package levels
 	{
 		[Embed(source = 'map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		
-		override protected function create():void
+		override public function create():void
 		{
+			var i:int;
 			_playerStart = new FlxPoint(100, 100);
 			_goalPos = new FlxPoint(200, 100);
 			super.create();
