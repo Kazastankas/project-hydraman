@@ -107,9 +107,13 @@ public class Player extends FlxSprite
 		}
 		if (floating)
 		{
-			fireTimer = 0;
-			onFire = false;
-			color = 0xFFFFFF;
+			if (onFire)
+			{
+				fireTimer = 0;
+				onFire = false;
+				color = 0xFFFFFF;
+				fireHair.kill();
+			}
 			maxVelocity.x = 100;
 			maxVelocity.y = 100;
 			acceleration.y = 0;

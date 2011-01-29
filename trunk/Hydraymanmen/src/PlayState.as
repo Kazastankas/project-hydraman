@@ -180,6 +180,7 @@ package
 			}
 			_goalCounter = 0;
 			//FlxU.overlap(_players, _floor,canJump);
+			FlxU.overlap(_waters, _meteor_fires, douseFire);
 			FlxU.overlap(_players, _waters, playerFloat);
 			FlxU.overlap(_players, _goal, hitGoal);
 			FlxU.overlap(_players, _meteor_fires, setOnFire);
@@ -192,7 +193,6 @@ package
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
 			
-			FlxU.collide(_waters, _meteor_fires);
 			
 			FlxU.collide(_meteors, _tileMap);
 			FlxU.collide(_meteor_fires, _tileMap);
@@ -287,6 +287,18 @@ package
 		{
 			a.velocity.x += a.velocity.x + Math.random() * 50;
 			a.velocity.y = Math.random() * a.maxVelocity.y * 2 - a.maxVelocity.y;
+		}
+		
+		protected function douseFire(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Fire)
+			{
+				a.kill();
+			}
+			else if (b is Fire)
+			{
+				b.kill();
+			}
 		}
 		
 		protected function setOnFire(a:FlxObject, b:FlxObject):void
