@@ -15,6 +15,7 @@ package
 		protected var _goalCounter:int = 0;//how many players are on the goal
 		protected var _explodes:FlxGroup;
 		protected var _meteors:FlxGroup;
+		protected var _enemies:FlxGroup;
 
 		override public function create():void
 		{
@@ -65,6 +66,15 @@ package
 			_players.add(new Player( 100, 100,_players));
 			add(_players);
 			
+			_enemies = new FlxGroup();
+			for(i = 0; i < 64; i++)
+			{
+				s = new Enemy( -100, -100);
+				s.exists = false;
+				_enemies.add(s);
+			}
+			add(_enemies);
+			
 			_camMan = new CameraMan(_players);
 			add(_camMan);
 			
@@ -85,11 +95,13 @@ package
 			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _doom);
 			FlxU.collide(_players, _tileMap);
+			FlxU.collide(_enemies, _tileMap);
 			FlxU.collide(_players, _players);
 			
 			FlxU.collide(_meteors, _tileMap);
 			
 			FlxU.overlap(_players, _explodes, playerHit);
+			FlxU.overlap(_players, _enemies, playerHit);
 			
 			//end condition
 			if (_goalCounter > 1)
@@ -120,6 +132,15 @@ package
 				if (s != null)
 				{
 					s.create(100,0,Math.random()*50-25);
+				}
+			}
+			if (FlxG.keys.justPressed('D'))
+			{
+				var x:Enemy;
+				x = (_enemies.getFirstAvail() as Enemy);
+				if (x != null)
+				{
+					x.create(100,0);
 				}
 			}
 			/*
