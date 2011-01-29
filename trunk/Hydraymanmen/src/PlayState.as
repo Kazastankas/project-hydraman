@@ -11,6 +11,7 @@ package
 		protected var _center:FlxObject;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
 		protected var _goal:FlxSprite;//the goal
+		protected var _doom:FlxSprite;//the doom
 		protected var _goalCounter:int = 0;//how many players are on the goal
 
 		override public function create():void
@@ -45,6 +46,10 @@ package
 			_players.add(new Player( 100, 100,_players));
 			add(_players);
 			
+			_doom = new DeathZone(150, 200);
+			_doom.fixed = true;
+			add(_doom);
+			
 			FlxG.follow(_center, 1);
 			FlxG.followAdjust(.1, .1);
 			FlxG.followBounds(-2000, -2000, 2000,2000);
@@ -56,6 +61,7 @@ package
 			//FlxU.overlap(_players, _floor,canJump);
 			FlxU.overlap(_players, _goal, hitGoal);
 			FlxU.collide(_players, _goal);
+			FlxU.collide(_players, _doom);
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_players, _players);
 			
