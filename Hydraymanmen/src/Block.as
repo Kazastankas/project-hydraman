@@ -27,7 +27,7 @@
 		
 		override public function update():void 
 		{
-			FlxG.log(collideGroup.members.length);
+			//FlxG.log(collideGroup.members.length);
 			for (var i:uint = 0; i < collideGroup.members.length; i++)
 			{
 				if (collideGroup.members[i] != null)
