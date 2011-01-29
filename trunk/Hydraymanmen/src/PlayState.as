@@ -13,11 +13,32 @@ package
 		protected var _goal:FlxSprite;//the goal
 		protected var _doom:FlxSprite;//the doom
 		protected var _goalCounter:int = 0;//how many players are on the goal
+		protected var _explodes:FlxGroup;
+		protected var _meteors:FlxGroup;
 
 		override public function create():void
 		{
 			FlxG.mouse.hide();
 			var i:int;
+			var s:FlxSprite;
+			
+			_explodes = new FlxGroup();
+			for(i = 0; i < 64; i++)
+			{
+				s = new Explode( -100, -100,5,_explodes);
+				s.exists = false;
+				_explodes.add(s);
+			}
+			add(_explodes);
+			
+			_meteors = new FlxGroup();
+			for(i = 0; i < 32; i++)
+			{
+				s = new Meteor( -100, -100,_explodes);
+				s.exists = false;
+				_meteors.add(s);
+			}
+			add(_meteors);
 			
 			_tileMap = new FlxTilemap();
 			_tileMap.loadMap(new Map,ImgTiles,16,16);
@@ -34,7 +55,6 @@ package
 			_goal.fixed = true;
 			add(_goal);
 			
-			var s:FlxSprite;
 			_players = new FlxGroup();
 			for(i = 0; i < 64; i++)
 			{
@@ -67,6 +87,10 @@ package
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_players, _players);
 			
+			FlxU.collide(_meteors, _tileMap);
+			
+			FlxU.overlap(_players, _explodes, playerHit);
+			
 			//end condition
 			if (_goalCounter > 1)
 			{
@@ -88,11 +112,17 @@ package
 			}
 			*/
 			
-			/*
+			
 			if (FlxG.keys.justPressed('S'))
 			{
-				makeSpheres(3);
+				var s:Meteor;
+				s = (_meteors.getFirstAvail() as Meteor);
+				if (s != null)
+				{
+					s.create(100,0,Math.random()*50-25);
+				}
 			}
+			/*
 			if (FlxG.keys.justPressed('D'))
 			{
 				makeShips(1);
@@ -108,6 +138,12 @@ package
 		{
 			_goalCounter += 1;
 		}
+		
+		private function playerHit(a:FlxObject, b:FlxObject):void
+		{
+			a.kill();
+		}
+		
 	}
 }
 
