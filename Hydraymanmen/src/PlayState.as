@@ -155,7 +155,7 @@ package
 			if (_changeIndex < int(_timer))
 			{
 				_changeIndex = _timer;
-				if (_changes[_changeIndex].length > 0)
+				if (_changes.length > _changeIndex && _changes[_changeIndex].length > 0)
 				{
 					for (var i:int = 0; i < _changes[_changeIndex].length; i++ )
 					{
@@ -183,7 +183,6 @@ package
 			FlxU.collide(_players, _players);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
-			
 			
 			FlxU.collide(_meteors, _tileMap);
 			FlxU.collide(_meteor_fires, _tileMap);
@@ -412,6 +411,25 @@ package
 			if (s != null)
 			{
 				s.create(x,y,dir);
+			}
+		}
+		
+		protected function addWater(x:Number, y:Number, width:Number, height:Number):void
+		{
+			var i:int;
+			var j:int;
+			//add the top layer of water
+			for (i = x; i <= x+width; i++ )
+			{
+				_waters.add(new Water(i, y,true));
+			}
+			//add the rest of the layers
+			for (i = x; i <= x+width; i++ )
+			{
+				for (j = y+1; j <= y+height; j++ )
+				{
+					_waters.add(new Water(i, j));
+				}
 			}
 		}
 	}
