@@ -4,9 +4,9 @@ package
 	
 	public class Human extends FlxSprite
 	{
-		[Embed(source = "data/dino.png")] protected var myImage:Class;
-		[Embed(source = "data/dino.png")] protected var myImage1:Class;
-		[Embed(source = "data/dino.png")] protected var myImage2:Class;
+		[Embed(source = "data/guy.png")] protected var myImage:Class;
+		[Embed(source = "data/dude.png")] protected var myImage1:Class;
+		[Embed(source = "data/bro.png")] protected var myImage2:Class;
 		public var AItimer:Number;
 		public var fireTimer:Number;
 		public var AImode:int;
@@ -19,7 +19,7 @@ package
 		{
 			super(X, Y);
 			loadGraphic(myImage,true,true);
-			addAnimation("idle", [0], 5, true);
+			addAnimation("idle", [0,1,2,3], 5, true);
 			addAnimation("go", [0, 1, 2, 3], 10, true);
 			addAnimation("fire", [4], 20, false);
 			addAnimation("jump", [4, 5, 6, 7], 20, false);
