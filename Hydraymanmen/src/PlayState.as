@@ -42,7 +42,7 @@ package
 				s.exists = false;
 				_players.add(s);
 			}
-			_players.add(new Player( _center.x, _center.y,_players));
+			_players.add(new Player( 100, 100,_players));
 			add(_players);
 			
 			FlxG.follow(_center, 1);
@@ -91,6 +91,10 @@ package
 			}
 			*/
 			
+			var centerPos:FlxPoint = calcCenter(_players);
+			_center.x = centerPos.x;
+			_center.y = centerPos.y;
+			
 			super.update();
 		
 		}
@@ -100,6 +104,27 @@ package
 			_goalCounter += 1;
 		}
 
+		
+		protected function calcCenter(group:FlxGroup):FlxPoint
+		{
+			var avgPos:FlxPoint = new FlxPoint(0, 0);
+			var numExists:int = 0;
+			for each(var member:FlxObject in group.members)
+			{
+				var player:Player = member as Player;
+				if (player && !player.dead && player.active && player.exists)
+				{
+					//trace("Player pos: " + member.x + ", " + member.y);
+					avgPos.x += member.x;
+					avgPos.y += member.y;
+					numExists++;
+				}
+			}
+			avgPos.x /= numExists;
+			avgPos.y /= numExists;
+			//trace("Avg pos: " + avgPos.x + ", " + avgPos.y + ", length: " + group.members.length);
+			return avgPos;
+		}
 	}
 }
 
