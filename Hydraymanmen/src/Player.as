@@ -113,7 +113,7 @@ public class Player extends FlxSprite
 		if (!onScreen())
 			kill();
 		
-		if (animationTime < .05&&health<=0)
+		if (animationTime < .05 && health <= 0)
 		{
 			kill();
 		}
@@ -133,13 +133,16 @@ public class Player extends FlxSprite
 			maxVelocity.x = 100;
 			maxVelocity.y = 100;
 			acceleration.y = 0;
-			if (FlxG.keys.X)
+			if (animationTime <= 0)
 			{
-				acceleration.y -= drag.x;
-			}
-			else
-			{
-				acceleration.y += drag.x;
+				if (FlxG.keys.X)
+				{
+					acceleration.y -= drag.x;
+				}
+				else
+				{
+					acceleration.y += drag.x;
+				}
 			}
 			floating = false;
 		}
