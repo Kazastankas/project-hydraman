@@ -21,6 +21,7 @@ package
 		protected var _meteor_fires:FlxGroup;
 		protected var _cosmetic_fires:FlxGroup;
 		protected var _waters:FlxGroup;
+		protected var _dinos:FlxGroup;
 		protected var _changes:Array;
 		protected var _changeIndex:int;
 		protected var _timer:Number=0;
@@ -135,6 +136,15 @@ package
 			}
 			add(_enemies);
 			
+			_dinos = new FlxGroup();
+			for(i = 0; i < 32; i++)
+			{
+				s = new Dino( -100, -100);
+				s.exists = false;
+				_dinos.add(s);
+			}
+			add(_dinos);
+			
 			add(_waters);
 			
 			_camMan = new CameraMan(_players);
@@ -177,6 +187,7 @@ package
 			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_enemies, _tileMap);
+			FlxU.collide(_dinos, _tileMap);
 			FlxU.collide(_players, _players);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
@@ -188,6 +199,7 @@ package
 			
 			//FlxU.overlap(_players, _explodes, playerHit);
 			FlxU.overlap(_players, _enemies, playerHit);
+			FlxU.overlap(_players, _dinos, playerHit);
 			
 			//end condition
 			if (_goalCounter > 1)
@@ -219,7 +231,6 @@ package
 			{
 				_changes[int(_timer + 1)].push(new Change(Math.floor(FlxG.mouse.x/32), Math.floor(FlxG.mouse.y/32), 0));
 			}
-			
 			if (FlxG.keys.justPressed('S'))
 			{
 				var s:Tornado;
@@ -236,6 +247,15 @@ package
 				if (x != null)
 				{
 					x.create(FlxG.mouse.x,FlxG.mouse.y);
+				}
+			}
+			if (FlxG.keys.justPressed('G'))
+			{
+				var d:Dino;
+				d = (_dinos.getFirstAvail() as Dino);
+				if (d != null)
+				{
+					d.create(FlxG.mouse.x,FlxG.mouse.y);
 				}
 			}
 			if (FlxG.keys.justPressed('F'))
