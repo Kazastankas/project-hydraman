@@ -32,6 +32,8 @@ package levels
 			addEnemy(1393, 1031);
 			addEnemy(1121, 1223);
 			addEnemy(999, 1102);
+			addTree(100, 1540);
+			addTree(120, 1540);
 			
 			_resetFlag = false;
 			spawnTarget = new FlxObject(_playerStart.x, _playerStart.y);

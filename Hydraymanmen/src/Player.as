@@ -10,7 +10,7 @@ public class Player extends FlxSprite
 	protected var runSpeed:Number = 100;
 	protected var splitTimer:Number = 0;
 	protected var fireTimer:Number = 0;
-	protected var onFire:Boolean;
+	public var onFire:Boolean;
 	protected var diseaseTimer:Number = 0;
 	protected var onDisease:Boolean;
 	protected var nearPlague:Boolean;
@@ -23,7 +23,7 @@ public class Player extends FlxSprite
 	protected var animationTime:Number = 0;
 	
 	public var pushing:Boolean;
-
+	
 	public function Player(X:int,Y:int,players:FlxGroup,fireHairs:FlxGroup)
 	{
 		super(X, Y);
