@@ -8,7 +8,7 @@ package
 		[Embed(source = "data/goal.png")] private var goalImg:Class;
 		[Embed(source = 'data/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		protected var _players:FlxGroup;//the players
-		protected var _center:FlxObject;//what the camera centers on
+		protected var _camMan:CameraMan;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
 		protected var _goal:FlxSprite;//the goal
 		protected var _doom:FlxSprite;//the doom
@@ -18,7 +18,6 @@ package
 		{
 			FlxG.mouse.hide();
 			var i:int;
-			_center = new FlxObject(100, 100);
 			
 			_tileMap = new FlxTilemap();
 			_tileMap.loadMap(new Map,ImgTiles,16,16);
@@ -46,11 +45,14 @@ package
 			_players.add(new Player( 100, 100,_players));
 			add(_players);
 			
+			_camMan = new CameraMan(_players);
+			add(_camMan);
+			
+			FlxG.follow(_camMan, 1);
 			_doom = new DeathZone(150, 200);
 			_doom.fixed = true;
 			add(_doom);
 			
-			FlxG.follow(_center, 1);
 			FlxG.followAdjust(.1, .1);
 			FlxG.followBounds(-2000, -2000, 2000,2000);
 		}
@@ -97,9 +99,6 @@ package
 			}
 			*/
 			
-			var centerPos:FlxPoint = calcCenter(_players);
-			_center.x = centerPos.x;
-			_center.y = centerPos.y;
 			
 			super.update();
 		
@@ -108,28 +107,6 @@ package
 		private function hitGoal(a:FlxObject, b:FlxObject):void
 		{
 			_goalCounter += 1;
-		}
-
-		
-		protected function calcCenter(group:FlxGroup):FlxPoint
-		{
-			var avgPos:FlxPoint = new FlxPoint(0, 0);
-			var numExists:int = 0;
-			for each(var member:FlxObject in group.members)
-			{
-				var player:Player = member as Player;
-				if (player && !player.dead && player.active && player.exists)
-				{
-					//trace("Player pos: " + member.x + ", " + member.y);
-					avgPos.x += member.x;
-					avgPos.y += member.y;
-					numExists++;
-				}
-			}
-			avgPos.x /= numExists;
-			avgPos.y /= numExists;
-			//trace("Avg pos: " + avgPos.x + ", " + avgPos.y + ", length: " + group.members.length);
-			return avgPos;
 		}
 	}
 }

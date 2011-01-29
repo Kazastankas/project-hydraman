@@ -44,7 +44,6 @@ public class Player extends FlxSprite
 			makePlayer(x - width / 2, y);
 			makePlayer(x + width / 2, y);
 			kill();
-			FlxG.log("do stuff");
 		}
 		else if (splitTimer < .2)
 		{
