@@ -11,6 +11,7 @@ public class Player extends FlxSprite
 	private var fireTimer:Number = 0;
 	private var onFire:Boolean;
 	private var players:FlxGroup;
+	protected var aliveCount:int = 0;
 	
 	public function Player(X:int,Y:int,players:FlxGroup)
 	{
@@ -78,6 +79,7 @@ public class Player extends FlxSprite
 	
 	override public function update():void
 	{
+		aliveCount++;
 		splitTimer -= FlxG.elapsed;
 		if (!onFire)
 		{
@@ -133,6 +135,7 @@ public class Player extends FlxSprite
 		{
 			play("run");
 		}
+		
 
 		super.update();
 	}
@@ -144,5 +147,6 @@ public class Player extends FlxSprite
 		else
 			collideTop = true;
 	}
+	
 }
 }
