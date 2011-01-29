@@ -435,8 +435,8 @@ package
 			PlayState.numHydra = numAlive;
 			if (numAlive == 0)
 			{
-				resetLevel();
 				PlayState.numHydra = 1;
+				resetLevel();
 			}
 		}
 		
