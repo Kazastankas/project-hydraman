@@ -86,6 +86,16 @@ package levels
 				addQuake(779, 842);
 				part = 4;
 			}
+			if (((_camMan.x > 650 && _camMan.x < 800) && (_camMan.y > 500 && _camMan.y < 750)) && (part == 4))
+			{
+				addTornado(650, 500, 0.1);
+				addQuake(652,716);
+				addQuake(690, 717);
+				addQuake(824, 717);
+				addQuake(850, 717);
+				addQuake(880, 717);
+				part = 5;
+			}
 		}
 		
 		override protected function resetLevel():void
