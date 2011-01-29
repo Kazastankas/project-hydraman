@@ -16,7 +16,7 @@ public class Tornado extends FlxSprite
 		maxVelocity.x = maxVelocity.y = 200;
 		
 		//animations
-		addAnimation("idle", [0],5);
+		addAnimation("idle", [0,1,2],5);
 		play("idle");
 	}
 	
