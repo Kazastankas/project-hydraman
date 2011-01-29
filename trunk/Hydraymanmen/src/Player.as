@@ -7,6 +7,8 @@ public class Player extends FlxSprite
 	[Embed(source = "data/hydra.png")] private var Img:Class;
 	private var runSpeed:Number = 100;
 	private var splitTimer:Number = 0;
+	private var fireTimer:Number = 0;
+	private var onFire:Boolean;
 	private var players:FlxGroup;
 	
 	public function Player(X:int,Y:int,players:FlxGroup)
@@ -26,6 +28,9 @@ public class Player extends FlxSprite
 		offset.x = 8;
 		offset.y = 5;
 		width = 8;
+		
+		fireTimer = 0;
+		onFire = false;
 
 		//animations
 		addAnimation("idle", [0,1,2,3,4,5,6,7],5);
@@ -34,6 +39,41 @@ public class Player extends FlxSprite
 		addAnimation("split", [0]);
 		play("idle");
 		
+	}
+	
+	public function ignite():void
+	{
+		onFire = true;
+		color = 0xFF0000;
+	}
+	
+	public function handle_collision(o:FlxObject):void
+	{
+		if (o is Player && onFire)
+		{
+			Player(o).ignite();
+		}
+	}
+		
+	public function create(x:Number,y:Number):void
+	{
+		velocity.x = velocity.y = 0;
+		health = 200;
+		splitTimer = Math.random() * 3 + 2;
+		fireTimer = 0;
+		onFire = false;
+		reset(x, y);
+	}
+	
+	private function makePlayer(x:Number,y:Number):void
+	{
+		var i:int;
+		var s:Player;
+		s = (players.getFirstAvail() as Player);
+		if (s != null)
+		{
+			s.create(x,y);
+		}
 	}
 	
 	override public function update():void
@@ -49,29 +89,41 @@ public class Player extends FlxSprite
 		{
 			play("split");
 		}
+		
+		
+		if (onFire)
+		{
+			fireTimer += FlxG.elapsed;
+			if (fireTimer > 5)
+			{
+				kill();
+			}
+		}
+		
 		acceleration.x = 0;
 		maxVelocity.x = runSpeed;
-		if(FlxG.keys.LEFT)
+		
+		if (FlxG.keys.LEFT)
 		{
 			facing = LEFT;
 			acceleration.x -= drag.x;
 		}
-		else if(FlxG.keys.RIGHT)
+		else if (FlxG.keys.RIGHT)
 		{
 			facing = RIGHT;
 			acceleration.x += drag.x;
 		}
 		
-		if(FlxG.keys.justPressed("X") && !velocity.y)
+		if (FlxG.keys.justPressed("X") && !velocity.y)
 		{
 			velocity.y = -maxVelocity.y;
 		}
 
-		if(velocity.y != 0)
+		if (velocity.y != 0)
 		{
 			play("jump");
 		}
-		else if(velocity.x == 0)
+		else if (velocity.x == 0)
 		{
 			play("idle");
 		}
@@ -90,31 +142,26 @@ public class Player extends FlxSprite
 			collideTop = false
 		else
 			collideTop = true;
-
 	}
-		
-	public function create(x:Number,y:Number):void
+	
+	override public function hitLeft(o:FlxObject, v:Number):void
 	{
-		velocity.x = velocity.y = 0;
-		health = 200;
-		splitTimer = Math.random() * 3+2;
-		reset(x, y);
+		handle_collision(o);
 	}
-	
-	private function makePlayer(x:Number,y:Number):void
-	{
-		var i:int;
-		var s:Player;
-		s = (players.getFirstAvail() as Player);
-		if (s != null)
-		{
-			s.create(x, y);
-		}
-		
-	}
-	
 
-	
-	
+	override public function hitRight(o:FlxObject, v:Number):void
+	{
+		handle_collision(o);
+	}
+
+	override public function hitBottom(o:FlxObject, v:Number):void
+	{
+		handle_collision(o);
+	}
+
+	override public function hitTop(o:FlxObject, v:Number):void
+	{
+		handle_collision(o);
+	}
 }
 }
