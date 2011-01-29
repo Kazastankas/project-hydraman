@@ -155,7 +155,7 @@ package
 			_players.add(_block);
 			
 			FlxG.followAdjust(.1, .1);
-			FlxG.followBounds(-2000, -2000, 2000,2000);
+			FlxG.followBounds(-32, -32, _tileMap.width+32,_tileMap.height+32);
 		}
 
 		override public function update():void
