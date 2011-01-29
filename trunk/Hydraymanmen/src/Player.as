@@ -33,8 +33,9 @@ public class Player extends FlxSprite
 		addAnimation("jump", [0]);
 		addAnimation("split", [0]);
 		play("idle");
+		
 	}
-
+	
 	override public function update():void
 	{
 		splitTimer -= FlxG.elapsed;
@@ -85,6 +86,15 @@ public class Player extends FlxSprite
 
 	}
 	
+	override public function preCollide(Object:FlxObject):void 
+	{
+		if (Object is Player)
+			collideTop = false
+		else
+			collideTop = true;
+
+	}
+		
 	public function create(x:Number,y:Number):void
 	{
 		velocity.x = velocity.y = 0;
@@ -102,6 +112,11 @@ public class Player extends FlxSprite
 		{
 			s.create(x,y);
 		}
+		
 	}
+	
+
+	
+	
 }
 }
