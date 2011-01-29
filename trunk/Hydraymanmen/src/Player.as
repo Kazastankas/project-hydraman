@@ -67,7 +67,7 @@ public class Player extends FlxSprite
 	{
 		if (!onFire)
 		{
-			fireHair = new Fire(x, y - height / 2, 5, false);
+			fireHair = new Fire(x - width / 2, y - height / 2, 5, false);
 			fire_hairs.add(fireHair);
 		}
 		onFire = true;
@@ -149,15 +149,15 @@ public class Player extends FlxSprite
 			maxVelocity.x = landVelocity.x;
 			maxVelocity.y = landVelocity.y;
 			
-			if (FlxG.keys.justPressed("X") && !velocity.y)
+			if (FlxG.keys.justPressed("X") && !velocity.y && animationTime <= 0)
 			{
 				velocity.y = -maxVelocity.y;
 			}
 		}
 		aliveCount++;
-		splitTimer -= FlxG.elapsed;
 		if (!onFire && !velocity.y)
 		{
+			splitTimer -= FlxG.elapsed;
 			if (splitTimer < 0)
 			{	if (!pushing)
 				{
@@ -176,11 +176,11 @@ public class Player extends FlxSprite
 		else if (onFire)
 		{
 			fireTimer += FlxG.elapsed;
-			fireHair.x = x;
+			fireHair.x = x - width / 2;
 			fireHair.y = y - height / 2;
 			if (fireTimer > 5)
 			{
-				kill();
+				die();
 			}
 		}
 		
