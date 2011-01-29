@@ -9,7 +9,7 @@ package
 		[Embed(source = "data/icetiles.png")] private var ImgTiles:Class;
 		[Embed(source = "data/goal.png")] private var goalImg:Class;
 		[Embed(source = "data/fire.png")] private var fireImg:Class;
-		[Embed(source = 'data/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
+		[Embed(source = 'levels/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		protected var _players:FlxGroup;//the players
 		protected var _camMan:CameraMan;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
@@ -129,7 +129,7 @@ package
 			//end condition
 			if (_goalCounter > 1)
 			{
-				FlxG.state = new PlayState();
+				nextLevel();
 			}
 			
 			//FlxU.collide(_players, _floor);
@@ -261,6 +261,10 @@ package
 				resetLevel();
 		}
 		
+		protected function nextLevel():void
+		{
+			FlxG.state = new PlayState();
+		}
 	}
 }
 

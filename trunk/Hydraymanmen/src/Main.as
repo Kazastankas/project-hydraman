@@ -1,7 +1,7 @@
 package
 {
 	import org.flixel.*;
-	import levels.LevelIce;
+	import levels.*;
 	[SWF(width="640", height="480", backgroundColor="#000000")]
 	[Frame(factoryClass="Preloader")]
 
@@ -9,7 +9,7 @@ package
 	{
 		public function Main()
 		{
-			super(320,240,LevelIce);
+			super(320,240,LevelMeteor);
 			//showLogo = false;
 		}
 	}
