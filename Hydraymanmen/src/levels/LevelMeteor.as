@@ -1,6 +1,7 @@
 package levels 
 {
 	import org.flixel.FlxG;
+	import org.flixel.FlxPoint;
 	
 	/**
 	 * ...
@@ -12,6 +13,8 @@ package levels
 		
 		override protected function create():void
 		{
+			_playerStart = new FlxPoint(100, 100);
+			_goalPos = new FlxPoint(200, 100);
 			super.create();
 			
 			//add the top layer of water
