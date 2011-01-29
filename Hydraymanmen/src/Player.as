@@ -23,9 +23,9 @@ public class Player extends FlxSprite
 		maxVelocity.y = 200;
 		health = 200;
 		splitTimer = Math.random() * 3 + 2;
-		offset.x = 5;
+		offset.x = 8;
 		offset.y = 5;
-		width = 12;
+		width = 8;
 
 		//animations
 		addAnimation("idle", [0,1,2,3,4,5,6,7],5);
@@ -49,7 +49,6 @@ public class Player extends FlxSprite
 		{
 			play("split");
 		}
-		if (splitTimer )
 		acceleration.x = 0;
 		maxVelocity.x = runSpeed;
 		if(FlxG.keys.LEFT)
@@ -109,7 +108,7 @@ public class Player extends FlxSprite
 		s = (players.getFirstAvail() as Player);
 		if (s != null)
 		{
-			s.create(x,y);
+			s.create(x, y);
 		}
 		
 	}
