@@ -95,6 +95,7 @@ package
 			//FlxU.overlap(_players, _floor,canJump);
 			FlxU.overlap(_players, _goal, hitGoal);
 			FlxU.overlap(_players, _fire, setOnFire);
+			FlxU.overlap(_players, _players, playerSetOnFire);
 			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_enemies, _tileMap);
@@ -171,6 +172,18 @@ package
 			else if (b is Player)
 			{
 				Player(b).ignite();
+			}
+		}
+		
+		private function playerSetOnFire(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Player && b is Player)
+			{
+				if (Player(a).fire_time() > 0.5 || Player(b).fire_time() > 0.5)
+				{
+					Player(a).ignite();
+					Player(b).ignite();
+				}
 			}
 		}
 		
