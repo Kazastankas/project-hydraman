@@ -6,6 +6,7 @@ package
 	{
 		[Embed(source = "data/tribalthing.mp3")] protected var Music:Class;
 		[Embed(source = "data/jump.mp3")] protected var JumpSnd:Class;
+		[Embed(source = "data/quake.mp3")] protected var QuakeSnd:Class;
 		[Embed(source = "data/morerocks.png")] protected var ImgTiles:Class;
 		[Embed(source = "data/goal.png")] protected var goalImg:Class;
 		[Embed(source = "data/fire.png")] protected var fireImg:Class;
@@ -35,13 +36,15 @@ package
 		protected var _huts:FlxGroup;
 		protected var _resetFlag:Boolean;
 		protected var _updateCount:int;
+		protected var _trees:FlxGroup;
+		static public var _firePlaying:Number = 0;
 		
 		public static var numHydra:int = 1;
 		protected var _enemies:FlxGroup;
 		protected var _tornados:FlxGroup;
 		
 		protected var _block:Block;
-
+		
 		override public function create():void
 		{
 			FlxG.playMusic(Music);
@@ -112,6 +115,9 @@ package
 			
 			_huts = new FlxGroup();
 			add(_huts);
+			
+			_trees = new FlxGroup();
+			add(_trees);
 			
 			_tileMap = new FlxTilemap();
 			_tileMap.loadMap(new Map,ImgTiles,32,32);
@@ -203,10 +209,12 @@ package
 				}
 			}
 		}
-
+		
 		override public function update():void
 		{
 			super.update();
+			
+			_firePlaying -= FlxG.elapsed;
 			
 			checkForExtinction();
 			
@@ -221,6 +229,7 @@ package
 						var c:Change = _changes[_changeIndex][i];
 						if (c.tile == 0)
 						{
+							FlxG.play(QuakeSnd);
 							FlxG.quake.start();
 						}
 						_tileMap.setTile(c.pos.x, c.pos.y, c.tile, true);
@@ -234,6 +243,7 @@ package
 			FlxU.overlap(_players, _goal, hitGoal);
 			FlxU.overlap(_players, _diseases, setOnDisease);
 			FlxU.overlap(_players, _meteor_fires, setOnFire);
+			FlxU.overlap(_trees, _meteor_fires, setOnFire);
 			FlxU.overlap(_players, _players, playerContagion);
 			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _tileMap);
@@ -243,6 +253,9 @@ package
 			FlxU.collide(_players, _players);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
+			
+			FlxU.overlap(_players, _trees, setOnFireTree);
+			FlxU.overlap(_trees, _players, setOnFirePlayer);
 			
 			FlxU.collide(_meteors, _tileMap);
 			FlxU.collide(_meteor_fires, _tileMap);
@@ -331,6 +344,26 @@ package
 			}
 		}
 		
+		protected function setOnFireTree(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Player && Tree(b).onFire)
+			{
+				Player(a).ignite();
+			}
+			else if (a is Tree && Tree(b).onFire)
+			{
+				Tree(a).ignite();
+			}
+		}
+		
+		protected function setOnFirePlayer(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Tree && Player(b).onFire)
+			{
+				Tree(a).ignite();
+			}
+		}
+		
 		protected function setOnFire(a:FlxObject, b:FlxObject):void
 		{
 			if (a is Player)
@@ -340,6 +373,10 @@ package
 			else if (b is Player)
 			{
 				Player(b).ignite();
+			}
+			else if (a is Tree)
+			{
+				Tree(a).ignite();
 			}
 		}
 		
@@ -505,6 +542,11 @@ package
 		protected function addHut(x:Number, y:Number):void
 		{
 			_huts.add(new Hut(x, y));
+		}
+		
+		protected function addTree(x:Number, y:Number):void
+		{
+			_trees.add(new Tree(x, y,_cosmetic_fires));
 		}
 		
 		protected function addWater(x:Number, y:Number, width:Number, height:Number):void

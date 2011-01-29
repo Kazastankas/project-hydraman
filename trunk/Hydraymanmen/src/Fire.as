@@ -5,6 +5,7 @@ import org.flixel.*;
 public class Fire extends FlxSprite
 {
 	[Embed(source = "data/fire.png")] protected var Img:Class;
+	[Embed(source = "data/Fire.mp3")] protected var Snd:Class;
 	protected var lifeTime:Number;
 	protected var fires:FlxGroup;
 	protected var falls:Boolean;
@@ -33,6 +34,11 @@ public class Fire extends FlxSprite
 	
 	override public function update():void
 	{
+		if (PlayState._firePlaying<0)
+		{
+			PlayState._firePlaying = 18;
+			FlxG.play(Snd);
+		}
 		super.update();
 		lifeTime -= FlxG.elapsed;
 		
@@ -41,7 +47,7 @@ public class Fire extends FlxSprite
 			velocity.y += 294 * FlxG.elapsed;
 		}
 		
-		if (lifeTime < 0)
+		if (lifeTime < 0 && lifeTime > -1)
 		{
 			kill();
 		}
