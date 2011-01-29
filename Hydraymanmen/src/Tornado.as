@@ -5,6 +5,7 @@ import org.flixel.*;
 public class Tornado extends FlxSprite
 {
 	[Embed(source = "data/tornado.png")] protected var Img:Class;
+	private var _timer:Number;
 
 	public function Tornado(X:int,Y:int)
 	{
@@ -20,11 +21,17 @@ public class Tornado extends FlxSprite
 	
 	override public function update():void
 	{
+		_timer -= FlxG.elapsed;
+		if (_timer < 0)
+		{
+			kill();
+		}
 		super.update();
 	}
 	
 	public function create(x:Number,y:Number,xdir:Number):void
 	{
+		_timer = 10;
 		velocity.x = velocity.y = 0;
 		velocity.x = xdir;
 		reset(x, y);
