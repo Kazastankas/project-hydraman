@@ -18,6 +18,9 @@ package
 		protected var _goalCounter:int = 0;//how many players are on the goal
 		protected var _explodes:FlxGroup;
 		protected var _meteors:FlxGroup;
+		protected var _changes:Array;
+		protected var _changeIndex:int;
+		protected var _timer:Number=0;
 		
 		public static var numHydra:int = 1;
 		protected var _enemies:FlxGroup;
@@ -39,6 +42,15 @@ package
 				_tornados.add(s);
 			}
 			add(_tornados);
+			
+			var c:Change;
+			_changes = new Array();
+			for (i = 0; i < 100; i++ )
+			{
+				_changes.push(null);
+			}
+			_changes[10] = new Change(10, 5, 0);
+			_changeIndex = 0;
 			
 			_explodes = new FlxGroup();
 			for(i = 0; i < 64; i++)
@@ -110,6 +122,15 @@ package
 
 		override public function update():void
 		{
+			_timer += FlxG.elapsed;
+			if (_changeIndex < int(_timer))
+			{
+				_changeIndex = _timer;
+				if (_changes[_changeIndex] != null)
+				{
+					_tileMap.setTile(_changes[_changeIndex].pos.x, _changes[_changeIndex].pos.y, _changes[_changeIndex].type, true);
+				}
+			}
 			_goalCounter = 0;
 			//FlxU.overlap(_players, _floor,canJump);
 			FlxU.overlap(_players, _goal, hitGoal);
