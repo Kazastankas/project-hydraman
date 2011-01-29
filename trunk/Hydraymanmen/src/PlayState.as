@@ -24,6 +24,7 @@ package
 		protected var _waters:FlxGroup;
 		protected var _bubbles:FlxGroup;
 		protected var _dinos:FlxGroup;
+		protected var _cavemen:FlxGroup;
 		protected var _changes:Array;
 		protected var _changeIndex:int;
 		protected var _timer:Number = 0;
@@ -137,16 +138,25 @@ package
 			}
 			add(_dinos);
 			
-			add(_waters);
-			
-			_bubbles = new FlxGroup();
+			_dinos = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
-				s = new Bubble( -100, -100);
+				s = new Dino( -100, -100);
 				s.exists = false;
-				_bubbles.add(s);
+				_dinos.add(s);
 			}
-			add(_bubbles);
+			add(_dinos);
+			
+			add(_waters);
+			
+			_cavemen = new FlxGroup();
+			for(i = 0; i < 32; i++)
+			{
+				s = new Human( -100, -100,_meteor_fires);
+				s.exists = false;
+				_cavemen.add(s);
+			}
+			add(_cavemen);
 			
 			_camMan = new CameraMan(_players);
 			add(_camMan);
@@ -194,6 +204,7 @@ package
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_enemies, _tileMap);
 			FlxU.collide(_dinos, _tileMap);
+			FlxU.collide(_cavemen, _tileMap);
 			FlxU.collide(_players, _players);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
@@ -204,6 +215,7 @@ package
 			//FlxU.overlap(_players, _explodes, playerHit);
 			FlxU.overlap(_players, _enemies, playerHit);
 			FlxU.overlap(_players, _dinos, playerHit);
+			FlxU.overlap(_players, _cavemen, playerHit);
 			
 			//end condition
 			if (_goalCounter > 1)
@@ -261,6 +273,10 @@ package
 				{
 					d.create(FlxG.mouse.x,FlxG.mouse.y);
 				}
+			}
+			if (FlxG.keys.justPressed('H'))
+			{
+				addHuman(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			if (FlxG.keys.justPressed('F'))
 			{
@@ -431,6 +447,15 @@ package
 			if (d != null)
 			{
 				d.create(x,y);
+			}
+		}
+		protected function addHuman(x:Number, y:Number):void
+		{
+			var s:Human;
+			s = (_cavemen.getFirstAvail() as Human);
+			if (s != null)
+			{
+				s.create(x,y);
 			}
 		}
 		protected function addMeteor(x:Number, y:Number, dir:Number):void
