@@ -34,26 +34,26 @@ package levels
 		override public function update():void
 		{
 			super.update();
-			if (((_camMan.x > 850 && _camMan.x <930) && (_camMan.y > 960 && _camMan.y < 1100)) && (part == 0))
+			if (((_camMan.x > 850 && _camMan.x <930) && (_camMan.y > 860 && _camMan.y < 1100)) && (part == 0))
 			{
 				addTornado(850, 900, 1);
 				part = 1;
 			}
-			if (((_camMan.x > 1000 && _camMan.x < 1200) && (_camMan.y > 850 && _camMan.y < 900)) && (part == 1))
+			if (((_camMan.x > 1000 && _camMan.x < 1200) && (_camMan.y > 750 && _camMan.y < 900)) && (part == 1))
 			{
 				addQuake(1255, 906);
 				addQuake(1226, 906);
 				addQuake(1189, 906);
 				part = 2;
 			}
-			if (((_camMan.x > 900 && _camMan.x < 1100) && (_camMan.y > 830 && _camMan.y < 900)) && (part == 2))
+			if (((_camMan.x > 900 && _camMan.x < 1100) && (_camMan.y > 730 && _camMan.y < 900)) && (part == 2))
 			{
 				addQuake(1093,879);
 				addQuake(1069, 875);
 				addQuake(1031, 866);
 				part = 3;
 			}
-			if (((_camMan.x > 400 && _camMan.x < 600) && (_camMan.y > 800 && _camMan.y < 900)) && (part == 3))
+			if (((_camMan.x > 400 && _camMan.x < 600) && (_camMan.y > 700 && _camMan.y < 900)) && (part == 3))
 			{
 				addQuake(652,839);
 				addQuake(714, 840);

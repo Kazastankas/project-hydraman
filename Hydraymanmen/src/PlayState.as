@@ -127,7 +127,7 @@ package
 			_players = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
-				s = new Player(_playerStart.x,_playerStart.y, _players, _cosmetic_fires);
+				s = new Player(_playerStart.x, _playerStart.y, _players, _cosmetic_fires);
 					s.exists = false;
 				_players.add(s);
 			}
