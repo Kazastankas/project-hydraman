@@ -151,6 +151,10 @@ package
 
 		override public function update():void
 		{
+			super.update();
+			
+			checkForExtinction();
+			
 			_timer += FlxG.elapsed;
 			if (_changeIndex < int(_timer))
 			{
@@ -263,9 +267,6 @@ package
 				makeShips(1);
 			}
 			*/
-			checkForExtinction();
-			
-			super.update();
 		}
 		
 		protected function hitGoal(a:FlxObject, b:FlxObject):void

@@ -14,6 +14,8 @@ package levels
 		
 		override public function create():void
 		{
+			trace("Creating ice level");
+			
 			var i:int;
 			_playerStart = new FlxPoint(100, 100);
 			_goalPos = new FlxPoint(200, 100);
@@ -42,7 +44,7 @@ package levels
 		
 		override protected function nextLevel():void
 		{
-			FlxG.state = new LevelIce();
+			FlxG.state = new LevelMeteor();
 		}
 	}
 
