@@ -25,7 +25,6 @@ public class Meteor extends FlxSprite
 	override public function update():void
 	{
 		super.update();
-		FlxG.log(velocity.y);
 		if (velocity.y < 20)
 		{
 			kill();

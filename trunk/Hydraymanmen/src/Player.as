@@ -66,7 +66,6 @@ public class Player extends FlxSprite
 	
 	private function makePlayer(x:Number,y:Number):void
 	{
-		var i:int;
 		var s:Player;
 		s = (players.getFirstAvail() as Player);
 		if (s != null)
@@ -118,7 +117,7 @@ public class Player extends FlxSprite
 		{
 			velocity.y = -maxVelocity.y;
 		}
-
+		
 		if (velocity.y != 0)
 		{
 			play("jump");
@@ -133,7 +132,6 @@ public class Player extends FlxSprite
 		}
 
 		super.update();
-
 	}
 	
 	override public function preCollide(Object:FlxObject):void 
