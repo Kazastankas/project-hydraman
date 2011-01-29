@@ -41,18 +41,16 @@ public class Player extends FlxSprite
 		
 	}
 	
+	public function fire_time():Number
+	{
+		
+		return fireTimer;
+	}
+	
 	public function ignite():void
 	{
 		onFire = true;
 		color = 0xFF0000;
-	}
-	
-	public function handle_collision(o:FlxObject):void
-	{
-		if (o is Player && onFire)
-		{
-			Player(o).ignite();
-		}
 	}
 		
 	public function create(x:Number,y:Number):void
@@ -62,6 +60,7 @@ public class Player extends FlxSprite
 		splitTimer = Math.random() * 3 + 2;
 		fireTimer = 0;
 		onFire = false;
+		color = 0xFFFFFF;
 		reset(x, y);
 	}
 	
@@ -79,19 +78,20 @@ public class Player extends FlxSprite
 	override public function update():void
 	{
 		splitTimer -= FlxG.elapsed;
-		if (splitTimer < 0)
+		if (!onFire)
 		{
-			makePlayer(x - width / 2, y);
-			makePlayer(x + width / 2, y);
-			kill();
+			if (splitTimer < 0)
+			{
+				makePlayer(x - width / 2, y);
+				makePlayer(x + width / 2, y);
+				kill();
+			}
+			else if (splitTimer < .2)
+			{
+				play("split");
+			}
 		}
-		else if (splitTimer < .2)
-		{
-			play("split");
-		}
-		
-		
-		if (onFire)
+		else
 		{
 			fireTimer += FlxG.elapsed;
 			if (fireTimer > 5)
@@ -142,26 +142,6 @@ public class Player extends FlxSprite
 			collideTop = false
 		else
 			collideTop = true;
-	}
-	
-	override public function hitLeft(o:FlxObject, v:Number):void
-	{
-		handle_collision(o);
-	}
-
-	override public function hitRight(o:FlxObject, v:Number):void
-	{
-		handle_collision(o);
-	}
-
-	override public function hitBottom(o:FlxObject, v:Number):void
-	{
-		handle_collision(o);
-	}
-
-	override public function hitTop(o:FlxObject, v:Number):void
-	{
-		handle_collision(o);
 	}
 }
 }
