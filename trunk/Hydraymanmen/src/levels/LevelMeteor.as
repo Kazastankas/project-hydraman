@@ -1,6 +1,7 @@
 package levels 
 {
 	import org.flixel.FlxG;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
 	
 	/**
@@ -12,6 +13,8 @@ package levels
 		[Embed(source = 'map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		[Embed(source = "../data/cambrian-bg.png")] private var bgImg:Class;
 		protected var part:int = 0;
+		protected var spawnTarget:FlxObject;
+		protected var bolt:Lightning;
 		
 		override public function create():void
 		{
@@ -27,14 +30,36 @@ package levels
 			addEnemy(1121, 1223);
 			addEnemy(999, 1102);
 			
-			/*addWater(5, 6, 4, 3);
-			
-			*/
+			_resetFlag = false;
+			spawnTarget = new FlxObject(_playerStart.x, _playerStart.y);
+			//activatePlayers(PlayState.numHydra);
 		}
 		
 		override public function update():void
 		{
 			super.update();
+			
+			
+			if (_updateCount >= 30 && _updateCount < 60)
+			{
+				_resetFlag = false;
+				bolt = add(new Lightning()) as Lightning;
+				var boltPoint:FlxPoint = spawnTarget.getScreenXY();
+				bolt.SetTarget(new FlxPoint(boltPoint.x, boltPoint.y - 400));
+				bolt.SetOrigin(boltPoint);
+				bolt.strike(boltPoint.x, boltPoint.y - 400);
+			}
+			if (_updateCount == 60)
+			{
+				var firstHydra:Player = _players.getFirstAvail() as Player;
+				if (firstHydra)
+				{
+					firstHydra.create(_playerStart.x, _playerStart.y);
+					//_resetFlag = true;
+				}
+			}
+			
+			
 			if (((_camMan.x > 850 && _camMan.x <930) && (_camMan.y > 860 && _camMan.y < 1100)) && (part == 0))
 			{
 				addTornado(850, 900, 1);

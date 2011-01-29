@@ -33,6 +33,8 @@ package
 		protected var _goalPos:FlxPoint;
 		protected var _changingLevel:Boolean = false;
 		protected var _huts:FlxGroup;
+		protected var _resetFlag:Boolean;
+		protected var _updateCount:int;
 		
 		public static var numHydra:int = 1;
 		protected var _enemies:FlxGroup;
@@ -131,7 +133,7 @@ package
 				s.exists = false;
 				_players.add(s);
 			}
-			activatePlayers(numHydra);
+			//activatePlayers(numHydra);
 			add(_players);
 			add(_cosmetic_fires);
 			
@@ -164,7 +166,7 @@ package
 			}
 			add(_bubbles);
 			
-			_camMan = new CameraMan(_players);
+			_camMan = new CameraMan(_players, _playerStart);
 			add(_camMan);
 			
 			FlxG.follow(_camMan, 9);
@@ -178,11 +180,14 @@ package
 			}
 			add(_cavemen);
 			
-			_block = new Block(50, 50, 5);
-			_players.add(_block);
+			//_block = new Block(50, 50, 5);
+			//_players.add(_block);
 			
 			FlxG.followAdjust(0, 0);
-			FlxG.followBounds(-32, -32, _tileMap.width+32,_tileMap.height+32);
+			FlxG.followBounds( -32, -32, _tileMap.width + 32, _tileMap.height + 32);
+			
+			_resetFlag = true;
+			_updateCount = 0;
 		}
 		
 		protected function activatePlayers(num:int):void
@@ -299,6 +304,8 @@ package
 			{
 				addDisease(FlxG.mouse.x, FlxG.mouse.y);
 			}
+			
+			_updateCount++;
 		}
 		
 		protected function hitGoal(a:FlxObject, b:FlxObject):void
@@ -424,7 +431,7 @@ package
 				}
 			}
 			PlayState.numHydra = numAlive;
-			if (numAlive == 0)
+			if (numAlive == 0 && _resetFlag)
 			{
 				PlayState.numHydra = 1;
 				resetLevel();

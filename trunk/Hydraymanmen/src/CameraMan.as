@@ -18,10 +18,12 @@ package
 		public var offset:FlxPoint;
 		public var maxOffsetX:Number = 0.5;
 		public var maxOffsetY:Number = 0.5;
+		protected var defaultPos:FlxPoint;
 		
-		public function CameraMan(group:FlxGroup) 
+		public function CameraMan(group:FlxGroup, defaultPos:FlxPoint) 
 		{
 			this.group = group;
+			this.defaultPos = defaultPos;
 			offset = new FlxPoint(0, 0);
 			calcCenter();
 		}
@@ -47,11 +49,19 @@ package
 					numExists++;
 				}
 			}
-			avgPos.x /= numExists;
-			avgPos.y /= numExists;
-			this.averagePos = avgPos;
-			this.x = avgPos.x + (offset.x * maxOffsetX * FlxG.width);
-			this.y = avgPos.y + (offset.y * maxOffsetY * FlxG.height);
+			if (numExists > 0)
+			{
+				avgPos.x /= numExists;
+				avgPos.y /= numExists;
+				this.averagePos = avgPos;
+				this.x = avgPos.x + (offset.x * maxOffsetX * FlxG.width);
+				this.y = avgPos.y + (offset.y * maxOffsetY * FlxG.height);
+			}
+			else
+			{
+				this.x = defaultPos.x;
+				this.y = defaultPos.y;
+			}
 		}
 		
 		protected function killOutliers():void
