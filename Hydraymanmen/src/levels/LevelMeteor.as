@@ -14,6 +14,12 @@ package levels
 		{
 			FlxG.state = new LevelMeteor();
 		}
+		
+		override protected function nextLevel():void
+		{
+			trace("Changing to levelIce");
+			FlxG.state = new LevelIce();
+		}
 	}
 
 }
