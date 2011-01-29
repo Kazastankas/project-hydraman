@@ -28,7 +28,7 @@ public class Player extends FlxSprite
 		
 		this.players = players;
 		this.fire_hairs = fire_hairs;
-
+		
 		drag.x = runSpeed * 8;
 		drag.y = runSpeed * 8;
 		acceleration.y = 420;

@@ -5,6 +5,8 @@ package
 	public class Human extends FlxSprite
 	{
 		[Embed(source = "data/dino.png")] protected var myImage:Class;
+		[Embed(source = "data/dino.png")] protected var myImage1:Class;
+		[Embed(source = "data/dino.png")] protected var myImage2:Class;
 		public var AItimer:Number;
 		public var fireTimer:Number;
 		public var AImode:int;
@@ -19,7 +21,8 @@ package
 			loadGraphic(myImage,true,true);
 			addAnimation("idle", [0], 5, true);
 			addAnimation("go", [0, 1, 2, 3], 10, true);
-			addAnimation("fire", [4,5,6,7], 20, false);
+			addAnimation("fire", [4], 20, false);
+			addAnimation("jump", [4, 5, 6, 7], 20, false);
 			play("idle");
 			drag.x = runSpeed * 8;
 			drag.y = runSpeed * 8;
@@ -63,6 +66,41 @@ package
 					play("fire");
 					makeFire(x,y,velocity.x*3+Math.random()*20-10);
 					animationTime = .5;
+					velocity.y = -50;
+				}
+			}
+			else if (AImode == 2)
+			{
+				if (AItimer < 0)
+				{
+					AItimer = 2;
+					if (moving == 1)
+					{
+						moving = 2;
+					}
+					else
+					{
+						moving = 1;
+					}
+				}
+			}
+			else if (AImode == 3)
+			{
+				if (AItimer < 0)
+				{
+					AItimer = 2;
+					if (moving == 1)
+					{
+						moving = 2;
+					}
+					else
+					{
+						moving = 1;
+					}
+					if (velocity.y == 0)
+					{
+						velocity.y = - maxVelocity.y;
+					}
 				}
 			}
 			
@@ -97,8 +135,21 @@ package
 			super.update();
 		}
 		
-		public function create(x:Number,y:Number):void
+		public function create(x:Number,y:Number,mode:Number = 1):void
 		{
+			AImode = mode;
+			if (AImode == 1)
+			{
+				loadGraphic(myImage,true,true);
+			}
+			else if (AImode == 2)
+			{
+				loadGraphic(myImage2,true,true);
+			}
+			else if (AImode == 3)
+			{
+				loadGraphic(myImage3,true,true);
+			}
 			velocity.x = velocity.y = 0;
 			health = 20;
 			reset(x, y);

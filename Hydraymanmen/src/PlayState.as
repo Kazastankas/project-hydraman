@@ -298,9 +298,17 @@ package
 					d.create(FlxG.mouse.x,FlxG.mouse.y);
 				}
 			}
-			if (FlxG.keys.justPressed('H'))
+			if (FlxG.keys.justPressed('L'))
 			{
-				addHuman(FlxG.mouse.x, FlxG.mouse.y);
+				addHuman(FlxG.mouse.x, FlxG.mouse.y,3);
+			}
+			if (FlxG.keys.justPressed('J'))
+			{
+				addHuman(FlxG.mouse.x, FlxG.mouse.y,2);
+			}
+			if (FlxG.keys.justPressed('K'))
+			{
+				addHuman(FlxG.mouse.x, FlxG.mouse.y,1);
 			}
 			if (FlxG.keys.justPressed('F'))
 			{
@@ -477,13 +485,13 @@ package
 				d.create(x,y);
 			}
 		}
-		protected function addHuman(x:Number, y:Number):void
+		protected function addHuman(x:Number, y:Number,mode:int):void
 		{
 			var s:Human;
 			s = (_cavemen.getFirstAvail() as Human);
 			if (s != null)
 			{
-				s.create(x,y);
+				s.create(x,y,mode);
 			}
 		}
 		protected function addMeteor(x:Number, y:Number, dir:Number):void
