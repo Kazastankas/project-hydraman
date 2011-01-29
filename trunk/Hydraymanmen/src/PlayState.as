@@ -11,6 +11,7 @@ package
 		{
 			FlxG.mouse.hide();
 			var i:int;
+			_center = new FlxObject(0, 0);
 			
 			/*
 			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
