@@ -17,7 +17,7 @@ public class Player extends FlxSprite
 		this.players = players;
 
 		drag.x = runSpeed * 8;
-		drag.y = runSpeed*8;
+		drag.y = runSpeed * 8;
 		acceleration.y = 420;
 		maxVelocity.x = runSpeed;
 		maxVelocity.y = 200;
