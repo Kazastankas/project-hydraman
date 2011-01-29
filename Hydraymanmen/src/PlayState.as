@@ -153,15 +153,6 @@ package
 			}
 			add(_dinos);
 			
-			_dinos = new FlxGroup();
-			for(i = 0; i < 32; i++)
-			{
-				s = new Dino( -100, -100);
-				s.exists = false;
-				_dinos.add(s);
-			}
-			add(_dinos);
-			
 			add(_waters);
 			
 			_bubbles = new FlxGroup();
@@ -261,8 +252,6 @@ package
 			{
 				nextLevel();
 			}
-			
-			*/
 			
 			if (FlxG.keys.justPressed('X'))
 			{
