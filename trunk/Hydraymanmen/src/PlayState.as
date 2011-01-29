@@ -31,6 +31,7 @@ package
 		protected var _playerStart:FlxPoint;
 		protected var _goalPos:FlxPoint;
 		protected var _changingLevel:Boolean = false;
+		protected var _huts:FlxGroup;
 		
 		public static var numHydra:int = 1;
 		protected var _enemies:FlxGroup;
@@ -96,6 +97,9 @@ package
 				_meteors.add(s);
 			}
 			add(_meteors);
+			
+			_huts = new FlxGroup();
+			add(_huts);
 			
 			_tileMap = new FlxTilemap();
 			_tileMap.loadMap(new Map,ImgTiles,32,32);
@@ -502,6 +506,11 @@ package
 			{
 				s.create(x,y,dir);
 			}
+		}
+		
+		protected function addHut(x:Number, y:Number):void
+		{
+			_huts.add(new Hut(x, y));
 		}
 		
 		protected function addWater(x:Number, y:Number, width:Number, height:Number):void

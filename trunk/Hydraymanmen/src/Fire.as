@@ -46,5 +46,10 @@ public class Fire extends FlxSprite
 			kill();
 		}
 	}
+	
+	override public function hitBottom(Contact:FlxObject, Velocity:Number):void 
+	{
+		velocity.x = 0;
+	}
 }
 }
