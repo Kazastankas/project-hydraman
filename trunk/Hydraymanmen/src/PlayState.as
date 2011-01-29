@@ -6,7 +6,7 @@ package
 	{
 		[Embed(source = "data/tribalthing.mp3")] protected var Music:Class;
 		[Embed(source = "data/jump.mp3")] protected var JumpSnd:Class;
-		[Embed(source = "data/icetiles.png")] protected var ImgTiles:Class;
+		[Embed(source = "data/morerocks.png")] protected var ImgTiles:Class;
 		[Embed(source = "data/goal.png")] protected var goalImg:Class;
 		[Embed(source = "data/fire.png")] protected var fireImg:Class;
 		[Embed(source = 'levels/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;

@@ -14,9 +14,12 @@ package levels
 		override public function create():void
 		{
 			var i:int;
-			_playerStart = new FlxPoint(100, 100);
+			_playerStart = new FlxPoint(1100, 100);
 			_goalPos = new FlxPoint(200, 100);
 			super.create();
+			
+			addEnemy(1277, 1480);
+
 			
 			//add the top layer of water
 			for (i = 5; i <= 8; i++ )
