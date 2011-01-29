@@ -407,11 +407,11 @@ package
 		}
 		protected function addMeteor(x:Number, y:Number, dir:Number):void
 		{
-			var y:Meteor;
-			y = (_meteors.getFirstAvail() as Meteor);
-			if (y != null)
+			var s:Meteor;
+			s = (_meteors.getFirstAvail() as Meteor);
+			if (s != null)
 			{
-				y.create(x,y,dir);
+				s.create(x,y,dir);
 			}
 		}
 	}
