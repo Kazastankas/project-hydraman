@@ -4,10 +4,11 @@ import org.flixel.*;
 
 public class Meteor extends FlxSprite
 {
-	[Embed(source = "data/meteor.png")] private var Img:Class;
-	private var explodes:FlxGroup;
+	[Embed(source = "data/meteor.png")] protected var Img:Class;
+	protected var explodes:FlxGroup;
+	protected var meteorFires:FlxGroup;
 	
-	public function Meteor(X:int,Y:int,explodes:FlxGroup)
+	public function Meteor(X:int,Y:int,explodes:FlxGroup, meteorFires:FlxGroup)
 	{
 		super(X, Y);
 		loadGraphic(Img, true, true);
@@ -16,6 +17,7 @@ public class Meteor extends FlxSprite
 		acceleration.y = 420;
 		velocity.y = 20;
 		this.explodes = explodes;
+		this.meteorFires = meteorFires;
 		
 		//animations
 		addAnimation("idle", [0],5);
@@ -28,9 +30,10 @@ public class Meteor extends FlxSprite
 		if (velocity.y < 20)
 		{
 			kill();
-			for (var i:int = 0; i < 10; i++ )
+			for (var i:int = 0; i < 10; i++)
 			{
-				makeExplode(x+Math.random()*50-25, y+Math.random()*50-25);
+				//makeExplode(x+Math.random()*50-25, y+Math.random()*50-25);
+				makeFire(x+Math.random()*50-25, y+Math.random()*50-25);
 			}
 		}
 	}
@@ -43,13 +46,25 @@ public class Meteor extends FlxSprite
 		reset(x, y);
 	}
 	
-	private function makeExplode(x:Number,y:Number):void
+	protected function makeExplode(x:Number,y:Number):void
 	{
 		var s:Explode;
 		s = (explodes.getFirstAvail() as Explode);
 		if (s != null)
 		{
 			s.create(x, y,5);
+		}
+	}
+	
+	protected function makeFire(x:Number,y:Number):void
+	{
+		var s:Fire;
+		s = (meteorFires.getFirstAvail() as Fire);
+		if (s != null)
+		{
+			s.create(x, y, 2);
+			s.velocity.y = -200;
+			s.velocity.x = Math.random() * 120 - 60;
 		}
 	}
 }

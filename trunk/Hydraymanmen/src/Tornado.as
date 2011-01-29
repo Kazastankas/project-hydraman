@@ -4,7 +4,7 @@ import org.flixel.*;
 
 public class Tornado extends FlxSprite
 {
-	[Embed(source = "data/tornado.png")] private var Img:Class;
+	[Embed(source = "data/tornado.png")] protected var Img:Class;
 
 	public function Tornado(X:int,Y:int)
 	{
