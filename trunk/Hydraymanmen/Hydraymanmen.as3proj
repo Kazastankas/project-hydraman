@@ -40,7 +40,7 @@
     <option staticLinkRSL="True" />
     <option additional="-frame start Main" />
     <option compilerConstants="" />
-    <option customSDK="C:\Program Files (x86)\Adobe\Adobe Flash Builder 4 Plug-in\sdks\4.1.0" />
+    <option customSDK="C:\Users\Chris Reid\Desktop\4.1.0" />
   </build>
   <!-- SWC Include Libraries -->
   <includeLibraries>
