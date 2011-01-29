@@ -113,14 +113,22 @@ public class Player extends FlxSprite
 		if (!onScreen())
 			kill();
 		
+		acceleration.x = 0;
+		maxVelocity.x = runSpeed;
+		
+		// dealing with death animation
 		if (animationTime < .05 && health <= 0)
 		{
 			kill();
 		}
+	
+		// all other special animations
 		if (animationTime > 0)
 		{
 			animationTime -= FlxG.elapsed;
 		}
+		
+		// dealing with floating
 		if (floating)
 		{
 			if (onFire)
@@ -157,7 +165,8 @@ public class Player extends FlxSprite
 				velocity.y = -maxVelocity.y;
 			}
 		}
-		aliveCount++;
+		
+		// split processing - not when on fire or moving vertically
 		if (!onFire && !velocity.y)
 		{
 			splitTimer -= FlxG.elapsed;
@@ -176,7 +185,9 @@ public class Player extends FlxSprite
 				animationTime = 1;
 			}
 		}
-		else if (onFire)
+		
+		// fire processing
+		if (onFire)
 		{
 			fireTimer += FlxG.elapsed;
 			fireHair.x = x - width / 2;
@@ -187,22 +198,19 @@ public class Player extends FlxSprite
 			}
 		}
 		
-		acceleration.x = 0;
-		maxVelocity.x = runSpeed;
-		
-		if (FlxG.keys.LEFT)
-		{
-			facing = LEFT;
-			acceleration.x -= drag.x;
-		}
-		else if (FlxG.keys.RIGHT)
-		{
-			facing = RIGHT;
-			acceleration.x += drag.x;
-		}
-		
+		// no movement when performing special animation (death, splitting)
 		if (animationTime <= 0)
 		{
+			if (FlxG.keys.LEFT)
+			{
+				facing = LEFT;
+				acceleration.x -= drag.x;
+			}
+			else if (FlxG.keys.RIGHT)
+			{
+				facing = RIGHT;
+				acceleration.x += drag.x;
+			}
 			if (velocity.y > 0)
 			{
 				play("fall");
