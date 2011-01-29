@@ -5,10 +5,13 @@ package
 	public class PlayState extends FlxState
 	{
 		[Embed(source = "data/tiles.png")] private var ImgTiles:Class;
+		[Embed(source = "data/goal.png")] private var goalImg:Class;
 		[Embed(source = 'data/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		protected var _players:FlxGroup;//the players
 		protected var _center:FlxObject;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
+		protected var _goal:FlxSprite;//the goal
+		protected var _goalCounter:int = 0;//how many players are on the goal
 
 		override public function create():void
 		{
@@ -26,6 +29,10 @@ package
 			bg.fixed = true;
 			add(bg);
 			*/
+			
+			_goal = new FlxSprite(200, 200, goalImg);
+			_goal.fixed = true;
+			add(_goal);
 			
 			var s:FlxSprite;
 			_players = new FlxGroup();
@@ -45,10 +52,18 @@ package
 
 		override public function update():void
 		{
-			
+			_goalCounter = 0;
 			//FlxU.overlap(_players, _floor,canJump);
+			FlxU.overlap(_players, _goal, hitGoal);
+			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_players, _players);
+			
+			//end condition
+			if (_goalCounter > 1)
+			{
+				FlxG.state = new PlayState();
+			}
 			
 			//FlxU.collide(_players, _floor);
 			
@@ -78,6 +93,11 @@ package
 			
 			super.update();
 		
+		}
+		
+		private function hitGoal(a:FlxObject, b:FlxObject):void
+		{
+			_goalCounter += 1;
 		}
 
 	}
