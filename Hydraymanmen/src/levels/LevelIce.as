@@ -38,6 +38,7 @@ package levels
 		
 		override protected function resetLevel():void
 		{
+			super.resetLevel();
 			trace("Reset LevelIce");
 			FlxG.state = new LevelIce();
 		}

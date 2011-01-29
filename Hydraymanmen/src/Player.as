@@ -39,7 +39,7 @@ public class Player extends FlxSprite
 		maxVelocity.x = landVelocity.x;
 		maxVelocity.y = landVelocity.y;
 		health = 200;
-		splitTimer = Math.random() * 3 + 2;
+		setSplitTimer();
 		offset.x = 8;
 		offset.y = 6;
 		width = 8;
@@ -60,6 +60,13 @@ public class Player extends FlxSprite
 		addAnimation("grow", [0, 1, 2, 3],8,false);
 		play("idle");
 		
+	}
+	
+	protected function setSplitTimer():void
+	{
+		splitTimer = Math.random() * 3 + 2;
+		splitTimer *= 0.2 * Math.sqrt(PlayState.numHydra + 1);
+		trace("splitTimer: " + splitTimer);
 	}
 	
 	public function fire_time():Number
@@ -103,7 +110,7 @@ public class Player extends FlxSprite
 	{
 		velocity.x = velocity.y = 0;
 		health = 200;
-		splitTimer = Math.random() * 3 + 2;
+		setSplitTimer();
 		fireTimer = 0;
 		onFire = false;
 		diseaseTimer = 0;

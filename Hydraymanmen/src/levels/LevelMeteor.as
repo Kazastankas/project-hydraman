@@ -15,13 +15,16 @@ package levels
 		protected var part:int = 0;
 		protected var spawnTarget:FlxObject;
 		protected var bolt:Lightning;
+		protected var enemySpawnTarget:FlxObject;
+		protected var enemyLightningCount:int = -1;
+		protected var spawnedFirstEnemy:Boolean = false;
 		
 		override public function create():void
 		{
 			trace("Creating meteor level");
 			
 			var i:int;
-			_playerStart = new FlxPoint(69, 1539);
+			_playerStart = new FlxPoint(100, 1539);
 			_goalPos = new FlxPoint(200, 100);
 			super.create();
 			addEnemy(1272, 1412);
@@ -32,6 +35,7 @@ package levels
 			
 			_resetFlag = false;
 			spawnTarget = new FlxObject(_playerStart.x, _playerStart.y);
+			enemySpawnTarget = new FlxObject(300, 1539);
 			//activatePlayers(PlayState.numHydra);
 		}
 		
@@ -39,7 +43,7 @@ package levels
 		{
 			super.update();
 			
-			
+			// lightning for either you or enemy
 			if (_updateCount >= 30 && _updateCount < 60)
 			{
 				_resetFlag = false;
@@ -55,10 +59,30 @@ package levels
 				if (firstHydra)
 				{
 					firstHydra.create(_playerStart.x, _playerStart.y);
-					//_resetFlag = true;
+					_resetFlag = true;
 				}
 			}
 			
+			// initiate lightning enemy spawn
+			if ((_camMan.x > 150) && (part == 0) && (enemyLightningCount == -1) && !spawnedFirstEnemy)
+			{
+				enemyLightningCount = 30;
+			}
+			if (enemyLightningCount > 0)
+			{
+				bolt = add(new Lightning()) as Lightning;
+				var enemyBoltPoint:FlxPoint = enemySpawnTarget.getScreenXY();
+				bolt.SetTarget(new FlxPoint(enemyBoltPoint.x, enemyBoltPoint.y - 400));
+				bolt.SetOrigin(enemyBoltPoint);
+				bolt.strike(enemyBoltPoint.x, enemyBoltPoint.y - 400);
+				enemyLightningCount--;
+			}
+			if (enemyLightningCount == 0)
+			{
+				super._enemies.getFirstAvail().reset(enemySpawnTarget.x, enemySpawnTarget.y);
+				enemyLightningCount = -1;
+				spawnedFirstEnemy = true;
+			}
 			
 			if (((_camMan.x > 850 && _camMan.x <930) && (_camMan.y > 860 && _camMan.y < 1100)) && (part == 0))
 			{
@@ -100,6 +124,7 @@ package levels
 		
 		override protected function resetLevel():void
 		{
+			super.resetLevel();
 			FlxG.state = new LevelMeteor();
 		}
 		
