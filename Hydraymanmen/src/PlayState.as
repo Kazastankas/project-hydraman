@@ -167,7 +167,7 @@ package
 			_camMan = new CameraMan(_players);
 			add(_camMan);
 			
-			FlxG.follow(_camMan, 1);
+			FlxG.follow(_camMan, 9);
 			
 			_cavemen = new FlxGroup();
 			for(i = 0; i < 32; i++)
@@ -181,7 +181,7 @@ package
 			_block = new Block(50, 50, 5);
 			_players.add(_block);
 			
-			FlxG.followAdjust(.1, .1);
+			FlxG.followAdjust(0, 0);
 			FlxG.followBounds(-32, -32, _tileMap.width+32,_tileMap.height+32);
 		}
 		
@@ -251,6 +251,11 @@ package
 			if (_goalCounter > 1)
 			{
 				nextLevel();
+			}
+			
+			if (FlxG.keys.justPressed('L'))
+			{
+				trace("X: " + FlxG.mouse.x + " Y: " + FlxG.mouse.y);
 			}
 			
 			if (FlxG.keys.justPressed('X'))
