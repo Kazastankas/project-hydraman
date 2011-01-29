@@ -14,7 +14,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="..\flixel\flixel" />
+    <class path="flixel" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -27,6 +27,7 @@
     <option optimize="True" />
     <option showActionScriptWarnings="True" />
     <option showBindingWarnings="True" />
+    <option showInvalidCSS="True" />
     <option showDeprecationWarnings="True" />
     <option showUnusedTypeSelectorWarnings="True" />
     <option strict="True" />
@@ -39,7 +40,7 @@
     <option staticLinkRSL="True" />
     <option additional="-frame start Main" />
     <option compilerConstants="" />
-    <option customSDK="" />
+    <option customSDK="C:\Program Files (x86)\Adobe\Adobe Flash Builder 4 Plug-in\sdks\4.1.0" />
   </build>
   <!-- SWC Include Libraries -->
   <includeLibraries>
