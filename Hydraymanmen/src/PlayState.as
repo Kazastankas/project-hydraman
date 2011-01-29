@@ -4,11 +4,11 @@ package
 
 	public class PlayState extends FlxState
 	{
-		[Embed(source = "data/tribalthing.mp3")] private var Music:Class;
-		[Embed(source = "data/jump.mp3")] private var JumpSnd:Class;
-		[Embed(source = "data/icetiles.png")] private var ImgTiles:Class;
-		[Embed(source = "data/goal.png")] private var goalImg:Class;
-		[Embed(source = "data/fire.png")] private var fireImg:Class;
+		[Embed(source = "data/tribalthing.mp3")] protected var Music:Class;
+		[Embed(source = "data/jump.mp3")] protected var JumpSnd:Class;
+		[Embed(source = "data/icetiles.png")] protected var ImgTiles:Class;
+		[Embed(source = "data/goal.png")] protected var goalImg:Class;
+		[Embed(source = "data/fire.png")] protected var fireImg:Class;
 		[Embed(source = 'levels/map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		protected var _players:FlxGroup;//the players
 		protected var _camMan:CameraMan;//what the camera centers on
@@ -18,6 +18,8 @@ package
 		protected var _goalCounter:int = 0;//how many players are on the goal
 		protected var _explodes:FlxGroup;
 		protected var _meteors:FlxGroup;
+		protected var _meteor_fires:FlxGroup;
+		protected var _cosmetic_fires:FlxGroup;
 		protected var _changes:Array;
 		protected var _changeIndex:int;
 		protected var _timer:Number=0;
@@ -25,7 +27,6 @@ package
 		public static var numHydra:int = 1;
 		protected var _enemies:FlxGroup;
 		protected var _tornados:FlxGroup;
-		protected var _fires:FlxGroup;
 		
 		protected var _block:Block;
 
@@ -65,10 +66,19 @@ package
 			}
 			add(_explodes);
 			
+			_meteor_fires = new FlxGroup();
+			for (i = 0; i < 64; i++)
+			{
+				s = new Fire(-100, -100, 5, true);
+				s.exists = false;
+				_meteor_fires.add(s);
+			}
+			add(_meteor_fires);
+			
 			_meteors = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
-				s = new Meteor( -100, -100,_explodes);
+				s = new Meteor( -100, -100,_explodes, _meteor_fires);
 				s.exists = false;
 				_meteors.add(s);
 			}
@@ -85,27 +95,22 @@ package
 			add(bg);
 			*/
 			
-			_goal = new FlxSprite(200, 200, goalImg);
+			_goal = new FlxSprite(200, 100, goalImg);
 			_goal.fixed = true;
 			add(_goal);
+			
+			_cosmetic_fires = new FlxGroup();
 			
 			_players = new FlxGroup();
 			for(i = 0; i < 64; i++)
 			{
-				s = new Player( 100, 100, _players);
-				
+				s = new Player(-100, -100, _players, _cosmetic_fires);
 				if (i >= PlayState.numHydra)
 					s.exists = false;
-				
 				_players.add(s);
 			}
 			add(_players);
-			
-			_fires = new FlxGroup();
-			s = new Fire(150, 200);
-			s.fixed = true;
-			_fires.add(s);
-			add(_fires);
+			add(_cosmetic_fires);
 			
 			_enemies = new FlxGroup();
 			for(i = 0; i < 64; i++)
@@ -142,7 +147,7 @@ package
 			_goalCounter = 0;
 			//FlxU.overlap(_players, _floor,canJump);
 			FlxU.overlap(_players, _goal, hitGoal);
-			FlxU.overlap(_players, _fires, setOnFire);
+			FlxU.overlap(_players, _meteor_fires, setOnFire);
 			FlxU.overlap(_players, _players, playerSetOnFire);
 			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _tileMap);
@@ -151,6 +156,7 @@ package
 			FlxU.overlap(_players, _tornados, blowAway);
 			
 			FlxU.collide(_meteors, _tileMap);
+			FlxU.collide(_meteor_fires, _tileMap);
 			
 			FlxU.overlap(_players, _explodes, playerHit);
 			FlxU.overlap(_players, _enemies, playerHit);
@@ -199,6 +205,15 @@ package
 					x.create(100,0);
 				}
 			}
+			if (FlxG.keys.justPressed('F'))
+			{
+				var y:Meteor;
+				y = (_meteors.getFirstAvail() as Meteor);
+				if (y != null)
+				{
+					y.create(100,100,Math.random()*50-25);
+				}
+			}
 			/*
 			if (FlxG.keys.justPressed('D'))
 			{
@@ -215,13 +230,13 @@ package
 			_goalCounter += 1;
 		}
 		
-		private function blowAway(a:FlxObject, b:FlxObject):void
+		protected function blowAway(a:FlxObject, b:FlxObject):void
 		{
 			a.velocity.x += a.velocity.x + Math.random() * 50;
 			a.velocity.y = Math.random() * a.maxVelocity.y * 2 - a.maxVelocity.y;
 		}
 		
-		private function setOnFire(a:FlxObject, b:FlxObject):void
+		protected function setOnFire(a:FlxObject, b:FlxObject):void
 		{
 			if (a is Player)
 			{
@@ -233,7 +248,7 @@ package
 			}
 		}
 		
-		private function playerSetOnFire(a:FlxObject, b:FlxObject):void
+		protected function playerSetOnFire(a:FlxObject, b:FlxObject):void
 		{
 			if (a is Player && b is Player)
 			{

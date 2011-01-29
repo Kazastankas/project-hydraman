@@ -4,23 +4,27 @@ import org.flixel.*;
 
 public class Player extends FlxSprite
 {
-	[Embed(source = "data/split4.mp3")] private var SplitSnd:Class;
-	[Embed(source = "data/hydra.png")] private var Img:Class;
-	private var runSpeed:Number = 100;
-	private var splitTimer:Number = 0;
-	private var fireTimer:Number = 0;
-	private var onFire:Boolean;
-	private var players:FlxGroup;
+	[Embed(source = "data/split4.mp3")] protected var SplitSnd:Class;
+	[Embed(source = "data/hydra.png")] protected var Img:Class;
+	[Embed(source = "data/fire.png")] protected var FireImg:Class;
+	protected var runSpeed:Number = 100;
+	protected var splitTimer:Number = 0;
+	protected var fireTimer:Number = 0;
+	protected var onFire:Boolean;
+	protected var players:FlxGroup;
+	protected var fire_hairs:FlxGroup;
+	protected var fireHair:FlxSprite;
 	protected var aliveCount:int = 0;
 	
 	public var pushing:Boolean;
-	
-	public function Player(X:int,Y:int,players:FlxGroup)
+
+	public function Player(X:int,Y:int,players:FlxGroup,fire_hairs:FlxGroup)
 	{
 		super(X, Y);
 		loadGraphic(Img, true, true);
 		
 		this.players = players;
+		this.fire_hairs = fire_hairs;
 
 		drag.x = runSpeed * 8;
 		drag.y = runSpeed * 8;
@@ -54,6 +58,11 @@ public class Player extends FlxSprite
 	
 	public function ignite():void
 	{
+		if (!onFire)
+		{
+			fireHair = new Fire(x, y - height / 2, 5, false);
+			fire_hairs.add(fireHair);
+		}
 		onFire = true;
 		color = 0xef3528;
 	}
@@ -69,7 +78,7 @@ public class Player extends FlxSprite
 		reset(x, y);
 	}
 	
-	private function makePlayer(x:Number,y:Number):void
+	protected function makePlayer(x:Number,y:Number):void
 	{
 		if (pushing)
 			return;
@@ -86,7 +95,7 @@ public class Player extends FlxSprite
 	{
 		aliveCount++;
 		splitTimer -= FlxG.elapsed;
-		if (!onFire)
+		if (!onFire && !velocity.y)
 		{
 			if (splitTimer < 0)
 			{
@@ -100,9 +109,11 @@ public class Player extends FlxSprite
 				play("split");
 			}
 		}
-		else
+		else if (onFire)
 		{
 			fireTimer += FlxG.elapsed;
+			fireHair.x = x;
+			fireHair.y = y - height / 2;
 			if (fireTimer > 5)
 			{
 				kill();

@@ -4,10 +4,10 @@ import org.flixel.*;
 
 public class Explode extends FlxSprite
 {
-	[Embed(source = "data/meteor.png")] private var Img:Class;
-	private var timer:Number = 0;
-	private var likeliness:Number = 0;
-	private var explodes:FlxGroup;
+	[Embed(source = "data/meteor.png")] protected var Img:Class;
+	protected var timer:Number = 0;
+	protected var likeliness:Number = 0;
+	protected var explodes:FlxGroup;
 	
 	public function Explode(X:int,Y:int,likely:Number,explodes:FlxGroup)
 	{
@@ -49,7 +49,7 @@ public class Explode extends FlxSprite
 		reset(x, y);
 	}
 	
-	private function makeExplode(x:Number,y:Number):void
+	protected function makeExplode(x:Number,y:Number):void
 	{
 		var s:Explode;
 		s = (explodes.getFirstAvail() as Explode);

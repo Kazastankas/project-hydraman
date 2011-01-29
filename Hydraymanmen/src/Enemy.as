@@ -4,11 +4,11 @@ package
 	
 	public class Enemy extends FlxSprite
 	{
-		[Embed(source = "data/doom.png")] private var myImage:Class;
+		[Embed(source = "data/doom.png")] protected var myImage:Class;
 		public var AItimer:Number;
 		public var AImode:int;
 		public var moving:uint;
-		private var runSpeed:Number = 50;
+		protected var runSpeed:Number = 50;
 		
 		public function Enemy(X:Number, Y:Number)
 		{
