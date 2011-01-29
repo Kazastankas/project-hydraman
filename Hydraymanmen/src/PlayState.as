@@ -41,6 +41,11 @@ package
 			var i:int;
 			var s:FlxSprite;
 			
+			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
+			bg.scrollFactor.x = bg.scrollFactor.y = 0;
+			bg.fixed = true;
+			add(bg);
+			
 			_tornados = new FlxGroup();
 			for(i = 0; i < 64; i++)
 			{
@@ -92,12 +97,6 @@ package
 			_tileMap.loadMap(new Map,ImgTiles,32,32);
 			_tileMap.follow();
 			add(_tileMap);
-			/*
-			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
-			bg.scrollFactor.x = bg.scrollFactor.y = 0;
-			bg.fixed = true;
-			add(bg);
-			*/
 			
 			_goal = new FlxSprite(_goalPos.x,_goalPos.y, goalImg);
 			_goal.fixed = true;

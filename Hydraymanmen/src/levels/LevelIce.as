@@ -11,6 +11,7 @@ package levels
 	public class LevelIce extends PlayState 
 	{
 		[Embed(source = 'map2.txt', mimeType = "application/octet-stream")] private var Map:Class;
+		[Embed(source = "data/cambrian-bg.png")] protected var bgImg:Class;
 		
 		override public function create():void
 		{
