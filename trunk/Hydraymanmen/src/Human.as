@@ -105,6 +105,15 @@ package
 				}
 			}
 			
+			if (target.x - x )
+			{
+				moving = 2;
+			}
+			else if (target.x > x)
+			{
+				moving = 1;
+			}
+			
 			if (animationTime <= 0)
 			{
 				if(velocity.y != 0)
