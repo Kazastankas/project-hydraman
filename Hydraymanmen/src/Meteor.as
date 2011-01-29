@@ -4,7 +4,8 @@ import org.flixel.*;
 
 public class Meteor extends FlxSprite
 {
-	[Embed(source = "data/meteor.png")] protected var Img:Class;
+	[Embed(source = "data/Explosion.mp3")] protected var ExpSnd:Class;
+	[Embed(source = "data/hydra-meteor.png")] protected var Img:Class;
 	protected var explodes:FlxGroup;
 	protected var meteorFires:FlxGroup;
 	
@@ -29,10 +30,11 @@ public class Meteor extends FlxSprite
 		super.update();
 		if (velocity.y < 20)
 		{
+			FlxG.play(ExpSnd);
 			kill();
 			for (var i:int = 0; i < 10; i++)
 			{
-				//makeExplode(x+Math.random()*50-25, y+Math.random()*50-25);
+				makeExplode(x+Math.random()*50-25, y+Math.random()*50-25);
 				makeFire(x+Math.random()*50-25, y+Math.random()*50-25);
 			}
 		}
@@ -52,7 +54,7 @@ public class Meteor extends FlxSprite
 		s = (explodes.getFirstAvail() as Explode);
 		if (s != null)
 		{
-			s.create(x, y,5);
+			s.create(x, y,4);
 		}
 	}
 	

@@ -20,6 +20,7 @@ package
 		protected var _meteors:FlxGroup;
 		protected var _meteor_fires:FlxGroup;
 		protected var _cosmetic_fires:FlxGroup;
+		protected var _waters:FlxGroup;
 		protected var _changes:Array;
 		protected var _changeIndex:int;
 		protected var _timer:Number=0;
@@ -33,7 +34,7 @@ package
 		override public function create():void
 		{
 			FlxG.playMusic(Music);
-			FlxG.mouse.hide();
+			FlxG.mouse.show();
 			var i:int;
 			var s:FlxSprite;
 			
@@ -50,11 +51,11 @@ package
 			_changes = new Array();
 			for (i = 0; i < 100; i++ )
 			{
-				_changes.push(null);
+				_changes.push(new Array());
 			}
-			_changes[1] = new Change(5, 10, 2);
-			_changes[2] = new Change(5, 11, 2);
-			_changes[3] = new Change(5, 9, 2);
+			//_changes[1] = new Change(5, 10, 0);
+			//_changes[2] = new Change(5, 11, 0);
+			//_changes[3].push(new Change(5, 9, 0));
 			_changeIndex = 0;
 			
 			_explodes = new FlxGroup();
@@ -99,12 +100,22 @@ package
 			_goal.fixed = true;
 			add(_goal);
 			
+			_waters = new FlxGroup();
+			for (i = 5; i <= 8; i++ )
+			{
+				for (var j:int = 7; j <= 8; j++ )
+				{
+					_waters.add(new Water(i, j));
+				}
+			}
+			add(_waters);
+			
 			_cosmetic_fires = new FlxGroup();
 			
 			_players = new FlxGroup();
 			for(i = 0; i < 64; i++)
 			{
-				s = new Player(-100, -100, _players, _cosmetic_fires);
+				s = new Player(100, 100, _players, _cosmetic_fires);
 				if (i >= PlayState.numHydra)
 					s.exists = false;
 				_players.add(s);
@@ -138,14 +149,23 @@ package
 			if (_changeIndex < int(_timer))
 			{
 				_changeIndex = _timer;
-				if (_changes[_changeIndex] != null)
+				if (_changes[_changeIndex].length > 0)
 				{
-					_tileMap.setTile(_changes[_changeIndex].pos.x, _changes[_changeIndex].pos.y, _changes[_changeIndex].tile, true);
-					FlxG.log("changes");
+					for (var i:int = 0; i < _changes[_changeIndex].length; i++ )
+					{
+						var c:Change = _changes[_changeIndex][i];
+						if (c.tile == 0)
+						{
+							FlxG.quake.start();
+						}
+						_tileMap.setTile(c.pos.x, c.pos.y, c.tile, true);
+						FlxG.log("changes");
+					}
 				}
 			}
 			_goalCounter = 0;
 			//FlxU.overlap(_players, _floor,canJump);
+			FlxU.overlap(_players, _waters, playerFloat);
 			FlxU.overlap(_players, _goal, hitGoal);
 			FlxU.overlap(_players, _meteor_fires, setOnFire);
 			FlxU.overlap(_players, _players, playerSetOnFire);
@@ -154,11 +174,14 @@ package
 			FlxU.collide(_enemies, _tileMap);
 			FlxU.collide(_players, _players);
 			FlxU.overlap(_players, _tornados, blowAway);
+			FlxU.overlap(_meteor_fires, _tornados, blowAway);
+			
+			FlxU.collide(_waters, _meteor_fires);
 			
 			FlxU.collide(_meteors, _tileMap);
 			FlxU.collide(_meteor_fires, _tileMap);
 			
-			FlxU.overlap(_players, _explodes, playerHit);
+			//FlxU.overlap(_players, _explodes, playerHit);
 			FlxU.overlap(_players, _enemies, playerHit);
 			
 			//end condition
@@ -187,13 +210,18 @@ package
 				FlxG.play(JumpSnd);
 			}
 			
+			if (FlxG.keys.justPressed('A'))
+			{
+				_changes[int(_timer + 1)].push(new Change(Math.floor(FlxG.mouse.x/32), Math.floor(FlxG.mouse.y/32), 0));
+			}
+			
 			if (FlxG.keys.justPressed('S'))
 			{
 				var s:Tornado;
 				s = (_tornados.getFirstAvail() as Tornado);
 				if (s != null)
 				{
-					s.create(100,100,Math.random()*50-25);
+					s.create(FlxG.mouse.x,FlxG.mouse.y,Math.random()*50-25);
 				}
 			}
 			if (FlxG.keys.justPressed('D'))
@@ -202,7 +230,7 @@ package
 				x = (_enemies.getFirstAvail() as Enemy);
 				if (x != null)
 				{
-					x.create(100,0);
+					x.create(FlxG.mouse.x,FlxG.mouse.y);
 				}
 			}
 			if (FlxG.keys.justPressed('F'))
@@ -211,7 +239,7 @@ package
 				y = (_meteors.getFirstAvail() as Meteor);
 				if (y != null)
 				{
-					y.create(100,100,Math.random()*50-25);
+					y.create(FlxG.mouse.x,FlxG.mouse.y,Math.random()*50-25);
 				}
 			}
 			/*
@@ -257,6 +285,14 @@ package
 					Player(a).ignite();
 					Player(b).ignite();
 				}
+			}
+		}
+		
+		protected function playerFloat(a:FlxObject, b:FlxObject):void
+		{
+			if (!Player(a).floating)
+			{
+				Player(a).floating = true;
 			}
 		}
 		

@@ -15,6 +15,8 @@ public class Player extends FlxSprite
 	protected var fire_hairs:FlxGroup;
 	protected var fireHair:FlxSprite;
 	protected var aliveCount:int = 0;
+	public var floating:Boolean = false;
+	protected var landVelocity:FlxPoint;
 	
 	public var pushing:Boolean;
 
@@ -29,8 +31,9 @@ public class Player extends FlxSprite
 		drag.x = runSpeed * 8;
 		drag.y = runSpeed * 8;
 		acceleration.y = 420;
-		maxVelocity.x = runSpeed;
-		maxVelocity.y = 200;
+		landVelocity = new FlxPoint(runSpeed,270+Math.random()*20);
+		maxVelocity.x = landVelocity.x;
+		maxVelocity.y = landVelocity.y;
 		health = 200;
 		splitTimer = Math.random() * 3 + 2;
 		offset.x = 8;
@@ -66,7 +69,7 @@ public class Player extends FlxSprite
 		onFire = true;
 		color = 0xef3528;
 	}
-		
+	
 	public function create(x:Number,y:Number):void
 	{
 		velocity.x = velocity.y = 0;
@@ -93,6 +96,29 @@ public class Player extends FlxSprite
 	
 	override public function update():void
 	{
+		if (floating)
+		{
+			fireTimer = 0;
+			onFire = false;
+			color = 0xFFFFFF;
+			maxVelocity.x = 100;
+			maxVelocity.y = 100;
+			if (FlxG.keys.UP)
+			{
+				acceleration.y -= drag.x;
+			}
+			else if (FlxG.keys.DOWN)
+			{
+				acceleration.y += drag.x;
+			}
+			floating = false;
+		}
+		else
+		{
+			acceleration.y = 420;
+			maxVelocity.x = landVelocity.x;
+			maxVelocity.y = landVelocity.y;
+		}
 		aliveCount++;
 		splitTimer -= FlxG.elapsed;
 		if (!onFire && !velocity.y)

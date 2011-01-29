@@ -14,10 +14,12 @@ public class Fire extends FlxSprite
 		super(X, Y);
 		loadGraphic(Img, true, true);
 		
+		maxVelocity.x = maxVelocity.y = 200;
+		
 		this.falls = falls;
 		lifeTime = time;
 		
-		addAnimation("idle", [0,1,2], 5);
+		addAnimation("idle", [0,1,2], Math.random()*5+5);
 		play("idle");
 		
 	}

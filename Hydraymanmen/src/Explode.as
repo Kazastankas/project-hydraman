@@ -4,7 +4,7 @@ import org.flixel.*;
 
 public class Explode extends FlxSprite
 {
-	[Embed(source = "data/meteor.png")] protected var Img:Class;
+	[Embed(source = "data/hydra-explosion.png")] protected var Img:Class;
 	protected var timer:Number = 0;
 	protected var likeliness:Number = 0;
 	protected var explodes:FlxGroup;
@@ -12,15 +12,15 @@ public class Explode extends FlxSprite
 	public function Explode(X:int,Y:int,likely:Number,explodes:FlxGroup)
 	{
 		super(X, Y);
-		loadGraphic(Img, true, true);
+		loadGraphic(Img, true, true,33,31);
 
 		maxVelocity.x = maxVelocity.y = 200;
 		likeliness = likely;
-		timer = Math.random() * .5;
+		timer = Math.random() * .20;
 		this.explodes = explodes;
 		
 		//animations
-		addAnimation("idle", [0],5);
+		addAnimation("idle", [0,1,2,3,4,5],10);
 		play("idle");
 	}
 
@@ -45,7 +45,7 @@ public class Explode extends FlxSprite
 		likeliness = likely;
 		velocity.x = velocity.y = 0;
 		health = 200;
-		timer = Math.random() * .5;
+		timer = Math.random() * .20;
 		reset(x, y);
 	}
 	
