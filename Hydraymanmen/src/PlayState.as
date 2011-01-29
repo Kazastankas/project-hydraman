@@ -389,11 +389,11 @@ package
 		}
 		protected function addEnemy(x:Number, y:Number):void
 		{
-			var x:Enemy;
-			x = (_enemies.getFirstAvail() as Enemy);
-			if (x != null)
+			var s:Enemy;
+			s = (_enemies.getFirstAvail() as Enemy);
+			if (s != null)
 			{
-				x.create(x,y);
+				s.create(x,y);
 			}
 		}
 		protected function addDino(x:Number, y:Number):void
