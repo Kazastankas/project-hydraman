@@ -12,7 +12,7 @@ package
 		public var AImode:int;
 		public var moving:uint;
 		protected var runSpeed:Number = 50;
-		private var animationTime:Number;
+		private var animationTime:Number = 0;
 		protected var fires:FlxGroup;
 		
 		public function Human(X:Number, Y:Number,fires:FlxGroup)
@@ -22,15 +22,13 @@ package
 			addAnimation("idle", [0,1,2,3], 5, true);
 			addAnimation("go", [0, 1, 2, 3], 10, true);
 			addAnimation("fire", [4], 20, false);
-			addAnimation("jump", [4, 5, 6, 7], 20, false);
+			addAnimation("jump", [4, 5, 6, 7], 20, true);
 			play("idle");
 			drag.x = runSpeed * 8;
 			drag.y = runSpeed * 8;
 			acceleration.y = 300;
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = 200;
-			offset.y = 10;
-			height -= 10;
 			AImode = 1;
 			fireTimer = 2;
 			AItimer = 2;
@@ -64,7 +62,7 @@ package
 				{
 					fireTimer = Math.random() * 1+.5;
 					play("fire");
-					makeFire(x,y,velocity.x*3+Math.random()*20-10);
+					makeFire(x,y-30,velocity.x*3+Math.random()*20-10);
 					animationTime = .5;
 					velocity.y = -50;
 				}
