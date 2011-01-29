@@ -87,10 +87,7 @@ public class Player extends FlxSprite
 	}
 	
 	protected function makePlayer(x:Number,y:Number):void
-	{
-		if (pushing)
-			return;
-			
+	{			
 		var s:Player;
 		s = (players.getFirstAvail() as Player);
 		if (s != null)
@@ -101,6 +98,9 @@ public class Player extends FlxSprite
 	
 	override public function update():void
 	{
+		if (!onScreen())
+			kill();
+			
 		if (animationTime > 0)
 		{
 			animationTime -= FlxG.elapsed;
@@ -143,11 +143,13 @@ public class Player extends FlxSprite
 		if (!onFire)
 		{
 			if (splitTimer < 0)
-			{
-				makePlayer(x - width / 2, y);
-				makePlayer(x + width / 2, y);
-				kill();
-				FlxG.play(SplitSnd);
+			{	if (!pushing)
+				{
+					makePlayer(x - width / 2, y);
+					makePlayer(x + width / 2, y);
+					kill();
+					FlxG.play(SplitSnd);
+				}
 			}
 			else if (splitTimer < .5)
 			{

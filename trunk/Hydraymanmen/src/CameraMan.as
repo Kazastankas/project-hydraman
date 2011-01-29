@@ -28,7 +28,7 @@ package
 		override public function update():void
 		{
 			calcCenter();
-			killOutliers();
+			//killOutliers();
 			handleInput();
 		}
 		
