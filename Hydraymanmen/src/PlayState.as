@@ -18,6 +18,8 @@ package
 		protected var _goalCounter:int = 0;//how many players are on the goal
 		protected var _explodes:FlxGroup;
 		protected var _meteors:FlxGroup;
+		
+		public static var numHydra:int = 1;
 		protected var _enemies:FlxGroup;
 		protected var _tornados:FlxGroup;
 		protected var _fires:FlxGroup;
@@ -74,11 +76,13 @@ package
 			_players = new FlxGroup();
 			for(i = 0; i < 64; i++)
 			{
-				s = new Player( -100, -100,_players);
-				s.exists = false;
+				s = new Player( 100, 100, _players);
+				
+				if (i >= PlayState.numHydra)
+					s.exists = false;
+				
 				_players.add(s);
 			}
-			_players.add(new Player( 100, 100,_players));
 			add(_players);
 			
 			_fires = new FlxGroup();
@@ -172,11 +176,12 @@ package
 				makeShips(1);
 			}
 			*/
+			checkForExtinction();
 			
 			super.update();
 		}
 		
-		private function hitGoal(a:FlxObject, b:FlxObject):void
+		protected function hitGoal(a:FlxObject, b:FlxObject):void
 		{
 			_goalCounter += 1;
 		}
@@ -232,10 +237,30 @@ package
 			return avgPos;
 		}
 		
-		private function playerHit(a:FlxObject, b:FlxObject):void
+		protected function playerHit(a:FlxObject, b:FlxObject):void
 		{
 			a.kill();
 		}
+		protected function resetLevel():void
+		{
+			FlxG.state = new PlayState();
+		}
+		
+		protected function checkForExtinction():void
+		{
+			var numAlive:int = 0;
+			for each(var member:FlxObject in _players.members)
+			{
+				var player:Player = member as Player;
+				if (player && !player.dead && player.active && player.exists)
+				{
+					numAlive++;
+				}
+			}
+			if (numAlive == 0)
+				resetLevel();
+		}
+		
 	}
 }
 

@@ -13,18 +13,23 @@ package
 	public class CameraMan extends FlxObject 
 	{
 		protected var group:FlxGroup;
-		public var killDist:Number = 0.75;
+		public var killDist:Number = 1.5;
+		public var averagePos:FlxPoint;
+		public var offset:FlxPoint;
+		public var maxOffsetX:Number = 0.5;
+		public var maxOffsetY:Number = 0.5;
 		
 		public function CameraMan(group:FlxGroup) 
 		{
 			this.group = group;
+			offset = new FlxPoint(0, 0);
 		}
 		
 		override public function update():void
 		{
 			calcCenter();
 			killOutliers();
-			
+			handleInput();
 		}
 		
 		protected function calcCenter():void
@@ -43,8 +48,9 @@ package
 			}
 			avgPos.x /= numExists;
 			avgPos.y /= numExists;
-			this.x = avgPos.x;
-			this.y = avgPos.y;
+			this.averagePos = avgPos;
+			this.x = avgPos.x + (offset.x * maxOffsetX * FlxG.width);
+			this.y = avgPos.y + (offset.y * maxOffsetY * FlxG.height);
 		}
 		
 		protected function killOutliers():void
@@ -57,9 +63,33 @@ package
 					var xdiff:Number = Math.abs(player.x - this.x);
 					var ydiff:Number = Math.abs(player.y - this.y);
 					if (xdiff > killDist * FlxG.width || ydiff > killDist * FlxG.height)
+					{
+						trace("Kill player");
 						player.kill();
+					}
 				}
 			}
+		}
+		
+		protected function handleInput():void
+		{
+			if (FlxG.keys.W) {
+				offset.y += 0.1 * (-maxOffsetY - offset.y);
+			}
+			else if (FlxG.keys.S) {
+				offset.y += 0.1 * (maxOffsetY - offset.y);
+			}
+			else
+				offset.y *= 0.9;
+				
+			if (FlxG.keys.A) {
+				offset.x += 0.1 * (-maxOffsetX - offset.x);
+			}
+			else if (FlxG.keys.D) {
+				offset.x += 0.1 * (maxOffsetX - offset.x);
+			}
+			else
+				offset.x *= 0.9;
 		}
 	}
 
