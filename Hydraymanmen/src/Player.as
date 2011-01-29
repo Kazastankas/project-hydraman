@@ -99,10 +99,13 @@ public class Player extends FlxSprite
 	
 	public function die():void
 	{
-		splitTimer = 5;
-		animationTime = .4;
-		play("die");
-		health = 0;
+		if (health > 0)
+		{
+			splitTimer = 5;
+			animationTime = .5;
+			play("die");
+			health = 0;
+		}
 	}
 	
 	override public function update():void
