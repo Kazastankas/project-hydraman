@@ -21,6 +21,7 @@ package
 		protected var _meteors:FlxGroup;
 		protected var _meteor_fires:FlxGroup;
 		protected var _cosmetic_fires:FlxGroup;
+		protected var _diseases:FlxGroup;
 		protected var _waters:FlxGroup;
 		protected var _bubbles:FlxGroup;
 		protected var _dinos:FlxGroup;
@@ -79,6 +80,15 @@ package
 				_explodes.add(s);
 			}
 			add(_explodes);
+			
+			_diseases = new FlxGroup();
+			for (i = 0; i < 64; i++)
+			{
+				s = new Disease(-100, -100);
+				s.exists = false;
+				_diseases.add(s);
+			}
+			add(_diseases);
 			
 			_meteor_fires = new FlxGroup();
 			for (i = 0; i < 64; i++)
@@ -177,7 +187,7 @@ package
 			
 			FlxG.follow(_camMan, 1);
 			_block = new Block(50, 50, 5);
-			_players.add(_block);
+			//_players.add(_block);
 			
 			FlxG.followAdjust(.1, .1);
 			FlxG.followBounds(-32, -32, _tileMap.width+32,_tileMap.height+32);
@@ -222,12 +232,12 @@ package
 				}
 			}
 			_goalCounter = 0;
-			//FlxU.overlap(_players, _floor,canJump);
 			FlxU.overlap(_waters, _meteor_fires, douseFire);
 			FlxU.overlap(_players, _waters, playerFloat);
 			FlxU.overlap(_players, _goal, hitGoal);
+			FlxU.overlap(_players, _diseases, setOnDisease);
 			FlxU.overlap(_players, _meteor_fires, setOnFire);
-			FlxU.overlap(_players, _players, playerSetOnFire);
+			FlxU.overlap(_players, _players, playerContagion);
 			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_enemies, _tileMap);
@@ -240,7 +250,7 @@ package
 			FlxU.collide(_meteors, _tileMap);
 			FlxU.collide(_meteor_fires, _tileMap);
 			
-			//FlxU.overlap(_players, _explodes, playerHit);
+			FlxU.overlap(_players, _explodes, playerHit);
 			FlxU.overlap(_players, _enemies, playerHit);
 			FlxU.overlap(_players, _dinos, playerHit);
 			FlxU.overlap(_players, _cavemen, playerHit);
@@ -250,21 +260,6 @@ package
 			{
 				nextLevel();
 			}
-			
-			//FlxU.collide(_players, _floor);
-			
-			/*
-			FlxU.overlap(_bullets, _zombies, solidHit);
-			
-			FlxU.overlap(_player, _powerUps, getPowerUp);
-			
-			if (!_player.flickering() && _player.exists)
-			{
-				FlxU.overlap(_zombies, _player, playerHit);
-				
-				FlxU.overlap(_blasts, _player, playerHit);
-			}
-			*/
 			
 			if (FlxG.keys.justPressed('X'))
 			{
@@ -277,30 +272,15 @@ package
 			}
 			if (FlxG.keys.justPressed('S'))
 			{
-				var s:Tornado;
-				s = (_tornados.getFirstAvail() as Tornado);
-				if (s != null)
-				{
-					s.create(FlxG.mouse.x,FlxG.mouse.y,Math.random()*50-25);
-				}
+				addTornado(FlxG.mouse.x, FlxG.mouse.y, Math.random() * 50 - 25);
 			}
 			if (FlxG.keys.justPressed('D'))
 			{
-				var x:Enemy;
-				x = (_enemies.getFirstAvail() as Enemy);
-				if (x != null)
-				{
-					x.create(FlxG.mouse.x,FlxG.mouse.y);
-				}
+				addEnemy(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			if (FlxG.keys.justPressed('G'))
 			{
-				var d:Dino;
-				d = (_dinos.getFirstAvail() as Dino);
-				if (d != null)
-				{
-					d.create(FlxG.mouse.x,FlxG.mouse.y);
-				}
+				addDino(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			if (FlxG.keys.justPressed('L'))
 			{
@@ -316,12 +296,11 @@ package
 			}
 			if (FlxG.keys.justPressed('F'))
 			{
-				var y:Meteor;
-				y = (_meteors.getFirstAvail() as Meteor);
-				if (y != null)
-				{
-					y.create(FlxG.mouse.x,FlxG.mouse.y,Math.random()*50-25);
-				}
+				addMeteor(FlxG.mouse.x, FlxG.mouse.y, Math.random() * 50 - 25);
+			}
+			if (FlxG.keys.justPressed('H'))
+			{
+				addDisease(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			/*
 			if (FlxG.keys.justPressed('D'))
@@ -366,7 +345,19 @@ package
 			}
 		}
 		
-		protected function playerSetOnFire(a:FlxObject, b:FlxObject):void
+		protected function setOnDisease(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Player)
+			{
+				Player(a).plague();
+			}
+			else if (b is Player)
+			{
+				Player(b).plague();
+			}
+		}
+		
+		protected function playerContagion(a:FlxObject, b:FlxObject):void
 		{
 			if (a is Player && b is Player)
 			{
@@ -374,6 +365,11 @@ package
 				{
 					Player(a).ignite();
 					Player(b).ignite();
+				}
+				if (Player(a).on_disease() || Player(b).on_disease())
+				{
+					Player(a).near_plague();
+					Player(b).near_plague();
 				}
 			}
 		}
@@ -507,7 +503,6 @@ package
 				s.create(x,y,dir);
 			}
 		}
-		
 		protected function addHut(x:Number, y:Number):void
 		{
 			_huts.add(new Hut(x, y));
@@ -529,6 +524,15 @@ package
 				{
 					_waters.add(new Water(i, j));
 				}
+			}
+		}
+		protected function addDisease(x:Number, y:Number):void
+		{
+			var s:Disease;
+			s = (_diseases.getFirstAvail() as Disease);
+			if (s != null)
+			{
+				s.create(x, y);
 			}
 		}
 	}

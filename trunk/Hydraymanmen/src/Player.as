@@ -11,8 +11,11 @@ public class Player extends FlxSprite
 	protected var splitTimer:Number = 0;
 	protected var fireTimer:Number = 0;
 	protected var onFire:Boolean;
+	protected var diseaseTimer:Number = 0;
+	protected var onDisease:Boolean;
+	protected var nearPlague:Boolean;
 	protected var players:FlxGroup;
-	protected var fire_hairs:FlxGroup;
+	protected var fireHairs:FlxGroup;
 	protected var fireHair:FlxSprite;
 	protected var aliveCount:int = 0;
 	public var floating:Boolean = false;
@@ -21,13 +24,13 @@ public class Player extends FlxSprite
 	
 	public var pushing:Boolean;
 
-	public function Player(X:int,Y:int,players:FlxGroup,fire_hairs:FlxGroup)
+	public function Player(X:int,Y:int,players:FlxGroup,fireHairs:FlxGroup)
 	{
 		super(X, Y);
 		loadGraphic(Img, true, true);
 		
 		this.players = players;
-		this.fire_hairs = fire_hairs;
+		this.fireHairs = fireHairs;
 		
 		drag.x = runSpeed * 8;
 		drag.y = runSpeed * 8;
@@ -44,6 +47,8 @@ public class Player extends FlxSprite
 		
 		fireTimer = 0;
 		onFire = false;
+		diseaseTimer = 0;
+		onDisease = false;
 
 		//animations
 		addAnimation("idle", [4,5,6,7,8,9,10,11],Math.random()*5+5);
@@ -63,15 +68,35 @@ public class Player extends FlxSprite
 		return fireTimer;
 	}
 	
+	public function on_disease():Boolean
+	{
+		return onDisease;
+	}
+	
 	public function ignite():void
 	{
 		if (!onFire)
 		{
 			fireHair = new Fire(x - width / 2, y - height / 2, 5, false);
-			fire_hairs.add(fireHair);
+			fireHairs.add(fireHair);
 		}
 		onFire = true;
 		color = 0xef3528;
+	}
+	
+	public function plague():void
+	{
+		if (!onDisease)
+		{
+		}
+		
+		onDisease = true;
+		color = 0x557700;
+	}
+	
+	public function near_plague():void
+	{
+		nearPlague = true;
 	}
 	
 	public function create(x:Number,y:Number):void
@@ -81,6 +106,9 @@ public class Player extends FlxSprite
 		splitTimer = Math.random() * 3 + 2;
 		fireTimer = 0;
 		onFire = false;
+		diseaseTimer = 0;
+		onDisease = false;
+		nearPlague = false;
 		color = 0xFFFFFF;
 		reset(x, y);
 		play("grow");
@@ -93,7 +121,9 @@ public class Player extends FlxSprite
 		s = (players.getFirstAvail() as Player);
 		if (s != null)
 		{
-			s.create(x,y);
+			s.create(x, y);
+			if (onDisease) s.plague();
+			else if (nearPlague && Math.random() <= 0.2) s.plague();
 		}
 	}
 	
@@ -141,7 +171,9 @@ public class Player extends FlxSprite
 			maxVelocity.x = 100;
 			maxVelocity.y = 100;
 			acceleration.y = 0;
-			if (animationTime <= 0)
+			
+			// misplaced jump code lolol
+			if (animationTime <= 0 && !onDisease)
 			{
 				if (FlxG.keys.X)
 				{
@@ -160,9 +192,13 @@ public class Player extends FlxSprite
 			maxVelocity.x = landVelocity.x;
 			maxVelocity.y = landVelocity.y;
 			
-			if (FlxG.keys.justPressed("X") && !velocity.y && animationTime <= 0)
+			// misplaced jump code lolol
+			if (animationTime <= 0 && !onDisease)
 			{
-				velocity.y = -maxVelocity.y * (1.0 + (Math.random()-0.5)*0.2);
+				if (FlxG.keys.justPressed("X") && !velocity.y)
+				{
+					velocity.y = -maxVelocity.y * (1.0 + (Math.random() - 0.5) * 0.2);
+				}
 			}
 		}
 		
@@ -198,19 +234,54 @@ public class Player extends FlxSprite
 			}
 		}
 		
+		// disease processing
+		if (onDisease)
+		{
+			diseaseTimer += FlxG.elapsed;
+			
+			if (animationTime <= 0)
+			{
+				// after 1 seconds, start spazzing
+				if (diseaseTimer > 1.0)
+				{
+					var mod:Number = Math.random() * drag.x - (drag.x / 2);
+					if (mod < 0)
+					{
+						facing = LEFT;
+					}
+					else
+					{
+						facing = RIGHT;
+					}
+					acceleration.x += mod;
+				}
+				
+				// after 2 seconds, start jumping
+				if (diseaseTimer > 2.0 && !velocity.y && Math.random() <= 0.01)
+				{
+					velocity.y = -maxVelocity.y * (1.0 + (Math.random() - 0.5) * 0.2);
+				}
+			}
+		}
+		
 		// no movement when performing special animation (death, splitting)
 		if (animationTime <= 0)
 		{
-			if (FlxG.keys.LEFT)
-			{
-				facing = LEFT;
-				acceleration.x -= drag.x;
+			// can't control sick dudes
+			if (!onDisease)
+			{	
+				if (FlxG.keys.LEFT)
+				{
+					facing = LEFT;
+					acceleration.x -= drag.x;
+				}
+				else if (FlxG.keys.RIGHT)
+				{
+					facing = RIGHT;
+					acceleration.x += drag.x;
+				}
 			}
-			else if (FlxG.keys.RIGHT)
-			{
-				facing = RIGHT;
-				acceleration.x += drag.x;
-			}
+			
 			if (velocity.y > 0)
 			{
 				play("fall");

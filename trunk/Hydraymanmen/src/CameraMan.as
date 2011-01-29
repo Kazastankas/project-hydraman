@@ -39,7 +39,7 @@ package
 			for each(var member:FlxObject in group.members)
 			{
 				var player:Player = member as Player;
-				if (player && !player.dead && player.active && player.exists)
+				if (player && !player.dead && player.active && player.exists && !player.on_disease())
 				{
 					avgPos.x += member.x;
 					avgPos.y += member.y;
