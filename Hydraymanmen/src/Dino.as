@@ -4,7 +4,7 @@ package
 	
 	public class Dino extends FlxSprite
 	{
-		[Embed(source = "data/hydra-trilobite.png")] protected var myImage:Class;
+		[Embed(source = "data/dino.png")] protected var myImage:Class;
 		public var AItimer:Number;
 		public var AImode:int;
 		public var moving:uint;
@@ -16,7 +16,7 @@ package
 			loadGraphic(myImage,true,true);
 			addAnimation("idle", [0], 5, true);
 			addAnimation("go", [0, 1, 2, 3], 10, true);
-			addAnimation("jump", [0], 10, true);
+			addAnimation("jump", [4,5,6,7], 20, true);
 			play("idle");
 			drag.x = runSpeed * 8;
 			drag.y = runSpeed * 8;
@@ -55,7 +55,7 @@ package
 			
 			if(velocity.y != 0)
 			{
-				play("go");
+				play("jump");
 			}
 			else if(velocity.x == 0)
 			{

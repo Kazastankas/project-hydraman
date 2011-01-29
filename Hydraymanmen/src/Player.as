@@ -50,7 +50,8 @@ public class Player extends FlxSprite
 		addAnimation("run", [12,13,14,15], 12);
 		addAnimation("jump", [16, 17], 8);
 		addAnimation("fall", [18,19],8);
-		addAnimation("split", [20,21,22,23,24,25],12,false);
+		addAnimation("split", [20, 21, 22, 23, 24, 25], 12, false);
+		addAnimation("die", [26, 27, 28, 29], 8, false);
 		addAnimation("grow", [0, 1, 2, 3],8,false);
 		play("idle");
 		
@@ -96,11 +97,23 @@ public class Player extends FlxSprite
 		}
 	}
 	
+	public function die():void
+	{
+		splitTimer = 5;
+		animationTime = .4;
+		play("die");
+		health = 0;
+	}
+	
 	override public function update():void
 	{
 		if (!onScreen())
 			kill();
-			
+		
+		if (animationTime < .05&&health<=0)
+		{
+			kill();
+		}
 		if (animationTime > 0)
 		{
 			animationTime -= FlxG.elapsed;
