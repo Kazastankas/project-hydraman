@@ -74,19 +74,19 @@ package
 		protected function handleInput():void
 		{
 			if (FlxG.keys.W) {
-				offset.y += 0.1 * (-maxOffsetY - offset.y);
+				offset.y += 0.6 * (-maxOffsetY - offset.y);
 			}
 			else if (FlxG.keys.S) {
-				offset.y += 0.1 * (maxOffsetY - offset.y);
+				offset.y += 0.6 * (maxOffsetY - offset.y);
 			}
 			else
 				offset.y *= 0.9;
 				
 			if (FlxG.keys.A) {
-				offset.x += 0.1 * (-maxOffsetX - offset.x);
+				offset.x += 0.6 * (-maxOffsetX - offset.x);
 			}
 			else if (FlxG.keys.D) {
-				offset.x += 0.1 * (maxOffsetX - offset.x);
+				offset.x += 0.6 * (maxOffsetX - offset.x);
 			}
 			else
 				offset.x *= 0.9;
