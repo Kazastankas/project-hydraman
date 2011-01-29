@@ -128,7 +128,7 @@ package
 			for(i = 0; i < 32; i++)
 			{
 				s = new Player(_playerStart.x, _playerStart.y, _players, _cosmetic_fires);
-					s.exists = false;
+				s.exists = false;
 				_players.add(s);
 			}
 			activatePlayers(numHydra);
@@ -194,7 +194,7 @@ package
 				{
 					player.exists = true;
 					player.x = _playerStart.x + numHydra * (Math.random() - 0.5);
-					player.y = _playerStart.x + 4 * Math.random();
+					player.y = _playerStart.y + 4 * Math.random();
 				}
 			}
 		}
