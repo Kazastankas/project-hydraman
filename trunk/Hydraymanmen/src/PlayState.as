@@ -8,7 +8,8 @@ package
 		[Embed(source = "data/jump.mp3")] protected var JumpSnd:Class;
 		[Embed(source = "data/quake.mp3")] protected var QuakeSnd:Class;
 		[Embed(source = "data/alltiles1.png")] protected var ImgTiles:Class;
-		[Embed(source = "data/goal.png")] protected var goalImg:Class;
+		[Embed(source = "data/caveback.png")] protected var goalBackImg:Class;
+		[Embed(source = "data/cavefront.png")] protected var goalFrontImg:Class;
 		[Embed(source = "data/fire.png")] protected var fireImg:Class;
 		[Embed(source = 'levels/map2.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		[Embed(source = "data/cambrian-bg.png")] private var bgImg:Class;
@@ -16,6 +17,8 @@ package
 		protected var _camMan:CameraMan;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
 		protected var _goal:FlxSprite;//the goal
+		protected var _goalBack:FlxSprite; // the goal's back
+		protected var _goalFlipped:Boolean = false;
 		protected var _doom:FlxSprite;//the doom
 		protected var _goalCounter:int = 0;//how many players are on the goal
 		protected var _explodes:FlxGroup;
@@ -64,6 +67,8 @@ package
 			bg.scrollFactor.x = bg.scrollFactor.y = 0;
 			bg.fixed = true;
 			add(bg);
+			
+			addBackSprites();
 			
 			_tornados = new FlxGroup();
 			for(i = 0; i < 64; i++)
@@ -132,9 +137,15 @@ package
 			_tileMap.follow();
 			add(_tileMap);*/
 			
-			_goal = new FlxSprite(_goalPos.x,_goalPos.y, goalImg);
-			_goal.fixed = true;
-			add(_goal);
+			_goalBack = new FlxSprite(_goalPos.x, _goalPos.y);
+			_goalBack.loadGraphic(goalBackImg, false, true, 79, 41);
+			if (!_goalFlipped) {
+				_goalBack.facing = FlxSprite.RIGHT;
+			} else {
+				_goalBack.facing = FlxSprite.LEFT;
+			}
+			_goalBack.fixed = true;
+			add(_goalBack);
 			
 			_cosmetic_fires = new FlxGroup();
 			_drunk_bubbles = new FlxGroup();
@@ -150,6 +161,20 @@ package
 			}
 			//activatePlayers(numHydra);
 			add(_players);
+			
+			_goal = new FlxSprite(_goalPos.x + 38, _goalPos.y);
+			_goal.loadGraphic(goalFrontImg, false, true, 42, 41);
+			if (!_goalFlipped)
+			{
+				_goal.facing = FlxSprite.RIGHT;
+				_goal.offset.x = 0;
+			} else {
+				_goal.x = _goalPos.x;
+				_goal.facing = FlxSprite.LEFT;
+				_goal.offset.x = 0;
+			}
+			_goal.fixed = true;
+			add(_goal);
 			
 			_enemies = new FlxGroup();
 			for(i = 0; i < 64; i++)
@@ -234,6 +259,11 @@ package
 			
 			_resetFlag = true;
 			_updateCount = 0;
+		}
+		
+		protected function addBackSprites():void
+		{
+			trace("Add backgrond sprites");
 		}
 		
 		protected function loadMap(map:Class):void
@@ -381,7 +411,11 @@ package
 			{
 				addShark(FlxG.mouse.x, FlxG.mouse.y);
 			}
-			
+			if (FlxG.keys.justPressed('CONTROL'))
+			{
+				_players.getFirstAlive().kill();
+				addPlayer(FlxG.mouse.x, FlxG.mouse.y);
+			}
 			
 			_updateCount++;
 		}
@@ -391,10 +425,18 @@ package
 			if (a is Player)
 			{
 				var hydra:Player = a as Player;
-				hydra.kill();
-				PlayState.numInGoal++;
-				trace("Landed in goal: " + numInGoal);
-				//_goalCounter += 1;
+				if (!_goalFlipped && hydra.velocity.x > 0)
+				{
+					hydra.kill();
+					PlayState.numInGoal++;
+					trace("Landed in goal: " + numInGoal);
+				}
+				else if (_goalFlipped && hydra.velocity.x < 0)
+				{
+					hydra.kill();
+					PlayState.numInGoal++;
+					trace("Landed in goal: " + numInGoal);
+				}
 			}
 		}
 		
@@ -560,6 +602,16 @@ package
 		{
 			trace("CALLING PLAYSTATE NEXT LEVEL");
 			FlxG.state = new PlayState();
+		}
+		
+		protected function addPlayer(x:Number, y:Number):void
+		{
+			var s:Player;
+			s = (_players.getFirstAvail() as Player);
+			if (s != null)
+			{
+				s.create(x, y);
+			}
 		}
 		
 		protected function addQuake(x:Number,y:Number):void
