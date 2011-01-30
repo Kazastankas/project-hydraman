@@ -10,12 +10,8 @@ package levels
 	 */
 	public class LevelIce extends PlayState 
 	{
-		[Embed(source = 'map2.txt', mimeType = "application/octet-stream")] private var map:Class;
-<<<<<<< .mine
+		[Embed(source = 'map2-final.txt', mimeType = "application/octet-stream")] private var map:Class;
 		[Embed(source = "../data/thingDino.mp3")] protected var Music:Class;
-=======
-		[Embed(source = "../data/tribalDino.mp3")] protected var Music:Class;
->>>>>>> .r257
 		[Embed(source = "../grafixxx/volcano-bg.png")] protected var bgImg:Class;
 		private var part:int = 1;
 		private var mTimer:Number = 1;
@@ -74,7 +70,6 @@ package levels
 			addBurrower(461, 508);
 			
 			
-			loadMap(map);
 		}
 		
 		override protected function addBackSprites():void
@@ -83,6 +78,13 @@ package levels
 			bg.scrollFactor.x = bg.scrollFactor.y = 0;
 			bg.fixed = true;
 			add(bg);
+			
+			_tileMap = new FlxTilemap();
+			_tileMap.loadMap(new map, ImgTiles, 32, 32);
+			_tileMap.collideIndex = 57;
+			_tileMap.follow();
+			add(_tileMap);
+			FlxG.followBounds( -32, -32, _tileMap.width + 32, _tileMap.height + 32);
 		}
 		
 		override public function update():void
