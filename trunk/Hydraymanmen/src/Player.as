@@ -287,12 +287,10 @@ public class Player extends Flammable
 			else if (velocity.x > -EPS && velocity.x < EPS)
 			{
 				play("idle");
-				trace("Idle");
 			}
 			else
 			{
 				play("run");
-				trace("Run: " + velocity.x);
 			}
 		}
 

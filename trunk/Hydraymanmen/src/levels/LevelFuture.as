@@ -69,7 +69,19 @@ package levels
 				}
 				part = 2;
 			}
-			if (((_camMan.x > 1050 && _camMan.x <1100) && (_camMan.y > 500 && _camMan.y < 800)) && (part == 2))
+			if (((_camMan.x > 400 && _camMan.x <450) && (_camMan.y > 900 && _camMan.y < 1150)) && (part == 2))
+			{
+				for (i = 0; i < 7; i++ )
+				{
+					addZombie(480+Math.random()*100,998+Math.random()*30);
+				}
+				addQuake(466, 1040)
+				addQuake(485, 1040);
+				addQuake(525, 1040);
+				addQuake(555, 1040);
+				part = 3;
+			}
+			if (((_camMan.x > 1050 && _camMan.x <1100) && (_camMan.y > 500 && _camMan.y < 800)) && (part == 3))
 			{
 				for (i = 0; i < 7; i++ )
 				{
@@ -78,7 +90,7 @@ package levels
 				addQuake(1190, 670)
 				addQuake(1210, 670);
 				addQuake(1240, 670);
-				part = 3;
+				part = 4;
 			}
 		}
 		
