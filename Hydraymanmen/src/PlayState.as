@@ -45,6 +45,7 @@ package
 		protected var _updateCount:int;
 		protected var _trees:FlxGroup;
 		protected var _melters:FlxGroup;
+		protected var _plagueBots:FlxGroup;
 		static public var _firePlaying:Number = 0;
 		static public var _fireSound:FlxSound;
 		
@@ -98,15 +99,6 @@ package
 				_explodes.add(s);
 			}
 			add(_explodes);
-			
-			_diseases = new FlxGroup();
-			for (i = 0; i < 64; i++)
-			{
-				s = new Disease(-100, -100);
-				s.exists = false;
-				_diseases.add(s);
-			}
-			add(_diseases);
 			
 			_meteor_fires = new FlxGroup();
 			for (i = 0; i < 64; i++)
@@ -224,6 +216,34 @@ package
 			}
 			add(_cavemen);
 			
+			_anglers = new FlxGroup();
+			for (i = 0; i < 32; i++)
+			{
+				s = new Angler( -100, -100, _players);
+				s.exists = false;
+				_anglers.add(s);
+			}
+			add(_anglers);
+			FlxG.followAdjust(0, 0);
+			
+			_diseases = new FlxGroup();
+			for (i = 0; i < 64; i++)
+			{
+				s = new Disease(-100, -100);
+				s.exists = false;
+				_diseases.add(s);
+			}
+			add(_diseases);
+			
+			_plagueBots = new FlxGroup();
+			for (i = 0; i < 32; i++)
+			{
+				s = new PlagueBot( -100, -100, _diseases);
+				s.exists = false;
+				_plagueBots.add(s);
+			}
+			add(_plagueBots);
+			
 			_waters = new FlxGroup();
 			add(_waters);
 			_waterSprites = new FlxGroup();
@@ -254,16 +274,6 @@ package
 				_sharks.add(s);
 			}
 			add(_sharks);
-			
-			_anglers = new FlxGroup();
-			for (i = 0; i < 32; i++)
-			{
-				s = new Angler( -100, -100, _players);
-				s.exists = false;
-				_anglers.add(s);
-			}
-			add(_anglers);
-			FlxG.followAdjust(0, 0);
 			
 			_resetFlag = true;
 			_updateCount = 0;
@@ -346,6 +356,7 @@ package
 			FlxU.collide(_players, _players);
 			FlxU.collide(_sharks, _tileMap);
 			FlxU.collide(_anglers, _tileMap);
+			FlxU.collide(_plagueBots, _tileMap);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
 			
@@ -361,6 +372,7 @@ package
 			FlxU.overlap(_players, _burrowers, processBurrower);
 			FlxU.overlap(_players, _sharks, playerHit);
 			FlxU.overlap(_players, _anglers, playerHit);
+			FlxU.overlap(_players, _plagueBots, playerHit);
 			
 			//end condition
 			if (_goalCounter > 1)
@@ -430,6 +442,10 @@ package
 			if (FlxG.keys.justPressed('M'))
 			{
 				addShark(FlxG.mouse.x, FlxG.mouse.y);
+			}
+			if (FlxG.keys.justPressed('U'))
+			{
+				addPlagueBot(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			if (FlxG.keys.justPressed('CONTROL'))
 			{
@@ -793,6 +809,16 @@ package
 		{
 			var s:Angler;
 			s = (_anglers.getFirstAvail() as Angler);
+			if (s != null)
+			{
+				s.create(x, y);
+			}
+		}
+		
+		protected function addPlagueBot(x:Number, y:Number):void
+		{
+			var s:PlagueBot;
+			s = (_plagueBots.getFirstAvail() as PlagueBot);
 			if (s != null)
 			{
 				s.create(x, y);
