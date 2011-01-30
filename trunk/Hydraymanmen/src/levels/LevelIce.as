@@ -17,7 +17,7 @@ package levels
 		override public function create():void
 		{
 			trace("Creating ice level");
-			
+
 			var i:int;
 			_playerStart = new FlxPoint(29 * 32, 37 * 32);
 			_goalPos = new FlxPoint(850, 630);
