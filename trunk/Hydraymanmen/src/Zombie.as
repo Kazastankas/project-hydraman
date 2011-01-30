@@ -233,7 +233,7 @@ public class Zombie extends Flammable
 				}
 				
 				// after 2 seconds, start jumping
-				if (diseaseTimer > 2.0 && !velocity.y && Math.random() <= 0.001)
+				if (diseaseTimer > 2.0 && !velocity.y && Math.random() <= 0.01)
 				{
 					velocity.y = -maxVelocity.y * (1.0 + (Math.random() - 0.5) * 0.2);
 				}
