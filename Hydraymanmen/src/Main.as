@@ -9,7 +9,7 @@ package
 	{
 		public function Main()
 		{
-			super(320,240,LevelDino);
+			super(320,240,MenuState);
 			//showLogo = false;
 		}
 	}
