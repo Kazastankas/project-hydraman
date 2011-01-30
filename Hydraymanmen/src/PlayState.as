@@ -404,6 +404,7 @@ package
 			FlxU.overlap(_players, _cavemen, playerHit);
 			FlxU.overlap(_players, _burrowers, processBurrower);
 			FlxU.overlap(_players, _sharks, playerHit);
+			FlxU.overlap(_players, _walkBots, playerHit);
 			//FlxU.overlap(_players, _anglers, playerHit);
 			//FlxU.overlap(_players, _plagueBots, playerHit);
 			
@@ -484,7 +485,9 @@ package
 			}
 			if (FlxG.keys.justPressed('CONTROL'))
 			{
-				_players.getFirstAlive().kill();
+				var h:Player = _players.getFirstAlive() as Player;
+				if (h)
+					h.kill();
 				addPlayer(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			if (FlxG.keys.justPressed("RBRACKET"))
