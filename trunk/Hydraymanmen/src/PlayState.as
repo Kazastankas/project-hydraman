@@ -408,6 +408,7 @@ package
 			//FlxU.overlap(_players, _anglers, playerHit);
 			//FlxU.overlap(_players, _plagueBots, playerHit);
 			
+			/*
 			if (FlxG.keys.justPressed('T'))
 			{
 				addTree(FlxG.mouse.x, FlxG.mouse.y);
@@ -494,6 +495,7 @@ package
 			{
 				nextLevel();
 			}
+			*/
 			
 			if (_gibbing > 0)
 				_gibbing -= FlxG.elapsed;
