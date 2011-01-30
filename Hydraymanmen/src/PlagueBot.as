@@ -57,7 +57,7 @@ package
 						s = (diseases.getFirstAvail() as Disease);
 						if (s != null)
 						{
-							s.create(this.x, this.y - 30);
+							s.create(this.x, this.y-8);
 						}
 					}
 				}
