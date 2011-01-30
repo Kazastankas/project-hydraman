@@ -105,13 +105,17 @@ package
 				}
 			}
 			
-			if (target.x - x > 10 && target.x - x < 150 )
+			if (target.x - x > 50 && target.x - x < 150 )
 			{
 				moving = 1;
 			}
-			if (target.x - x < -10 && target.x - x > -150 )
+			else if (target.x - x < -50 && target.x - x > -150 )
 			{
 				moving = 2;
+			}
+			else if (target.x -x < 50 && target.x - x > -50)
+			{
+				moving = 0;
 			}
 			
 			if (animationTime <= 0)
