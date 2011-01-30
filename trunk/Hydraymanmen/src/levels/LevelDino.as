@@ -33,6 +33,7 @@ package levels
 			addWater(30, 39, 3, 9);
 			addWater(34, 45, 7, 3);
 			addWater(17, 26, 3, 1);
+			addWater(43, 43, 0, 0);
 			addHuman(300, 780, 1);
 			addHuman(380, 780, 3);
 			addHuman(260, 780, 2);
@@ -43,6 +44,12 @@ package levels
 			addMelter(25, 37);
 			addMelter(24, 38);
 			addMelter(25, 38);
+			addMelter(42, 40);
+			addMelter(42, 41);
+			addMelter(17, 26);
+			addMelter(18, 26);
+			addMelter(19, 26);
+			addMelter(20, 26);
 			
 			loadMap(map);
 		}
