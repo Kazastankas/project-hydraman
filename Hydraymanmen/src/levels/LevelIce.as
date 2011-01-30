@@ -10,7 +10,7 @@ package levels
 	 */
 	public class LevelIce extends PlayState 
 	{
-		[Embed(source = 'map2.txt', mimeType = "application/octet-stream")] private var Map:Class;
+		[Embed(source = 'map2.txt', mimeType = "application/octet-stream")] private var map:Class;
 		
 		override public function create():void
 		{
@@ -20,6 +20,7 @@ package levels
 			_playerStart = new FlxPoint(100, 100);
 			_goalPos = new FlxPoint(200, 100);
 			super.create();
+			loadMap(map);
 			
 			//add the top layer of water
 			for (i = 5; i <= 8; i++ )
@@ -34,6 +35,8 @@ package levels
 					_waters.add(new Water(i, j));
 				}
 			}
+			
+			activatePlayers(Math.min(1, PlayState.numHydra));
 		}
 		
 		override protected function resetLevel():void
