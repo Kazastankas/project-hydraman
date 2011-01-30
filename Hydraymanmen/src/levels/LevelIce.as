@@ -11,7 +11,7 @@ package levels
 	public class LevelIce extends PlayState 
 	{
 		[Embed(source = 'map2.txt', mimeType = "application/octet-stream")] private var map:Class;
-		private var part:int = 0;
+		private var part:int = 1;
 		private var mTimer:Number = 1;
 		
 		override public function create():void
@@ -75,7 +75,7 @@ package levels
 					addMeteor(_camMan.x + Math.random() * 200 - 70,-50,Math.random()*200-100);
 				}
 			}
-			if (((_camMan.x > 1000 && _camMan.x < 1180) && (_camMan.y > 200 && _camMan.y < 400)) && (part == 1))
+			if (((_camMan.x > 1000 && _camMan.x < 1180) && (_camMan.y > 200 && _camMan.y < 500)) && (part == 1))
 			{
 				addQuake(1136, 368);
 				addQuake(1165, 368);
@@ -84,7 +84,7 @@ package levels
 				addQuake(1197, 333);
 				part = 2;
 			}
-			if (((_camMan.x > 1150 && _camMan.x < 1280) && (_camMan.y > 0 && _camMan.y < 400)) && (part == 2))
+			if (((_camMan.x > 1150 && _camMan.x < 1280) && (_camMan.y > 0 && _camMan.y < 500)) && (part == 2))
 			{
 				addQuake(1230, 368);
 				addQuake(1230, 333);
