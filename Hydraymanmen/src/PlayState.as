@@ -38,6 +38,7 @@ package
 		protected var _updateCount:int;
 		protected var _trees:FlxGroup;
 		static public var _firePlaying:Number = 0;
+		static public var _fireSound:FlxSound;
 		
 		public static var numHydra:int = 1;
 		protected var _enemies:FlxGroup;
@@ -215,6 +216,8 @@ package
 			super.update();
 			
 			_firePlaying -= FlxG.elapsed;
+			if (_fireSound)
+				adjustFireVolume();
 			
 			checkForExtinction();
 			
@@ -278,7 +281,7 @@ package
 			
 			if (FlxG.keys.justPressed('X'))
 			{
-				FlxG.play(JumpSnd);
+				FlxG.play(JumpSnd).volume = Math.sqrt(numHydra) / 6.0;
 			}
 			
 			if (FlxG.keys.justPressed('A'))
@@ -575,6 +578,50 @@ package
 			if (s != null)
 			{
 				s.create(x, y);
+			}
+		}
+		
+		public function adjustFireVolume():void
+		{
+			var maxSndDist:Number = 250000;
+			var sndAccum:Number = 0;
+			var spos:FlxPoint, xdiff:Number, ydiff:Number, distsq:Number;
+			
+			var avgDist:FlxPoint = new FlxPoint();
+			var numFires:int = 0;
+			for each(var cfire:Fire in _cosmetic_fires.members)
+			{
+				if (cfire.exists)
+				{
+					spos = cfire.getScreenXY();
+					xdiff = Math.abs(spos.x - FlxG.width / 2);
+					ydiff = Math.abs(spos.y - FlxG.height / 2);
+					distsq = xdiff * xdiff + ydiff * ydiff;
+					if (distsq < maxSndDist)
+						sndAccum += maxSndDist - distsq;
+					numFires++;
+				}
+			}
+			for each(var mfire:Fire in _meteor_fires.members)
+			{
+				if (mfire.exists)
+				{
+					spos = mfire.getScreenXY();
+					xdiff = Math.abs(spos.x - FlxG.width / 2);
+					ydiff = Math.abs(spos.y - FlxG.height / 2);
+					distsq = xdiff * xdiff + ydiff * ydiff;
+					if (distsq < maxSndDist)
+						sndAccum += maxSndDist - distsq;
+					numFires++;
+				}
+			}
+			if (PlayState._fireSound)
+			{
+				if (sndAccum > 2 * maxSndDist)
+					sndAccum = 2 * maxSndDist;
+				var coeff:Number = sndAccum / (2 * maxSndDist);
+				PlayState._fireSound.volume = coeff;
+				//trace("Fires: " + numFires + ", vol coeff: " + coeff + ", accum: " + sndAccum);
 			}
 		}
 	}

@@ -37,7 +37,7 @@ public class Fire extends FlxSprite
 		if (PlayState._firePlaying<0)
 		{
 			PlayState._firePlaying = 18;
-			FlxG.play(Snd);
+			PlayState._fireSound = FlxG.play(Snd);
 		}
 		super.update();
 		lifeTime -= FlxG.elapsed;

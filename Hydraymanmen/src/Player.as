@@ -65,8 +65,8 @@ public class Player extends FlxSprite
 	protected function setSplitTimer():void
 	{
 		splitTimer = Math.random() * 3 + 2;
-		splitTimer *= 0.2 * Math.sqrt(PlayState.numHydra + 1);
-		trace("splitTimer: " + splitTimer);
+		splitTimer *= 0.3 * Math.sqrt(PlayState.numHydra + 1);
+		//trace("splitTimer: " + splitTimer);
 	}
 	
 	public function fire_time():Number
