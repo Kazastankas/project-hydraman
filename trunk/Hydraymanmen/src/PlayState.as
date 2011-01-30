@@ -25,6 +25,7 @@ package
 		protected var _diseases:FlxGroup;
 		protected var _waters:FlxGroup;
 		protected var _bubbles:FlxGroup;
+		protected var _drunk_bubbles:FlxGroup;
 		protected var _dinos:FlxGroup;
 		protected var _burrowers:FlxGroup;
 		protected var _cavemen:FlxGroup;
@@ -132,11 +133,12 @@ package
 			add(_goal);
 			
 			_cosmetic_fires = new FlxGroup();
+			_drunk_bubbles = new FlxGroup();
 			
 			_players = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
-				s = new Player(_playerStart.x, _playerStart.y, _players, _cosmetic_fires);
+				s = new Player(_playerStart.x, _playerStart.y, _players, _cosmetic_fires, _drunk_bubbles);
 				s.exists = false;
 				_players.add(s);
 			}
@@ -182,6 +184,14 @@ package
 				_bubbles.add(s);
 			}
 			add(_bubbles);
+			
+			for(i = 0; i < 64; i++)
+			{
+				s = new DrunkBubble( -100, -100);
+				s.exists = false;
+				_drunk_bubbles.add(s);
+			}
+			add(_drunk_bubbles);
 			
 			_camMan = new CameraMan(_players, _playerStart);
 			add(_camMan);
