@@ -847,13 +847,13 @@ package
 			}
 		}
 		
-		protected function addDisease(x:Number, y:Number):void
+		protected function addDisease(x:Number, y:Number, life:Number = 3.0):void
 		{
 			var s:Disease;
 			s = (_diseases.getFirstAvail() as Disease);
 			if (s != null)
 			{
-				s.create(x, y);
+				s.create(x, y, life);
 			}
 		}
 		

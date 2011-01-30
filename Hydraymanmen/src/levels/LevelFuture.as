@@ -24,18 +24,20 @@ package levels
 			activatePlayers(Math.max(1, PlayState.numInGoal));
 			addPlagueBot(980, 1400);
 			addPlagueBot(930, 1400);
-			addPlagueBot(960, 1400);
+			addPlagueBot(830, 1400);
 			addPlagueBot(412, 1218);
 			addPlagueBot(780, 740);
 			addAngler(1380, 876);
 			addAngler(350, 855);
 			
-			for (i = 0; i < 10; i++)
+			for (i = 0; i < 40; i++)
 			{
-				addPlagueBot((2 * i + 9) * 32, 18 * 32);
+				addDisease((i*0.5 + 9) * 32, 18 * 32, 0.0);
 			}
-			addAngler(18 * 32, 12 * 32, 2.0);
-			addAngler(21 * 32, 12 * 32, 2.0);
+			for (i = 0; i < 20; i++)
+			{
+				addDisease((30.0 + (i * 0.5)) * 32, 20.0 * 32, 0.0);
+			}
 			
 			addAngler(32 * 32, 17 * 32, -2.0);
 			addAngler(36 * 32, 17 * 32, -2.0);
@@ -63,10 +65,10 @@ package levels
 			}
 			if (((_camMan.x > 30 && _camMan.x <200) && (_camMan.y > 1250 && _camMan.y < 1300)) && (part == 1))
 			{
-				for (i = 0; i < 7; i++ )
+				/*for (i = 0; i < 7; i++ )
 				{
 					addZombie(43+Math.random()*100,1220+Math.random()*30);
-				}
+				}*/
 				part = 2;
 			}
 			if (((_camMan.x > 400 && _camMan.x <450) && (_camMan.y > 900 && _camMan.y < 1150)) && (part == 2))
@@ -77,7 +79,7 @@ package levels
 				}
 				addQuake(466, 1040);
 				addQuake(485, 1040);
-				addQuake(525, 1040);
+				//addQuake(525, 1040);
 				addQuake(555, 1040);
 				part = 3;
 			}
