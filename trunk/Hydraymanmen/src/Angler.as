@@ -20,10 +20,10 @@ package
 			play("idle");
 			
 			this.players = players;
-			drag.x = runSpeed * 8;
-			drag.y = runSpeed * 8;
+			drag.x = runSpeed;
+			drag.y = runSpeed;
 			acceleration.y = 420;
-			maxVelocity.x = runSpeed;
+			maxVelocity.x = runSpeed / 2;
 			maxVelocity.y = 200;
 			offset.y = 10;
 			height -= 10;
