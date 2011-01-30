@@ -17,7 +17,9 @@ package
 			loadGraphic(mainImage, true, true);
 			addAnimation("idle", [0], 5, true);
 			addAnimation("noms", [0,1,2,3,4,5,6], 10, true);
-			addAnimation("nomming", [5,6], 10, true);
+			addAnimation("nomming", [5, 6], 10, true);
+			offset.x = 10;
+			width -= 10;
 			
 			angry = false;
 			angering = false;
