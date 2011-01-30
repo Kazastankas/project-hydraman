@@ -67,7 +67,7 @@ package levels
 			}
 			super.update();
 			
-			if (((_camMan.x > 500) && (_camMan.y > 0 && _camMan.y < 400)) && (part == 0))
+			if (((_camMan.x > 500) && (_camMan.y > 0 && _camMan.y < 700)))
 			{
 				if (mTimer <= 0)
 				{
@@ -75,19 +75,19 @@ package levels
 					addMeteor(_camMan.x + Math.random() * 200 - 70,-50,Math.random()*200-100);
 				}
 			}
-			/*
-			if (((_camMan.x > 1000 && _camMan.x < 1200) && (_camMan.y > 750 && _camMan.y < 900)) && (part == 1))
+			if (((_camMan.x > 1000 && _camMan.x < 1180) && (_camMan.y > 200 && _camMan.y < 400)) && (part == 1))
 			{
-				addQuake(1255, 906);
-				addQuake(1226, 906);
-				addQuake(1189, 906);
+				addQuake(1136, 368);
+				addQuake(1165, 368);
+				addQuake(1165, 333);
+				addQuake(1197, 368);
+				addQuake(1197, 333);
 				part = 2;
 			}
-			if (((_camMan.x > 900 && _camMan.x < 1100) && (_camMan.y > 730 && _camMan.y < 900)) && (part == 2))
+			if (((_camMan.x > 1150 && _camMan.x < 1280) && (_camMan.y > 0 && _camMan.y < 400)) && (part == 2))
 			{
-				addQuake(1093,879);
-				addQuake(1069, 875);
-				addQuake(1031, 866);
+				addQuake(1230, 368);
+				addQuake(1230, 333);
 				part = 3;
 			}
 			if (((_camMan.x > 400 && _camMan.x < 600) && (_camMan.y > 700 && _camMan.y < 900)) && (part == 3))
