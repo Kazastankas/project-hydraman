@@ -12,6 +12,7 @@ package levels
 	{
 		[Embed(source = 'map2.txt', mimeType = "application/octet-stream")] private var map:Class;
 		private var part:int = 0;
+		private var mTimer:Number = 1;
 		
 		override public function create():void
 		{
@@ -58,14 +59,21 @@ package levels
 		
 		override public function update():void
 		{
+			if (mTimer > 0)
+			{
+				mTimer -= FlxG.elapsed;
+			}
 			super.update();
 			
-			/*
-			if (((_camMan.x > 850 && _camMan.x <930) && (_camMan.y > 860 && _camMan.y < 1100)) && (part == 0))
+			if (((_camMan.x > 500) && (_camMan.y > 0 && _camMan.y < 400)) && (part == 0))
 			{
-				addTornado(850, 900, 1);
-				part = 1;
+				if (mTimer <= 0)
+				{
+					mTimer = Math.random()*1.5;
+					addMeteor(_camMan.x + Math.random() * 200 - 70,-50,Math.random()*200-100);
+				}
 			}
+			/*
 			if (((_camMan.x > 1000 && _camMan.x < 1200) && (_camMan.y > 750 && _camMan.y < 900)) && (part == 1))
 			{
 				addQuake(1255, 906);
