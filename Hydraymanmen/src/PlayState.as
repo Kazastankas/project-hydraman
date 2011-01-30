@@ -338,7 +338,7 @@ package
 			{
 				addDisease(FlxG.mouse.x, FlxG.mouse.y);
 			}
-			if (FlxG.keys.justPressed('Q'))
+			if (FlxG.keys.justPressed('W'))
 			{
 				addBurrower(FlxG.mouse.x, FlxG.mouse.y);
 			}
