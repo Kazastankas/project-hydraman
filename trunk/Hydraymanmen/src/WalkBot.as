@@ -41,7 +41,7 @@ package
 			{
 				if (AItimer < 0)
 				{
-					AItimer = 3;
+					AItimer = 5;
 					if (moving == 1)
 					{
 						moving = 2;

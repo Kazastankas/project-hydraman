@@ -8,7 +8,7 @@ package
 		public var AItimer:Number;
 		public var AImode:int;
 		public var moving:uint;
-		protected var runSpeed:Number = 50;
+		protected var runSpeed:Number = 0;
 		public var players:FlxGroup;
 		public var power:uint;
 		protected var coeff:Number;

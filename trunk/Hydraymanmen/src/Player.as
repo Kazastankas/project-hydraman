@@ -23,6 +23,8 @@ public class Player extends Flammable
 	
 	public var pushing:Boolean;
 	
+	public var invincible:Boolean;
+	
 	public function Player(X:int,Y:int,players:FlxGroup,fireHairs:FlxGroup,drunkBubbles:FlxGroup)
 	{
 		super(X, Y, fireHairs);
@@ -46,6 +48,7 @@ public class Player extends Flammable
 
 		diseaseTimer = 0;
 		onDisease = false;
+		invincible = false;
 
 		//animations
 		addAnimation("idle", [4,5,6,7,8,9,10,11],Math.random()*5+5);
@@ -56,7 +59,6 @@ public class Player extends Flammable
 		addAnimation("die", [26, 27, 28, 29], 8, false);
 		addAnimation("grow", [0, 1, 2, 3],8,false);
 		play("idle");
-		
 	}
 	
 	protected function setSplitTimer():void
@@ -122,7 +124,7 @@ public class Player extends Flammable
 	
 	public function die():void
 	{
-		if (health > 0)
+		if (health > 0 && !invincible)
 		{
 			splitTimer = 5;
 			animationTime = .5;
@@ -133,7 +135,7 @@ public class Player extends Flammable
 	
 	override public function update():void
 	{
-		if (!onScreen())
+		if (!onScreen() && !invincible)
 		{
 			deflame();
 			kill();
@@ -300,6 +302,12 @@ public class Player extends Flammable
 		}
 
 		super.update();
+	}
+	
+	override public function kill():void
+	{
+		if (!invincible)
+			super.kill();
 	}
 	
 	override public function preCollide(Object:FlxObject):void 

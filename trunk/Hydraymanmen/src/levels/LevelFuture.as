@@ -16,9 +16,18 @@ package levels
 		[Embed(source = "../grafixxx/alltilesfinal.png")] protected var tiles:Class;
 		[Embed(source = "../data/rock.png")] private var rockImg:Class;
 		protected var zTriggers:FlxGroup;
-		protected var bolts:FlxGroup;
+		
 		protected var bolt:Lightning;
 		protected var lightningCount:int;
+		protected var boltOrigin:FlxObject;
+		
+		protected var finaleTrigger:FlxObject;
+		protected var finalSpawnTimer:Number;
+		protected var finaleCountingDown:Boolean;
+		protected var finalSpawnCount:int;
+		
+		protected var postFinaleTimer:Number;
+		protected var postFinale:Boolean;
 		
 		override public function create():void
 		{
@@ -29,7 +38,6 @@ package levels
 			_playerStart = new FlxPoint(48*32, 44*32);
 			_goalPos = new FlxPoint(200, 100);
 			lightningCount = -1;
-			bolts = new FlxGroup();
 			super.create();
 			activatePlayers(Math.max(1, PlayState.numInGoal));
 			
@@ -80,7 +88,13 @@ package levels
 			zTriggers.add(new ZombieTrigger(32, 11, 35, 11, 10));
 			zTriggers.add(new ZombieTrigger(23, 10, 28, 10, 10));
 			
-			
+			finaleTrigger = new FlxObject(7 * 32, 10 * 32, 32, 64);
+			finalSpawnTimer = -1;
+			finaleCountingDown = false;
+			finalSpawnCount = 0;
+			boltOrigin = new FlxObject(32 * 8, 32 * 8, 32, 32);
+			postFinaleTimer = -1.0;
+			postFinale = false;
 		}
 		
 		override protected function addBackSprites():void
@@ -103,6 +117,7 @@ package levels
 			super.update();
 			
 			FlxU.overlap(_players, zTriggers, triggerZombies);
+			FlxU.overlap(_players, finaleTrigger, triggerFinale);
 			
 			if ((_camMan.x > 520 && _camMan.x <700) && (_camMan.y > 300 && _camMan.y < 350))
 			{
@@ -117,7 +132,7 @@ package levels
 				lightningCount = 30;
 			}
 			
-			if (lightningCount > 0)
+			/*if (lightningCount > 0)
 			{
 				for (var i:Number = 0; i < _players.members.length; i++) {
 					bolt = add(new Lightning()) as Lightning;
@@ -147,7 +162,86 @@ package levels
 					_players.members.pop();
 				}
 				nextLevel();
+			}*/
+			
+			if (finaleCountingDown)
+			{
+				if (finalSpawnTimer > 0)
+				{
+					finalSpawnTimer -= FlxG.elapsed;
+				}
+				else
+				{
+					// begin the spawn
+					if (finalSpawnCount < 50)
+					{
+						// 13,8 and 1,8
+						if (Math.random() < 0.5)
+						{
+							addWalkBot(1 * 32, 8 * 32);
+							addZombie(13 * 32, 8 * 32);
+						}
+						else
+						{
+							addWalkBot(13 * 32, 8 * 32);
+							addZombie(1 * 32, 8 * 32);
+						}
+					}
+				}
+				
+				// finale
+				if (finalSpawnTimer < 0 && PlayState.numHydra < 2 && lightningCount == -1)
+				{
+					var hydra:Player = _players.getFirstAlive() as Player;
+					if (hydra)
+					{
+						hydra.invincible = true;
+						lightningCount = 60;
+					}
+				}
 			}
+			
+			if (lightningCount > 0)
+			{
+				var lhydra:Player = _players.getFirstAlive() as Player;
+				if (lhydra)
+				{
+					var hpos:FlxPoint = lhydra.getScreenXY();
+					var bpos:FlxPoint = boltOrigin.getScreenXY();
+					bolt = add(new Lightning()) as Lightning;
+					bolt.SetTarget(bpos);
+					bolt.SetOrigin(hpos);
+					bolt.strike(bpos.x, bpos.y);
+				}
+				lightningCount--;
+			}
+			
+			if (lightningCount == 0)
+			{
+				if (!postFinale)
+				{
+					FlxG.flash.start();
+					var lhydra:Player = _players.getFirstAlive() as Player;
+					if (lhydra)
+					{
+						lhydra.invincible = false;
+						lhydra.die();
+						postFinaleTimer = 3.0;
+					}
+					postFinale = true;
+					_resetFlag = false;
+				}
+				else
+				{
+					postFinaleTimer -= FlxG.elapsed;
+					if (postFinaleTimer < 0)
+					{
+						FlxG.fade.start(0xff000000, 1.4, function():void { _changingLevel = false; FlxG.state = new EndState(); } );
+					}
+				}
+			}
+			
+			
 			/*var i:int;
 			if (((_camMan.x > 400 && _camMan.x <500) && (_camMan.y > 1350 && _camMan.y < 1600)) && (part == 0))
 			{
@@ -208,6 +302,19 @@ package levels
 					addZombie(trigger.spawnX + 32 * (Math.random()-0.5), trigger.spawnY + 16 * (Math.random()-0.5));
 				}
 				zTriggers.remove(trigger);
+			}
+		}
+		
+		protected function triggerFinale(a:FlxObject, b:FlxObject):void
+		{
+			if (!finaleCountingDown)
+			{
+				_camMan.x = finaleTrigger.x;
+				_camMan.y = finaleTrigger.y;
+				_camMan.fix = true;
+				playQuake();
+				finalSpawnTimer = 3.0;
+				finaleCountingDown = true;
 			}
 		}
 		
