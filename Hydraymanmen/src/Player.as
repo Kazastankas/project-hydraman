@@ -16,6 +16,7 @@ public class Player extends FlxSprite
 	protected var nearPlague:Boolean;
 	protected var players:FlxGroup;
 	protected var fireHairs:FlxGroup;
+	protected var drunkBubbles:FlxGroup;
 	protected var fireHair:FlxSprite;
 	protected var aliveCount:int = 0;
 	public var floating:Boolean = false;
@@ -24,13 +25,14 @@ public class Player extends FlxSprite
 	
 	public var pushing:Boolean;
 	
-	public function Player(X:int,Y:int,players:FlxGroup,fireHairs:FlxGroup)
+	public function Player(X:int,Y:int,players:FlxGroup,fireHairs:FlxGroup,drunkBubbles:FlxGroup)
 	{
 		super(X, Y);
 		loadGraphic(Img, true, true);
 		
 		this.players = players;
 		this.fireHairs = fireHairs;
+		this.drunkBubbles = drunkBubbles;
 		
 		drag.x = runSpeed * 8;
 		drag.y = runSpeed * 8;
@@ -255,6 +257,16 @@ public class Player extends FlxSprite
 		{
 			diseaseTimer += FlxG.elapsed;
 			
+			if (Math.random() < 0.4)
+			{
+				var s:DrunkBubble;
+				s = (drunkBubbles.getFirstAvail() as DrunkBubble);
+				if (s != null)
+				{
+					s.create(x + Math.random() * width, y);
+				}
+			}
+		
 			if (animationTime <= 0)
 			{
 				// after 1 seconds, start spazzing
