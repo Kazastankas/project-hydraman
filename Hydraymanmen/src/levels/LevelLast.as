@@ -93,9 +93,13 @@ package levels
 				if (firstHydra)
 				{
 					firstHydra.create(_playerStart.x, _playerStart.y);
-					FlxG.fade.start(0xFF000000,1,function():void { _changingLevel = false; FlxG.state = new EndState(); });
 					_resetFlag = true;
 				}
+			}
+			
+			if (_updateCount == 100)
+			{
+				FlxG.fade.start(0xff000000, 1.4, function():void { _changingLevel = false; FlxG.state = new EndState(); } );
 			}
 			
 			// initiate lightning enemy spawn
