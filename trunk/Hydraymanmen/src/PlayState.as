@@ -675,7 +675,7 @@ package
 		
 		protected function addHut(x:Number, y:Number):void
 		{
-			_huts.add(new Hut(x, y));
+			_huts.add(new Hut(x, y, _cavemen));
 		}
 		
 		protected function addTree(x:Number, y:Number):void
