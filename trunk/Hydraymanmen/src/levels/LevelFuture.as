@@ -12,6 +12,7 @@ package levels
 	{
 		[Embed(source = 'map4.txt', mimeType = "application/octet-stream")] private var map:Class;
 		private var part:int = 0;
+		protected var zTriggers:FlxGroup;
 		
 		override public function create():void
 		{
@@ -22,6 +23,10 @@ package levels
 			_goalPos = new FlxPoint(200, 100);
 			super.create();
 			activatePlayers(Math.max(1, PlayState.numInGoal));
+			
+			zTriggers = new FlxGroup();
+			add(zTriggers);
+			
 			addPlagueBot(980, 1400);
 			addPlagueBot(930, 1400);
 			addPlagueBot(830, 1400);
@@ -42,13 +47,38 @@ package levels
 			addAngler(32 * 32, 17 * 32, -2.0);
 			addAngler(36 * 32, 17 * 32, -2.0);
 			
+			
+			zTriggers.add(new ZombieTrigger(42, 42, 44, 42, 10));
+			zTriggers.add(new ZombieTrigger(16, 48, 18, 48, 10));
+			zTriggers.add(new ZombieTrigger(6, 44, 9, 44, 10));
+			zTriggers.add(new ZombieTrigger(7, 40, 3, 39, 10));
+			zTriggers.add(new ZombieTrigger(21, 38, 19, 40, 10));
+			zTriggers.add(new ZombieTrigger(14, 34, 17, 34, 10));
+			zTriggers.add(new ZombieTrigger(4, 34, 7, 34, 10));
+			zTriggers.add(new ZombieTrigger(12, 31, 8, 31, 10));
+			zTriggers.add(new ZombieTrigger(24, 31, 20, 31, 10));
+			zTriggers.add(new ZombieTrigger(39, 28, 35, 28, 10));
+			zTriggers.add(new ZombieTrigger(37, 23, 41, 23, 10));
+			zTriggers.add(new ZombieTrigger(29, 23, 33, 23, 10));
+			zTriggers.add(new ZombieTrigger(19, 23, 25, 23, 10));
+			zTriggers.add(new ZombieTrigger(1, 19, 5, 21, 10));
+			zTriggers.add(new ZombieTrigger(25, 23, 29, 23, 10));
+			zTriggers.add(new ZombieTrigger(38, 12, 42, 12, 10));
+			zTriggers.add(new ZombieTrigger(32, 11, 35, 11, 10));
+			zTriggers.add(new ZombieTrigger(23, 10, 28, 10, 10));
+			
+			
 			loadMap(map);
 		}
 		
 		override public function update():void
 		{
 			super.update();
-			var i:int;
+			
+			FlxU.overlap(_players, zTriggers, triggerZombies);
+			
+			
+			/*var i:int;
 			if (((_camMan.x > 400 && _camMan.x <500) && (_camMan.y > 1350 && _camMan.y < 1600)) && (part == 0))
 			{
 				for (i = 0; i < 7; i++ )
@@ -65,10 +95,6 @@ package levels
 			}
 			if (((_camMan.x > 30 && _camMan.x <200) && (_camMan.y > 1250 && _camMan.y < 1300)) && (part == 1))
 			{
-				/*for (i = 0; i < 7; i++ )
-				{
-					addZombie(43+Math.random()*100,1220+Math.random()*30);
-				}*/
 				part = 2;
 			}
 			if (((_camMan.x > 400 && _camMan.x <450) && (_camMan.y > 900 && _camMan.y < 1150)) && (part == 2))
@@ -93,6 +119,25 @@ package levels
 				addQuake(1210, 670);
 				addQuake(1240, 670);
 				part = 4;
+			}*/
+		}
+		
+		protected function triggerZombies(a:FlxObject, b:FlxObject):void
+		{
+			var trigger:ZombieTrigger;
+			if (a is Player && b is ZombieTrigger)
+				trigger = b as ZombieTrigger;
+			else if (b is Player && a is ZombieTrigger)
+				trigger = a as ZombieTrigger;
+			
+			if (trigger)
+			{
+				playQuake();
+				for (var i:int = 0; i < trigger.num; i++)
+				{
+					addZombie(trigger.spawnX + 32 * (Math.random()-0.5), trigger.spawnY + 16 * (Math.random()-0.5));
+				}
+				zTriggers.remove(trigger);
 			}
 		}
 		
