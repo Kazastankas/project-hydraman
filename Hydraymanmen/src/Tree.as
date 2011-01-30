@@ -10,6 +10,7 @@ public class Tree extends Flammable
 	{
 		super(X, Y, fireHairs);
 		loadGraphic(Img, true, true, 47, 36);
+		killable = false;
 		
 		//addAnimation("idle", [0,1,2,3], Math.random()*5+5,true);
 		//play("idle");
