@@ -25,10 +25,7 @@ public class Hut extends FlxSprite
 		
 		if (spawnCount == spawnRate)
 		{
-			trace("Trying to create caveman...");
-			
 			var screenPos:FlxPoint = this.getScreenXY();
-			trace("Screenpos: " + screenPos.x + ", " + screenPos.y);
 			if (screenPos.x > 0 && screenPos.x < FlxG.width && screenPos.y > 0 && screenPos.y < FlxG.height)
 			{
 				var mode:int = 2;
@@ -45,7 +42,6 @@ public class Hut extends FlxSprite
 				if (s != null)
 				{
 					s.create(x, y, mode);
-					trace("Creating cave man of mode " + mode);
 				}
 			}
 			spawnCount = 30*(Math.random() - 0.5);
