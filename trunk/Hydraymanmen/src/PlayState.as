@@ -321,6 +321,7 @@ package
 			}
 			_goalCounter = 0;
 			FlxU.overlap(_waters, _meteor_fires, douseFire);
+			FlxU.overlap(_cavemen, _waters, drownCavemen);
 			FlxU.overlap(_players, _goal, hitGoal);
 			FlxU.overlap(_players, _diseases, setOnDisease);
 			FlxU.overlap(_flammables, _waters, lessFire);
@@ -466,6 +467,14 @@ package
 			}
 		}
 		
+		protected function drownCavemen(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Human)
+			{
+				Human(a).drown();
+			}
+		}
+		
 		protected function fireSharing(a:FlxObject, b:FlxObject):void
 		{
 			if (a is Flammable && b is Flammable)
@@ -566,7 +575,14 @@ package
 		
 		protected function playerHit(a:FlxObject, b:FlxObject):void
 		{
-			Player(a).die();
+			if (b is Human && Human(b).drowned)
+			{
+				return;
+			}
+			else
+			{
+				Player(a).die();
+			}
 		}
 		
 		protected function resetLevel():void
