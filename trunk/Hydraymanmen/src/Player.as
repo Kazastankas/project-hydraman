@@ -18,6 +18,8 @@ public class Player extends Flammable
 	protected var landVelocity:FlxPoint;
 	protected var animationTime:Number = 0;
 	
+	public static const EPS:Number = 0.02;
+	
 	public var pushing:Boolean;
 	
 	public function Player(X:int,Y:int,players:FlxGroup,fireHairs:FlxGroup,drunkBubbles:FlxGroup)
@@ -266,21 +268,23 @@ public class Player extends Flammable
 		if (animationTime <= 0)
 		{
 			
-			if (velocity.y > 0)
+			if (velocity.y > EPS)
 			{
 				play("fall");
 			}
-			else if (velocity.y < 0)
+			else if (velocity.y < -EPS)
 			{
 				play("jump");
 			}
-			else if (velocity.x == 0)
+			else if (velocity.x > -EPS && velocity.x < EPS)
 			{
 				play("idle");
+				trace("Idle");
 			}
 			else
 			{
 				play("run");
+				trace("Run: " + velocity.x);
 			}
 		}
 
