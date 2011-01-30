@@ -12,6 +12,7 @@ package levels
 	{
 		[Embed(source = 'map4.txt', mimeType = "application/octet-stream")] private var map:Class;
 		[Embed(source = "../data/tribalthing.mp3")] protected var Music:Class;
+		[Embed(source = "../data/rock.png")] private var rockImg:Class;
 		protected var zTriggers:FlxGroup;
 		protected var bolt:Lightning;
 		protected var lightningCount:int;
@@ -99,14 +100,28 @@ package levels
 			
 			if (lightningCount > 0)
 			{
-				bolt = add(new Lightning()) as Lightning;
-				var boltPoint:FlxPoint = _players.members[0].getScreenXY();
-				bolt.SetTarget(new FlxPoint(boltPoint.x, boltPoint.y - 400));
-				bolt.SetOrigin(boltPoint);
-				bolt.strike(boltPoint.x, boltPoint.y - 400);
+				for (var i:Number = 0; i < _players.members.length; i++) {
+					bolt = add(new Lightning()) as Lightning;
+					var boltPoint:FlxPoint = _players.members[i].getScreenXY();
+					bolt.SetTarget(new FlxPoint(boltPoint.x, boltPoint.y - 400));
+					bolt.SetOrigin(boltPoint);
+					bolt.strike(boltPoint.x, boltPoint.y - 400);
+				}
 				lightningCount--;
-			} else if (lightningCount == 0)
+			}
+			else if (lightningCount == 0)
 			{
+				while (_players.members.length > 1) {
+					var hydra:Player = _players.members.pop();
+					hydra.kill();
+				}
+				
+				if (_players.members.length == 1) {
+					var spawnRock:FlxSprite = new FlxSprite(_players.members[0].x - 18, _players.members[0].y + 8);
+					spawnRock.loadGraphic(rockImg , false, false, 36, 22);
+					add(spawnRock);
+					_players.members.pop();
+				}
 				nextLevel();
 			}
 			/*var i:int;
