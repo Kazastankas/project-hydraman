@@ -69,6 +69,17 @@ package levels
 				}
 				part = 2;
 			}
+			if (((_camMan.x > 1050 && _camMan.x <1100) && (_camMan.y > 500 && _camMan.y < 800)) && (part == 2))
+			{
+				for (i = 0; i < 7; i++ )
+				{
+					addZombie(1214+Math.random()*100,700+Math.random()*30);
+				}
+				addQuake(1190, 670)
+				addQuake(1210, 670);
+				addQuake(1240, 670);
+				part = 3;
+			}
 		}
 		
 		override protected function resetLevel():void
