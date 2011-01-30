@@ -18,7 +18,7 @@ package levels
 			trace("Creating dino level");
 			
 			var i:int;
-			_playerStart = new FlxPoint(8*32, 48*32);
+			_playerStart = new FlxPoint(8*32, 47*32);
 			_goalPos = new FlxPoint(1479, 759);
 			
 			super.create();
@@ -38,6 +38,8 @@ package levels
 			addWater(14, 18, 0, 0);
 			addWater(19, 19, 1, 0);
 			addWater(28, 20, 1, 0);
+			addWater(42, 23, 0, 0);
+			addWater(21, 39, 0, 0);
 			addHuman(300, 780, 1);
 			addHuman(500, 780, 1);
 			addHuman(260, 780, 2);
