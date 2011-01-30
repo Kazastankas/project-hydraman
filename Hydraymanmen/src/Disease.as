@@ -13,9 +13,6 @@ public class Disease extends FlxSprite
 	{
 		super(X, Y);
 		loadGraphic(Img, true, true, 25, 25);
-				
-		//addAnimation("idle", [0], 5);
-		//play("idle");
 		
 		this.maxLife = maxLife;
 		this.life = maxLife;
@@ -28,11 +25,9 @@ public class Disease extends FlxSprite
 		reset(x, y);
 		
 		var theta:Number = 2 * Math.PI * Math.random();
-		trace("Angle: " + theta);
 		var velmag:Number = 8.0 + (Math.random() - 0.5);
 		this.velocity.x = velmag * Math.cos(theta);
 		this.velocity.y = velmag * Math.sin(theta);
-		trace("Vel: " + velocity.x + ", " + velocity.y);
 	}
 	
 	override public function update():void

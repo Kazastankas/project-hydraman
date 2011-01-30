@@ -13,6 +13,7 @@ package
 		[Embed(source = "data/fire.png")] protected var fireImg:Class;
 		[Embed(source = 'levels/map2.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		[Embed(source = "data/cambrian-bg.png")] private var bgImg:Class;
+		[Embed(source = "data/icegibs.png")] private var iceGibs:Class;
 		protected var _players:FlxGroup;//the players
 		protected var _camMan:CameraMan;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
@@ -57,6 +58,8 @@ package
 		protected var _tornados:FlxGroup;
 		protected var _sharks:FlxGroup;
 		protected var _anglers:FlxGroup;
+		protected var _iceGibs:FlxEmitter;
+		protected var _gibbing:Number = -1;
 		
 		override public function create():void
 		{
@@ -208,10 +211,16 @@ package
 			
 			add(_cosmetic_fires);
 			
+			_iceGibs = new FlxEmitter();
+			_iceGibs.createSprites(iceGibs, 15, 16, true, 1);
+			//_iceGibs.delay = 1.5;
+			_iceGibs.setXSpeed( -150, 150);
+			_iceGibs.setYSpeed( -150, 50);
+			add(_iceGibs);
 			_cavemen = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
-				s = new Human( -100, -100,_meteor_fires,_camMan);
+				s = new Human( -100, -100,_meteor_fires,_camMan, _iceGibs);
 				s.exists = false;
 				_cavemen.add(s);
 			}
@@ -467,6 +476,11 @@ package
 				nextLevel();
 			}
 			
+			if (_gibbing > 0)
+				_gibbing -= FlxG.elapsed;
+			if (_gibbing < 0)
+				_gibbing = -1;
+			
 			_updateCount++;
 		}
 		
@@ -595,7 +609,13 @@ package
 			{
 				if (Player(a).onFire)
 				{
-					_tileMap.setTile(b.x/32, b.y/32, 0, true);
+					_tileMap.setTile(b.x / 32, b.y / 32, 0, true);
+					if (_gibbing < 0)
+					{
+						_iceGibs.at(b);
+						_iceGibs.start(true, 0, 0);
+						_gibbing = 0.5;
+					}
 				}
 			}
 			else
