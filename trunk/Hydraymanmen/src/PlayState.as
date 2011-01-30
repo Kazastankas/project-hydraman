@@ -220,7 +220,7 @@ package
 			_anglers = new FlxGroup();
 			for (i = 0; i < 32; i++)
 			{
-				s = new Angler( -100, -100, _players);
+				s = new Angler( -100, -100, 10000, _players);
 				s.exists = false;
 				_anglers.add(s);
 			}

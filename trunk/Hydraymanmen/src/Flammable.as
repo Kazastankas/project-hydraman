@@ -30,7 +30,14 @@ public class Flammable extends FlxSprite
 	{
 		if (!onFire)
 		{
-			fireSprite.push(new Fire(x + (width / 2) - 12, y + (height / 2) - 12, 5, false));
+			if (killable)
+			{
+				fireSprite.push(new Fire(x + (width / 2) - 12, y + (height / 2) - 12, 5, false));
+			}
+			else
+			{
+				fireSprite.push(new Fire(x + (width / 2) - 12, y + (height / 2) - 12, -1, false));
+			}
 			fireSprites.add(fireSprite[0]);
 			
 			var center_x:Number = x + (width / 2) - 12;
@@ -40,7 +47,14 @@ public class Flammable extends FlxSprite
 			{
 				for (var j:Number = 0; j < height / 24; j++)
 				{
-					fireSprite.push(new Fire(center_x + (i - int(width / 48)) * 10, center_y + (j - int(height / 48)) * 10, 5, false));
+					if (killable)
+					{
+						fireSprite.push(new Fire(center_x + (i - int(width / 48)) * 10, center_y + (j - int(height / 48)) * 10, 5, false));
+					}
+					else
+					{
+						fireSprite.push(new Fire(center_x + (i - int(width / 48)) * 10, center_y + (j - int(height / 48)) * 10, -1, false));
+					}
 					fireSprites.add(fireSprite[1 + (i * int(height / 24) + j)]);
 				}
 			}
@@ -58,7 +72,8 @@ public class Flammable extends FlxSprite
 		{
 			for (var i:Number = 0; i < fireSprite.length; i++)
 			{
-				fireSprite[i].kill();
+				var j:FlxSprite = fireSprite.pop();
+				j.kill();
 			}
 		}
 	}
@@ -85,9 +100,9 @@ public class Flammable extends FlxSprite
 			
 			if (fireTimer > 5)
 			{
-				deflame();
 				if (killable)
 				{
+					deflame();
 					kill();
 				}
 			}

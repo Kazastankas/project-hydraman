@@ -10,8 +10,9 @@ package
 		public var moving:uint;
 		protected var runSpeed:Number = 50;
 		public var players:FlxGroup;
+		public var power:uint;
 		
-		public function Angler(X:Number, Y:Number, players:FlxGroup)
+		public function Angler(X:Number, Y:Number, power:uint, players:FlxGroup)
 		{
 			super(X, Y);
 			loadGraphic(myImage,true,true);
@@ -20,6 +21,7 @@ package
 			play("idle");
 			
 			this.players = players;
+			this.power = power;
 			drag.x = runSpeed;
 			drag.y = runSpeed;
 			acceleration.y = 420;
@@ -80,8 +82,8 @@ package
 				if (Player(players.members[i]).health <= 0) continue;
 				var dist:Number = Math.sqrt(Math.pow(Player(players.members[i]).x - x, 2) +
 											Math.pow(Player(players.members[i]).y - y, 2));
-				Player(players.members[i]).velocity.x += (x - Player(players.members[i]).x) * 10000 / Math.pow(dist, 3);
-				Player(players.members[i]).velocity.y += (y - Player(players.members[i]).y) * 10000 / Math.pow(dist, 3);
+				Player(players.members[i]).velocity.x += (x - Player(players.members[i]).x) * power / Math.pow(dist, 3);
+				Player(players.members[i]).velocity.y += (y - Player(players.members[i]).y) * power / Math.pow(dist, 3);
 			}
 			
 			super.update();
