@@ -55,8 +55,6 @@ package
 		protected var _tornados:FlxGroup;
 		protected var _sharks:FlxGroup;
 		
-		protected var _block:Block;
-		
 		override public function create():void
 		{
 			FlxG.playMusic(Music);
@@ -165,6 +163,11 @@ package
 			//activatePlayers(numHydra);
 			add(_players);
 			
+			_camMan = new CameraMan(_players, _playerStart);
+			add(_camMan);
+			
+			FlxG.follow(_camMan, 9);
+			
 			_goal = new FlxSprite(_goalPos.x + 38, _goalPos.y);
 			_goal.loadGraphic(goalFrontImg, false, true, 42, 41);
 			if (!_goalFlipped)
@@ -210,6 +213,15 @@ package
 			
 			add(_cosmetic_fires);
 			
+			_cavemen = new FlxGroup();
+			for(i = 0; i < 32; i++)
+			{
+				s = new Human( -100, -100,_meteor_fires,_camMan);
+				s.exists = false;
+				_cavemen.add(s);
+			}
+			add(_cavemen);
+			
 			_waters = new FlxGroup();
 			add(_waters);
 			_waterSprites = new FlxGroup();
@@ -232,20 +244,6 @@ package
 			}
 			add(_drunk_bubbles);
 			
-			_camMan = new CameraMan(_players, _playerStart);
-			add(_camMan);
-			
-			FlxG.follow(_camMan, 9);
-			
-			_cavemen = new FlxGroup();
-			for(i = 0; i < 32; i++)
-			{
-				s = new Human( -100, -100,_meteor_fires,_camMan);
-				s.exists = false;
-				_cavemen.add(s);
-			}
-			add(_cavemen);
-			
 			_sharks = new FlxGroup();
 			for (i = 0; i < 32; i++)
 			{
@@ -254,9 +252,6 @@ package
 				_sharks.add(s);
 			}
 			add(_sharks);
-			
-			//_block = new Block(50, 50, 5);
-			//_players.add(_block);
 			
 			FlxG.followAdjust(0, 0);
 			
@@ -341,7 +336,6 @@ package
 			FlxU.collide(_cavemen, _tileMap);
 			FlxU.collide(_players, _players);
 			FlxU.collide(_sharks, _tileMap);
-			//FlxU.collide(_players, _blocks);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
 			
