@@ -23,22 +23,23 @@ package levels
 			super.create();
 			activatePlayers(1);
 			addDino(1230, 960);
+			addDino(790, 820);
 			addWater(39, 38, 5, 11);
 			addWater(45, 31, 3, 16);
-			addTree(100,100);
+			addTree(100, 100);
+			loadMap(map);
 		}
 		
 		override public function update():void
 		{
 			super.update();
-			loadMap(map);
 			
+			/*
 			if (((_camMan.x > 850 && _camMan.x <930) && (_camMan.y > 860 && _camMan.y < 1100)) && (part == 0))
 			{
 				addTornado(850, 900, 1);
 				part = 1;
 			}
-			/*
 			if (((_camMan.x > 1000 && _camMan.x < 1200) && (_camMan.y > 750 && _camMan.y < 900)) && (part == 1))
 			{
 				addQuake(1255, 906);
