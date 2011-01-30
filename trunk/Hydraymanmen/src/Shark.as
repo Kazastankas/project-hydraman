@@ -58,16 +58,23 @@
 					moveIndex = 0;
 			}
 			
+			if (velocity.x > 0)
+			{
+				facing = RIGHT;
+			}
+			else if (velocity.x < 0)
+			{
+				facing = LEFT;
+			}
+			
 			switch(move)
 			{
 				case 0:
-					facing = RIGHT;
 					velocity.x = maxVelocity.x;
 					velocity.y = -20;
 				break;
 				
 				case 1:
-					facing = LEFT;
 					velocity.x = -maxVelocity.x;
 					velocity.y = -20;
 				break;
