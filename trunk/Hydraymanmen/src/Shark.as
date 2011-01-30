@@ -21,6 +21,8 @@
 		
 		private const moveArray:Array = [1, 1, 2, 3, 3, 0, 0, 2, 3, 3];
 		
+		protected var patrolSpeed:Number;
+		
 		public function Shark(X:Number, Y:Number, PlayerCenter:FlxObject) 
 		{
 			super(X, Y);
@@ -39,6 +41,8 @@
 			playerCenter = PlayerCenter;
 			lungeVector = new FlxPoint();
 			
+			patrolSpeed = Math.random() * 2 + 2;
+			
 			moveTimer = 0;
 			moveIndex = 0;
 
@@ -50,6 +54,14 @@
 		{
 			moveTimer -= FlxG.elapsed;
 			
+			if (moveTimer < 0)
+			{
+				moveTimer = patrolSpeed;
+				velocity.x = -velocity.x;
+			}
+			
+			/*
+			
 			if (moveTimer <= 0)
 			{
 				moveTimer = 1;
@@ -57,6 +69,7 @@
 				if (moveIndex >= moveArray.length)
 					moveIndex = 0;
 			}
+			*/
 			
 			if (velocity.x > 0)
 			{
@@ -66,7 +79,7 @@
 			{
 				facing = LEFT;
 			}
-			
+			/*
 			switch(move)
 			{
 				case 0:
@@ -101,6 +114,7 @@
 					velocity = lungeVector;				
 				break;
 			}
+			*/
 			
 			super.update();
 		}
@@ -109,6 +123,7 @@
 		{
 			velocity.x = velocity.y = 0;
 			health = 20;
+			velocity.x = runSpeed;
 			reset(x, y);
 		}
 		
