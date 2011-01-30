@@ -2,44 +2,49 @@ package
 {
 import org.flixel.*;
 
-public class Player extends Flammable
+public class Zombie extends Flammable
 {
 	[Embed(source = "data/split4.mp3")] protected var SplitSnd:Class;
 	[Embed(source = "data/hydra-all.png")] protected var Img:Class;
+	public var AItimer:Number;
+	public var AImode:int;
+	public var moving:uint;
 	protected var runSpeed:Number = 100;
 	protected var splitTimer:Number = 0;
 	protected var diseaseTimer:Number = 0;
 	protected var onDisease:Boolean;
-	protected var nearPlague:Boolean;
-	protected var players:FlxGroup;
+	protected var zombies:FlxGroup;
 	protected var drunkBubbles:FlxGroup;
-	protected var aliveCount:int = 0;
 	public var floating:Boolean = false;
 	protected var landVelocity:FlxPoint;
 	protected var animationTime:Number = 0;
+	protected var target:FlxObject;
 	
 	public var pushing:Boolean;
 	
-	public function Player(X:int,Y:int,players:FlxGroup,fireHairs:FlxGroup,drunkBubbles:FlxGroup)
+	public function Zombie(X:int,Y:int,zombies:FlxGroup,fireHairs:FlxGroup,drunkBubbles:FlxGroup,target:FlxObject)
 	{
 		super(X, Y, fireHairs);
 		loadGraphic(Img, true, true);
 		
-		this.players = players;
+		this.zombies = zombies;
 		this.drunkBubbles = drunkBubbles;
+		this.target = target;
 		
-		drag.x = runSpeed * 8;
-		drag.y = runSpeed * 8;
+		drag.x = runSpeed * 2;
+		drag.y = runSpeed * 2;
 		acceleration.y = 420;
 		landVelocity = new FlxPoint(runSpeed,270+Math.random()*20);
-		maxVelocity.x = landVelocity.x;
-		maxVelocity.y = landVelocity.y;
+		maxVelocity.x = landVelocity.x / 4;
+		maxVelocity.y = landVelocity.y / 4;
 		health = 200;
 		setSplitTimer();
 		offset.x = 8;
 		offset.y = 6;
 		width = 8;
 		height = 18;
+		AImode = 1;
+		AItimer = 2;
 
 		diseaseTimer = 0;
 		onDisease = false;
@@ -54,13 +59,12 @@ public class Player extends Flammable
 		addAnimation("grow", [0, 1, 2, 3],8,false);
 		play("idle");
 		
+		plague();
 	}
 	
 	protected function setSplitTimer():void
 	{
-		splitTimer = Math.random() * 3 + 2;
-		splitTimer *= 0.3 * Math.sqrt(PlayState.numHydra + 1);
-		//trace("splitTimer: " + splitTimer);
+		splitTimer = Math.random() * 6 + 4;
 	}
 	
 	public function on_disease():Boolean
@@ -69,18 +73,9 @@ public class Player extends Flammable
 	}
 	
 	public function plague():void
-	{
-		if (!onDisease)
-		{
-		}
-		
+	{		
 		onDisease = true;
 		color = 0x557700;
-	}
-	
-	public function near_plague():void
-	{
-		nearPlague = true;
 	}
 	
 	public function create(x:Number,y:Number):void
@@ -91,22 +86,22 @@ public class Player extends Flammable
 		setSplitTimer();
 		diseaseTimer = 0;
 		onDisease = false;
-		nearPlague = false;
 		color = 0xFFFFFF;
+		AImode = 1;
+		AItimer = 2;
 		reset(x, y);
 		play("grow");
 		animationTime = .5;
+		plague();
 	}
 	
-	protected function makePlayer(x:Number,y:Number):void
+	protected function makeZombie(x:Number,y:Number):void
 	{			
-		var s:Player;
-		s = (players.getFirstAvail() as Player);
+		var s:Zombie;
+		s = (zombies.getFirstAvail() as Zombie);
 		if (s != null)
 		{
 			s.create(x, y);
-			if (onDisease) s.plague();
-			else if (nearPlague && Math.random() <= 0.2) s.plague();
 		}
 	}
 	
@@ -122,13 +117,7 @@ public class Player extends Flammable
 	}
 	
 	override public function update():void
-	{
-		if (!onScreen())
-		{
-			deflame();
-			kill();
-		}
-		
+	{		
 		acceleration.x = 0;
 		maxVelocity.x = runSpeed;
 		
@@ -144,6 +133,31 @@ public class Player extends Flammable
 		{
 			animationTime -= FlxG.elapsed;
 		}
+		AItimer -= FlxG.elapsed;
+		
+		if (AItimer < 0)
+		{
+			AItimer = 2;
+			if (moving == 1)
+			{
+				moving = 2;
+			}
+			else
+			{
+				moving = 1;
+			}
+		}
+		if (target.y - y > -50 && target.y -y < 50)
+		{
+			if (target.x - x > 50 && target.x - x < 150 )
+			{
+				moving = 1;
+			}
+			else if (target.x - x < -50 && target.x - x > -150 )
+			{
+				moving = 2;
+			}
+		}
 		
 		// dealing with floating
 		if (floating)
@@ -151,19 +165,6 @@ public class Player extends Flammable
 			maxVelocity.x = 100;
 			maxVelocity.y = 100;
 			acceleration.y = 0;
-			
-			// misplaced jump code lolol
-			if (animationTime <= 0 && !onDisease)
-			{
-				if (FlxG.keys.X)
-				{
-					acceleration.y -= drag.x;
-				}
-				else
-				{
-					acceleration.y += drag.x;
-				}
-			}
 			floating = false;
 		}
 		else
@@ -171,20 +172,6 @@ public class Player extends Flammable
 			acceleration.y = 420;
 			maxVelocity.x = landVelocity.x;
 			maxVelocity.y = landVelocity.y;
-			
-			// misplaced jump code lolol
-			if (!onDisease)
-			{
-				if (FlxG.keys.justPressed("X") && !velocity.y)
-				{
-					velocity.y = -maxVelocity.y * (1.0 + (Math.random() - 0.5) * 0.2);
-					if (splitTimer < .5)
-					{
-						splitTimer += .5;
-					}
-					play("jump");
-				}
-			}
 		}
 		
 		// split processing - not when on fire or moving vertically
@@ -194,8 +181,8 @@ public class Player extends Flammable
 			if (splitTimer < 0)
 			{	if (!pushing)
 				{
-					makePlayer(x - width / 2, y);
-					makePlayer(x + width / 2, y);
+					makeZombie(x - width / 2, y);
+					makeZombie(x + width / 2, y);
 					kill();
 					FlxG.play(SplitSnd);
 				}
@@ -227,16 +214,16 @@ public class Player extends Flammable
 				// after 1 seconds, start spazzing
 				if (diseaseTimer > 1.0)
 				{
-					var mod:Number = Math.random() * drag.x - (drag.x / 2);
-					if (mod < 0)
+					if (moving == 2)
 					{
 						facing = LEFT;
+						acceleration.x -= drag.x;
 					}
-					else
+					if (moving == 1)
 					{
 						facing = RIGHT;
+						acceleration.x += drag.x;
 					}
-					acceleration.x += mod;
 				}
 				
 				// after 2 seconds, start jumping
@@ -244,21 +231,6 @@ public class Player extends Flammable
 				{
 					velocity.y = -maxVelocity.y * (1.0 + (Math.random() - 0.5) * 0.2);
 				}
-			}
-		}
-		
-		// can't control sick dudes
-		if (!onDisease)
-		{	
-			if (FlxG.keys.LEFT)
-			{
-				facing = LEFT;
-				acceleration.x -= drag.x;
-			}
-			else if (FlxG.keys.RIGHT)
-			{
-				facing = RIGHT;
-				acceleration.x += drag.x;
 			}
 		}
 		
@@ -294,35 +266,5 @@ public class Player extends Flammable
 		else
 			collideTop = true;
 	}
-	
-	override public function hitRight(Contact:FlxObject, Velocity:Number):void 
-	{
-		if (Contact is Player)
-		{
-			if (pushing)
-			{
-				Contact.x = x;
-				return;
-			}
-		}
-			
-		super.hitRight(Contact, Velocity);
-	}
-	
-	override public function hitLeft(Contact:FlxObject, Velocity:Number):void 
-	{
-		if (Contact is Player)
-		{
-			if (pushing)
-			{
-				Contact.x = x;
-				return;
-			}
-		}		
-		
-		super.hitLeft(Contact, Velocity);
-	}
-	
-	
 }
 }

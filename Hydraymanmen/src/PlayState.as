@@ -16,6 +16,7 @@ package
 		[Embed(source = "data/icegibs.png")] private var iceGibs:Class;
 		[Embed(source = "data/shatter.mp3")] protected var shatterSnd:Class;
 		protected var _players:FlxGroup;//the players
+		protected var _zombies:FlxGroup;//the zombies
 		protected var _camMan:CameraMan;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
 		protected var _goal:FlxSprite;//the goal
@@ -166,6 +167,16 @@ package
 			add(_camMan);
 			
 			FlxG.follow(_camMan, 9);
+			
+			_zombies = new FlxGroup();
+			for (i = 0; i < 64; i++)
+			{
+				s = new Zombie( -100, -100, _zombies, _cosmetic_fires, _drunk_bubbles, _camMan);
+				s.exists = false;
+				_zombies.add(s);
+				_flammables.add(s)
+			}
+			add(_zombies);
 			
 			_goal = new FlxSprite(_goalPos.x + 38, _goalPos.y);
 			_goal.loadGraphic(goalFrontImg, false, true, 42, 41);
@@ -368,6 +379,7 @@ package
 			FlxU.overlap(_flammables, _meteor_fires, setOnFire);
 			FlxU.overlap(_trees, _meteor_fires, setOnFire);
 			FlxU.overlap(_players, _players, playerContagion);
+			FlxU.overlap(_players, _zombies, zombieContagion);
 			FlxU.overlap(_flammables, _flammables, fireSharing);
 			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _tileMap);
@@ -375,10 +387,12 @@ package
 			FlxU.collide(_dinos, _tileMap);
 			FlxU.collide(_cavemen, _tileMap);
 			FlxU.collide(_players, _players);
+			FlxU.collide(_players, _zombies);
 			FlxU.collide(_sharks, _tileMap);
 			FlxU.collide(_anglers, _tileMap);
 			FlxU.collide(_plagueBots, _tileMap);
 			FlxU.collide(_walkBots, _tileMap);
+			FlxU.collide(_zombies, _tileMap);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
 			
@@ -466,6 +480,10 @@ package
 			if (FlxG.keys.justPressed('O'))
 			{
 				addWalkBot(FlxG.mouse.x, FlxG.mouse.y);
+			}
+			if (FlxG.keys.justPressed('P'))
+			{
+				addZombie(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			if (FlxG.keys.justPressed('CONTROL'))
 			{
@@ -578,11 +596,19 @@ package
 		{
 			if (a is Player && b is Player)
 			{
-				if (Player(a).on_disease() || Player(b).on_disease())
+				if (Player(a).on_disease() && Player(b).on_disease())
 				{
 					Player(a).near_plague();
 					Player(b).near_plague();
 				}
+			}
+		}
+		
+		protected function zombieContagion(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Player)
+			{
+				Player(a).near_plague();
 			}
 		}
 		
@@ -865,6 +891,16 @@ package
 		{
 			var s:PlagueBot;
 			s = (_plagueBots.getFirstAvail() as PlagueBot);
+			if (s != null)
+			{
+				s.create(x, y);
+			}
+		}
+		
+		protected function addZombie(x:Number, y:Number):void
+		{
+			var s:Zombie;
+			s = (_zombies.getFirstAvail() as Zombie);
 			if (s != null)
 			{
 				s.create(x, y);
