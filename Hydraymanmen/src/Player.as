@@ -2,22 +2,17 @@ package
 {
 import org.flixel.*;
 
-public class Player extends FlxSprite
+public class Player extends Flammable
 {
 	[Embed(source = "data/split4.mp3")] protected var SplitSnd:Class;
 	[Embed(source = "data/hydra-all.png")] protected var Img:Class;
-	[Embed(source = "data/fire.png")] protected var FireImg:Class;
 	protected var runSpeed:Number = 100;
 	protected var splitTimer:Number = 0;
-	protected var fireTimer:Number = 0;
-	public var onFire:Boolean;
 	protected var diseaseTimer:Number = 0;
 	protected var onDisease:Boolean;
 	protected var nearPlague:Boolean;
 	protected var players:FlxGroup;
-	protected var fireHairs:FlxGroup;
 	protected var drunkBubbles:FlxGroup;
-	protected var fireHair:FlxSprite;
 	protected var aliveCount:int = 0;
 	public var floating:Boolean = false;
 	protected var landVelocity:FlxPoint;
@@ -27,11 +22,10 @@ public class Player extends FlxSprite
 	
 	public function Player(X:int,Y:int,players:FlxGroup,fireHairs:FlxGroup,drunkBubbles:FlxGroup)
 	{
-		super(X, Y);
+		super(X, Y, fireHairs);
 		loadGraphic(Img, true, true);
 		
 		this.players = players;
-		this.fireHairs = fireHairs;
 		this.drunkBubbles = drunkBubbles;
 		
 		drag.x = runSpeed * 8;
@@ -46,9 +40,7 @@ public class Player extends FlxSprite
 		offset.y = 6;
 		width = 8;
 		height = 18;
-		
-		fireTimer = 0;
-		onFire = false;
+
 		diseaseTimer = 0;
 		onDisease = false;
 
@@ -71,26 +63,9 @@ public class Player extends FlxSprite
 		//trace("splitTimer: " + splitTimer);
 	}
 	
-	public function fire_time():Number
-	{
-		
-		return fireTimer;
-	}
-	
 	public function on_disease():Boolean
 	{
 		return onDisease;
-	}
-	
-	public function ignite():void
-	{
-		if (!onFire)
-		{
-			fireHair = new Fire(x - width / 2, y - height / 2, 5, false);
-			fireHairs.add(fireHair);
-		}
-		onFire = true;
-		color = 0xef3528;
 	}
 	
 	public function plague():void
@@ -110,11 +85,10 @@ public class Player extends FlxSprite
 	
 	public function create(x:Number,y:Number):void
 	{
+		deflame();
 		velocity.x = velocity.y = 0;
 		health = 200;
 		setSplitTimer();
-		fireTimer = 0;
-		onFire = false;
 		diseaseTimer = 0;
 		onDisease = false;
 		nearPlague = false;
@@ -142,7 +116,7 @@ public class Player extends FlxSprite
 		{
 			if (onFire)
 			{
-				fireHair.kill();
+				deflame();
 			}
 			splitTimer = 5;
 			animationTime = .5;
@@ -176,10 +150,7 @@ public class Player extends FlxSprite
 		{
 			if (onFire)
 			{
-				fireTimer = 0;
-				onFire = false;
-				color = 0xFFFFFF;
-				fireHair.kill();
+				deflame();
 			}
 			maxVelocity.x = 100;
 			maxVelocity.y = 100;
@@ -237,18 +208,6 @@ public class Player extends FlxSprite
 			{
 				play("split");
 				animationTime = 1;
-			}
-		}
-		
-		// fire processing
-		if (onFire)
-		{
-			fireTimer += FlxG.elapsed;
-			fireHair.x = x - width / 2;
-			fireHair.y = y - height / 2;
-			if (fireTimer > 5)
-			{
-				die();
 			}
 		}
 		
