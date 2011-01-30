@@ -340,6 +340,12 @@ package
 			numInGoal = 0;
 		}
 		
+		protected function playQuake():void
+		{
+			FlxG.play(QuakeSnd);
+			FlxG.quake.start();
+		}
+		
 		override public function update():void
 		{
 			super.update();
@@ -361,8 +367,7 @@ package
 						var c:Change = _changes[_changeIndex][i];
 						if (c.tile == 0)
 						{
-							FlxG.play(QuakeSnd);
-							FlxG.quake.start();
+							playQuake();
 						}
 						_tileMap.setTile(c.pos.x, c.pos.y, c.tile, true);
 						//FlxG.log("changes");
