@@ -45,8 +45,6 @@
 			
 			moveTimer = 0;
 			moveIndex = 0;
-
-			
 			
 		}
 		
