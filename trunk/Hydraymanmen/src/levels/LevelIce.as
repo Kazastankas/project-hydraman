@@ -70,7 +70,7 @@ package levels
 			}
 			super.update();
 			
-			if (((_camMan.x > 500) && (_camMan.y > 0 && _camMan.y < 650)))
+			if (((_camMan.x > 500) && (_camMan.y > 0 && _camMan.y < 440))&&(part <= 4))
 			{
 				if (mTimer <= 0)
 				{
@@ -111,7 +111,7 @@ package levels
 				addQuake(1549, 400);
 				part = 5;
 			}
-			if (((_camMan.x > 500) && (_camMan.y > 0 && _camMan.y < 800))&&(part >= 4))
+			if (((_camMan.x > 300) && (_camMan.y > 0 && _camMan.y < 800))&&(part > 4))
 			{
 				if (mTimer <= 0)
 				{
