@@ -32,6 +32,7 @@ package levels
 			addWater(6, 10, 12, 6);
 			addWater(30, 12, 1, 0);
 			addWater(44, 12, 0, 0);
+			addWater(37, 12, 1, 0);
 			addShark(406,1160);
 			addShark(285, 1199);
 			addShark(61, 1336);
