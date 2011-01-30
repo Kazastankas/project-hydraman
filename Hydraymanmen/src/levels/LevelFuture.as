@@ -81,10 +81,10 @@ package levels
 			
 			FlxU.overlap(_players, zTriggers, triggerZombies);
 			
-			if (((_camMan.x > 680 && _camMan.x <700) && (_camMan.y > 300 && _camMan.y < 350)) && (part == 0))
+			if (((_camMan.x > 520 && _camMan.x <700) && (_camMan.y > 300 && _camMan.y < 350)) && (part == 0))
 			{
-				addQuake(655, 332);
-				addQuake(625, 332);
+				addQuake(500, 332);
+				addQuake(470, 332);
 			}
 			
 			
