@@ -138,6 +138,10 @@ public class Player extends FlxSprite
 	{
 		if (health > 0)
 		{
+			if (onFire)
+			{
+				fireHair.kill();
+			}
 			splitTimer = 5;
 			animationTime = .5;
 			play("die");

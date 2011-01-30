@@ -26,6 +26,7 @@ package
 		protected var _waters:FlxGroup;
 		protected var _bubbles:FlxGroup;
 		protected var _dinos:FlxGroup;
+		protected var _burrowers:FlxGroup;
 		protected var _cavemen:FlxGroup;
 		protected var _changes:Array;
 		protected var _changeIndex:int;
@@ -129,8 +130,6 @@ package
 			_goal.fixed = true;
 			add(_goal);
 			
-			_waters = new FlxGroup();
-			
 			_cosmetic_fires = new FlxGroup();
 			
 			_players = new FlxGroup();
@@ -162,6 +161,16 @@ package
 			}
 			add(_dinos);
 			
+			_burrowers = new FlxGroup();
+			for (i = 0; i < 32; i++)
+			{
+				s = new Burrower( -100, -100);
+				s.exists = false;
+				_burrowers.add(s);
+			}
+			add(_burrowers);
+			
+			_waters = new FlxGroup();
 			add(_waters);
 			
 			_bubbles = new FlxGroup();
@@ -244,7 +253,7 @@ package
 							FlxG.quake.start();
 						}
 						_tileMap.setTile(c.pos.x, c.pos.y, c.tile, true);
-						FlxG.log("changes");
+						//FlxG.log("changes");
 					}
 				}
 			}
@@ -275,6 +284,7 @@ package
 			FlxU.overlap(_players, _enemies, playerHit);
 			FlxU.overlap(_players, _dinos, playerHit);
 			FlxU.overlap(_players, _cavemen, playerHit);
+			FlxU.overlap(_players, _burrowers, processBurrower);
 			
 			//end condition
 			if (_goalCounter > 1)
@@ -327,6 +337,10 @@ package
 			if (FlxG.keys.justPressed('H'))
 			{
 				addDisease(FlxG.mouse.x, FlxG.mouse.y);
+			}
+			if (FlxG.keys.justPressed('Q'))
+			{
+				addBurrower(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			
 			_updateCount++;
@@ -458,10 +472,23 @@ package
 			return avgPos;
 		}
 		
+		protected function processBurrower(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Burrower) 
+			{
+				Burrower(a).processSeen(Player(b));
+			}
+			else
+			{
+				Burrower(b).processSeen(Player(a));
+			}
+		}
+		
 		protected function playerHit(a:FlxObject, b:FlxObject):void
 		{
 			Player(a).die();
 		}
+		
 		protected function resetLevel():void
 		{
 			_updateCount = 0;
@@ -583,6 +610,16 @@ package
 		{
 			var s:Disease;
 			s = (_diseases.getFirstAvail() as Disease);
+			if (s != null)
+			{
+				s.create(x, y);
+			}
+		}
+		
+		protected function addBurrower(x:Number, y:Number):void
+		{
+			var s:Burrower;
+			s = (_burrowers.getFirstAvail() as Burrower);
 			if (s != null)
 			{
 				s.create(x, y);
