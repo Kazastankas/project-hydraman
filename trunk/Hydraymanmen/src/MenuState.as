@@ -35,14 +35,8 @@ package
 			if (time > 6 && part == 1)
 			{
 				FlxG.flash.start(0xff000000, 1);
-				page.loadGraphic(Img3);
-				part = 2;
-			}
-			if (time > 9 && part == 2)
-			{
-				FlxG.flash.start(0xff000000, 1);
 				page.loadGraphic(Img4);
-				part = 3;
+				part = 2;
 			}
 			if (FlxG.keys.justPressed('X'))
 			{
