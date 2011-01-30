@@ -5,7 +5,7 @@ package
 
 	public class EndState extends FlxState
 	{
-		[Embed(source = "data/endpage.png")] protected var Img1:Class;
+		[Embed(source = "data/ending.png")] protected var Img1:Class;
 		[Embed(source = "data/thing2_adapted.mp3")] protected var Music:Class;
 		
 		private var page:FlxSprite = new FlxSprite(0, 0, Img1);
