@@ -22,7 +22,7 @@ package levels
 			_playerStart = new FlxPoint(29*32, 37*32);
 			_goalPos = new FlxPoint(200, 100);
 			super.create();
-			activatePlayers(1);
+			activatePlayers(Math.max(1, PlayState.numInGoal));
 			addDino(1230, 960);
 			addDino(750, 800);
 			addWater(39, 38, 5, 11);

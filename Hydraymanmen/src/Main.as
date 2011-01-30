@@ -9,7 +9,7 @@ package
 	{
 		public function Main()
 		{
-			super(320,240,LevelIce);
+			super(320,240,LevelMeteor);
 			//showLogo = false;
 		}
 	}
