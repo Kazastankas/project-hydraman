@@ -64,7 +64,6 @@ package
 		
 		override public function create():void
 		{
-			FlxG.playMusic(Music);
 			FlxG.mouse.show();
 			var i:int;
 			var s:FlxSprite;
