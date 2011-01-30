@@ -14,12 +14,14 @@
 		protected var moveTimer:Number;
 		protected var moveIndex:uint;
 		protected var move:uint;
+		protected var playerCenter:FlxObject;
+		protected var lungeVector:FlxPoint;
 		
-		protected var runSpeed:Number = 50;
+		protected var runSpeed:Number = 100;
 		
-		private const moveArray:Array = [ 1, 1, 1, 0, 0, 0];
+		private const moveArray:Array = [1, 1, 2, 3, 3, 0, 0, 2, 3, 3];
 		
-		public function Shark(X:Number, Y:Number) 
+		public function Shark(X:Number, Y:Number, PlayerCenter:FlxObject) 
 		{
 			super(X, Y);
 			loadGraphic(myImage, true, true);
@@ -27,13 +29,15 @@
 			
 			play("idle");
 			
-			drag.x = runSpeed * 8;
-			drag.y = runSpeed * 8;
-			//acceleration.y = 300;
+			//drag.x = runSpeed * 8;
+			//drag.y = runSpeed * 8;
+			acceleration.y = 200;
 			maxVelocity.x = runSpeed;
-			maxVelocity.y = 200;
+			maxVelocity.y = runSpeed;
 			offset.y = 10;
 			height -= 10;
+			playerCenter = PlayerCenter;
+			lungeVector = new FlxPoint();
 			
 			moveTimer = 0;
 			moveIndex = 0;
@@ -58,10 +62,34 @@
 			{
 				case 0:
 					velocity.x = maxVelocity.x;
+					velocity.y = -20;
 				break;
 				
 				case 1:
 					velocity.x = -maxVelocity.x;
+					velocity.y = -20;
+				break;
+				
+				case 2:
+					if (onScreen())
+					{
+						var factor:Number;
+						lungeVector.x = playerCenter.x - x;
+						lungeVector.y = playerCenter.y - y;
+						factor = Math.max(lungeVector.x, lungeVector.y);
+						if (factor == 0)
+							factor = .001;
+						lungeVector.x = lungeVector.x / factor;
+						lungeVector.y = lungeVector.y / factor;
+						lungeVector.x *= maxVelocity.x;
+						lungeVector.y *= maxVelocity.y;
+						moveIndex++;
+					}
+
+				break;
+				
+				case 3:
+					velocity = lungeVector;				
 				break;
 			}
 			
