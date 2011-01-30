@@ -460,7 +460,6 @@ package
 			{
 				Player(a).floating = true;
 			}
-			
 		}
 		
 		protected function inWater(a:FlxObject, b:FlxObject):void

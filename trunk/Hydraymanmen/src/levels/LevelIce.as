@@ -26,9 +26,19 @@ package levels
 			addDino(750, 800);
 			addWater(39, 38, 5, 11);
 			addWater(45, 31, 3, 17);
-			addWater(7, 27, 8, 16);
-			addWater(1, 10, 4, 32);
-			addWater(6,10,17,6);
+			addWater(6, 27, 9, 16);
+			addWater(1, 10, 4, 33);
+			addWater(6, 10, 12, 6);
+			addShark(406,1160);
+			addShark(285, 1199);
+			addShark(61, 1336);
+			addShark(48, 1070);
+			addShark(167, 845);
+			addShark(167, 675);
+			addShark(74, 473);
+			addShark(238, 395);
+			addShark(463, 489);
+			addShark(566,393);
 			addTree(100, 100);
 			loadMap(map);
 		}
