@@ -8,7 +8,7 @@
 	 */
 	public class Shark extends FlxSprite
 	{
-		[Embed(source = "data/dino.png")] protected var myImage:Class;
+		[Embed(source = "data/shark.png")] protected var myImage:Class;
 		
 		
 		protected var moveTimer:Number;
@@ -25,7 +25,7 @@
 		{
 			super(X, Y);
 			loadGraphic(myImage, true, true);
-			addAnimation("idle", [0], 5, true);
+			addAnimation("idle", [0,1,2,3], 5, true);
 			
 			play("idle");
 			
