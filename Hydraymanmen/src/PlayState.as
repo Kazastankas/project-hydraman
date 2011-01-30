@@ -318,7 +318,6 @@ package
 				}
 			}
 			_goalCounter = 0;
-			FlxU.overlap(_meteor_fires, _melters, meltBlock);
 			FlxU.overlap(_players, _melters, meltBlock);
 			FlxU.overlap(_waters, _meteor_fires, douseFire);
 			FlxU.overlap(_cavemen, _waters, drownCavemen);
