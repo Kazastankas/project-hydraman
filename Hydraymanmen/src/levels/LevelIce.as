@@ -177,9 +177,9 @@ package levels
 		{
 			if (!_changingLevel)
 			{
-				trace("Changing to levelIce");
+				trace("Changing to Dino Level");
 				_changingLevel = true;
-				FlxG.fade.start(0xff000000, 0.4, function():void { _changingLevel = false; FlxG.state = new LevelMeteor(); } );
+				FlxG.fade.start(0xff000000, 0.4, function():void { _changingLevel = false; FlxG.state = new LevelDino(); } );
 			}
 		}
 	}
