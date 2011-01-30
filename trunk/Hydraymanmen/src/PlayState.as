@@ -4,7 +4,6 @@ package
 
 	public class PlayState extends FlxState
 	{
-		[Embed(source = "data/tribalthing.mp3")] protected var Music:Class;
 		[Embed(source = "data/jump.mp3")] protected var JumpSnd:Class;
 		[Embed(source = "data/quake.mp3")] protected var QuakeSnd:Class;
 		[Embed(source = "data/alltiles1.png")] protected var ImgTiles:Class;

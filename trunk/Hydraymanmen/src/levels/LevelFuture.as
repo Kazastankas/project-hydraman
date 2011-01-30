@@ -11,6 +11,7 @@ package levels
 	public class LevelFuture extends PlayState 
 	{
 		[Embed(source = 'map4.txt', mimeType = "application/octet-stream")] private var map:Class;
+		[Embed(source = "../data/tribalthing.mp3")] protected var Music:Class;
 		protected var zTriggers:FlxGroup;
 		protected var bolt:Lightning;
 		protected var lightningCount:int;
@@ -18,6 +19,7 @@ package levels
 		override public function create():void
 		{
 			trace("Creating future level");
+			FlxG.playMusic(Music);
 			
 			var i:int;
 			_playerStart = new FlxPoint(48*32, 44*32);

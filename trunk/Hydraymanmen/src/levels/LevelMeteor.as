@@ -15,6 +15,7 @@ package levels
 		[Embed(source = "../data/cambrian-bg.png")] private var bgImg:Class;
 		[Embed(source = "../data/rock.png")] private var rockImg:Class;
 		[Embed(source = "../data/bigrock.png")] private var bigRockImg:Class;
+		[Embed(source = "../data/tribalthing.mp3")] protected var Music:Class;
 		protected var part:int = 0;
 		protected var spawnTarget:FlxObject;
 		protected var bolt:Lightning;
@@ -25,6 +26,7 @@ package levels
 		override public function create():void
 		{
 			trace("Creating meteor level");
+			FlxG.playMusic(Music);
 			
 			var i:int;
 			_playerStart = new FlxPoint(100, 1539);

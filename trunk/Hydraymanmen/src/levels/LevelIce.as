@@ -11,12 +11,14 @@ package levels
 	public class LevelIce extends PlayState 
 	{
 		[Embed(source = 'map2.txt', mimeType = "application/octet-stream")] private var map:Class;
+		[Embed(source = "../data/thingOnIce.mp3")] protected var Music:Class;
 		private var part:int = 1;
 		private var mTimer:Number = 1;
 		
 		override public function create():void
 		{
 			trace("Creating ice level");
+			FlxG.playMusic(Music);
 
 			var i:int;
 			_playerStart = new FlxPoint(29 * 32, 37 * 32);
