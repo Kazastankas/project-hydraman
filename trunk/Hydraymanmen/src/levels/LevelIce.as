@@ -22,7 +22,7 @@ package levels
 			FlxG.playMusic(Music);
 
 			var i:int;
-			_playerStart = new FlxPoint(29 * 32, 37 * 32);
+			_playerStart = new FlxPoint(30 * 32, 37 * 32);
 			_goalPos = new FlxPoint(850, 630);
 			_goalFlipped = true;
 			super.create();
