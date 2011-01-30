@@ -587,13 +587,9 @@ package
 		
 		protected function setOnDisease(a:FlxObject, b:FlxObject):void
 		{
-			if (a is Player)
+			if (a is Player && Math.random() < 0.05)
 			{
 				Player(a).plague();
-			}
-			else if (b is Player)
-			{
-				Player(b).plague();
 			}
 		}
 		
