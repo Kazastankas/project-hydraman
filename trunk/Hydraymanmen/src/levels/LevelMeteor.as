@@ -25,7 +25,7 @@ package levels
 			
 			var i:int;
 			_playerStart = new FlxPoint(100, 1539);
-			_goalPos = new FlxPoint(200, 100);
+			_goalPos = new FlxPoint(450, 1400);
 			
 			super.create();
 			loadMap(map);
@@ -48,7 +48,7 @@ package levels
 		{
 			super.update();
 			
-			if (FlxG.keys.justPressed("PLUS"))
+			if (FlxG.keys.justPressed("RBRACKET"))
 				nextLevel();
 			
 			// lightning for either you or enemy
@@ -141,6 +141,7 @@ package levels
 			if (!_changingLevel)
 			{
 				trace("Changing to levelIce");
+				_camMan.fix = true;
 				_changingLevel = true;
 				FlxG.fade.start(0xff000000, 0.4, function():void { _changingLevel = false; FlxG.state = new LevelIce(); } );
 			}

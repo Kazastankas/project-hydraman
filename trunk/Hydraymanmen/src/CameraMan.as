@@ -13,24 +13,28 @@ package
 	public class CameraMan extends FlxObject 
 	{
 		protected var group:FlxGroup;
+		protected var defaultPos:FlxPoint;
 		public var killDist:Number = 1.5;
 		public var averagePos:FlxPoint;
 		public var offset:FlxPoint;
 		public var maxOffsetX:Number = 0.5;
 		public var maxOffsetY:Number = 0.5;
-		protected var defaultPos:FlxPoint;
+		public var fix:Boolean;
 		
 		public function CameraMan(group:FlxGroup, defaultPos:FlxPoint) 
 		{
+			fix = false;
 			this.group = group;
 			this.defaultPos = defaultPos;
 			offset = new FlxPoint(0, 0);
-			calcCenter();
+			if (!fix)
+				calcCenter();
 		}
 		
 		override public function update():void
 		{
-			calcCenter();
+			if (!fix && PlayState.numInGoal == 0)
+				calcCenter();
 			//killOutliers();
 			handleInput();
 		}

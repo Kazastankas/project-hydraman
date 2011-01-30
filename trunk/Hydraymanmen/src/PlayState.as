@@ -25,6 +25,7 @@ package
 		protected var _flammables:FlxGroup;
 		protected var _diseases:FlxGroup;
 		protected var _waters:FlxGroup;
+		protected var _waterSprites:FlxGroup;
 		protected var _bubbles:FlxGroup;
 		protected var _drunk_bubbles:FlxGroup;
 		protected var _dinos:FlxGroup;
@@ -44,6 +45,8 @@ package
 		static public var _fireSound:FlxSound;
 		
 		public static var numHydra:int = 1;
+		public static var numInGoal:int = 0;
+		
 		protected var _enemies:FlxGroup;
 		protected var _tornados:FlxGroup;
 		protected var _sharks:FlxGroup;
@@ -181,6 +184,8 @@ package
 			
 			_waters = new FlxGroup();
 			add(_waters);
+			_waterSprites = new FlxGroup();
+			add(_waterSprites);
 			
 			_bubbles = new FlxGroup();
 			for(i = 0; i < 32; i++)
@@ -242,16 +247,17 @@ package
 		
 		protected function activatePlayers(num:int):void
 		{
-			for(var i:int = 0; i < numHydra; i++)
+			for(var i:int = 0; i < num; i++)
 			{
 				var player:Player = _players.getFirstAvail() as Player;
 				if (player)
 				{
 					player.exists = true;
-					player.x = _playerStart.x + numHydra * (Math.random() - 0.5);
+					player.x = _playerStart.x + num * (Math.random() - 0.5);
 					player.y = _playerStart.y + 4 * Math.random();
 				}
 			}
+			numInGoal = 0;
 		}
 		
 		override public function update():void
@@ -381,7 +387,14 @@ package
 		
 		protected function hitGoal(a:FlxObject, b:FlxObject):void
 		{
-			_goalCounter += 1;
+			if (a is Player)
+			{
+				var hydra:Player = a as Player;
+				hydra.kill();
+				PlayState.numInGoal++;
+				trace("Landed in goal: " + numInGoal);
+				//_goalCounter += 1;
+			}
 		}
 		
 		protected function blowAway(a:FlxObject, b:FlxObject):void
@@ -515,6 +528,7 @@ package
 		
 		protected function resetLevel():void
 		{
+			trace("RESETTING LEVEL");
 			_updateCount = 0;
 		}
 		
@@ -530,15 +544,20 @@ package
 				}
 			}
 			PlayState.numHydra = numAlive;
-			if (numAlive == 0 && _resetFlag)
+			if (numAlive == 0 && _resetFlag && PlayState.numInGoal == 0)
 			{
 				PlayState.numHydra = 1;
 				resetLevel();
+			}
+			else if(numAlive == 0 && PlayState.numInGoal > 0)
+			{
+				nextLevel();
 			}
 		}
 		
 		protected function nextLevel():void
 		{
+			trace("CALLING PLAYSTATE NEXT LEVEL");
 			FlxG.state = new PlayState();
 		}
 		
@@ -618,16 +637,18 @@ package
 			//add the top layer of water
 			for (i = x; i <= x+width; i++ )
 			{
-				_waters.add(new Water(i, y,true));
+				_waterSprites.add(new Water(i, y,true));
 			}
 			//add the rest of the layers
 			for (i = x; i <= x+width; i++ )
 			{
 				for (j = y+1; j <= y+height; j++ )
 				{
-					_waters.add(new Water(i, j));
+					_waterSprites.add(new Water(i, j));
 				}
 			}
+			//var waterBody:FlxObject = new FlxObject(x, y, width, height);
+			_waters.add(new FlxObject(x*32, y*32, (width+1)*32, (height+1)*32));
 		}
 		
 		protected function addShark(x:Number, y:Number):void
