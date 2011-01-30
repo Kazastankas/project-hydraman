@@ -43,17 +43,17 @@ package levels
 			addShark(463, 489);
 			addShark(566,393);
 			addTree(100, 100);
-			addTree(874, 363);
-			addTree(902, 370);
-			addTree(930, 371);
-			addTree(909, 272);
-			addTree(1031, 373);
-			addTree(1069, 375);
-			addTree(1097, 375);
-			addTree(1149, 372);
-			addTree(1165, 371);
-			addTree(1195, 369);
-			addTree(1262, 374);
+			addTree(874, 352);
+			addTree(902, 352);
+			addTree(930, 352);
+			addTree(909, 352);
+			addTree(1031, 352);
+			addTree(1069, 352);
+			addTree(1097, 352);
+			addTree(1149, 352);
+			addTree(1165, 352);
+			addTree(1195, 352);
+			addTree(1262, 352);
 			
 			
 			loadMap(map);
