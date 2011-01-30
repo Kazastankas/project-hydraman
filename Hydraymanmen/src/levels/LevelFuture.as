@@ -331,7 +331,7 @@ package levels
 			{
 				trace("Changing to end state");
 				_changingLevel = true;
-				FlxG.fade.start(0xff000000, 0.4, function():void { _changingLevel = false; FlxG.state = new EndState(); } );
+				FlxG.fade.start(0xff000000, 0.4, function():void { _changingLevel = false; FlxG.state = new LevelLast(); } );
 			}
 		}
 	}
