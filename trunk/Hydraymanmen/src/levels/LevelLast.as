@@ -16,7 +16,7 @@ package levels
 		[Embed(source = "../data/cambrian-bg.png")] private var bgImg:Class;
 		[Embed(source = "../data/rock.png")] private var rockImg:Class;
 		[Embed(source = "../data/bigrock.png")] private var bigRockImg:Class;
-		[Embed(source = "../data/tribalthing.mp3")] protected var Music:Class;
+		[Embed(source = "../data/thingViolin.mp3")] protected var Music:Class;
 		protected var part:int = 0;
 		protected var spawnTarget:FlxObject;
 		protected var bolt:Lightning;
@@ -93,6 +93,7 @@ package levels
 				if (firstHydra)
 				{
 					firstHydra.create(_playerStart.x, _playerStart.y);
+					FlxG.fade.start(0xFF000000,1,function():void { _changingLevel = false; FlxG.state = new EndState(); });
 					_resetFlag = true;
 				}
 			}
