@@ -53,7 +53,7 @@ package
 		
 		public function changeState():void
 		{
-			FlxG.state = new LevelDino();
+			FlxG.state = new LevelMeteor();
 		}
 	}
 }
