@@ -11,8 +11,9 @@ package levels
 	public class LevelFuture extends PlayState 
 	{
 		[Embed(source = 'map4.txt', mimeType = "application/octet-stream")] private var map:Class;
-		private var part:int = 0;
 		protected var zTriggers:FlxGroup;
+		protected var bolt:Lightning;
+		protected var lightningCount:int;
 		
 		override public function create():void
 		{
@@ -21,6 +22,7 @@ package levels
 			var i:int;
 			_playerStart = new FlxPoint(48*32, 44*32);
 			_goalPos = new FlxPoint(200, 100);
+			lightningCount = -1;
 			super.create();
 			activatePlayers(Math.max(1, PlayState.numInGoal));
 			
@@ -81,13 +83,30 @@ package levels
 			
 			FlxU.overlap(_players, zTriggers, triggerZombies);
 			
-			if (((_camMan.x > 520 && _camMan.x <700) && (_camMan.y > 300 && _camMan.y < 350)) && (part == 0))
+			if ((_camMan.x > 520 && _camMan.x <700) && (_camMan.y > 300 && _camMan.y < 350))
 			{
 				addQuake(500, 332);
 				addQuake(470, 332);
 			}
 			
 			
+			if ((_camMan.x > 100 && _camMan.x < 200) && (_camMan.y > 300 && _camMan.y < 350) && (lightningCount == -1))
+			{
+				lightningCount = 30;
+			}
+			
+			if (lightningCount > 0)
+			{
+				bolt = add(new Lightning()) as Lightning;
+				var boltPoint:FlxPoint = _players.members[0].getScreenXY();
+				bolt.SetTarget(new FlxPoint(boltPoint.x, boltPoint.y - 400));
+				bolt.SetOrigin(boltPoint);
+				bolt.strike(boltPoint.x, boltPoint.y - 400);
+				lightningCount--;
+			} else if (lightningCount == 0)
+			{
+				nextLevel();
+			}
 			/*var i:int;
 			if (((_camMan.x > 400 && _camMan.x <500) && (_camMan.y > 1350 && _camMan.y < 1600)) && (part == 0))
 			{
