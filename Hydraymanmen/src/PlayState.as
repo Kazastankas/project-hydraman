@@ -324,6 +324,7 @@ package
 			}
 			_goalCounter = 0;
 			FlxU.overlap(_meteor_fires, _melters, meltBlock);
+			FlxU.overlap(_players, _melters, meltBlock);
 			FlxU.overlap(_waters, _meteor_fires, douseFire);
 			FlxU.overlap(_cavemen, _waters, drownCavemen);
 			FlxU.overlap(_players, _goal, hitGoal);
@@ -546,7 +547,17 @@ package
 		
 		protected function meltBlock(a:FlxObject, b:FlxObject):void
 		{
-			_tileMap.setTile(b.x/32, b.y/32, 0, true);
+			if (a is Player)
+			{
+				if (Player(a).onFire)
+				{
+					_tileMap.setTile(b.x/32, b.y/32, 0, true);
+				}
+			}
+			else
+			{
+				_tileMap.setTile(b.x / 32, b.y / 32, 0, true);
+			}
 		}
 		
 		protected function calcCenter(group:FlxGroup):FlxPoint
