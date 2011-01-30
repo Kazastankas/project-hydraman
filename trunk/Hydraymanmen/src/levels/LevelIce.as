@@ -26,7 +26,6 @@ package levels
 			addDino(1230, 960);
 			addDino(750, 800);
 			addDino(1283, 545);
-			addDino(1063,607);
 			addWater(39, 38, 5, 11);
 			addWater(45, 31, 3, 17);
 			addWater(6, 27, 9, 16);
