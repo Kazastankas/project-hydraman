@@ -22,6 +22,7 @@ package
 		protected var _meteors:FlxGroup;
 		protected var _meteor_fires:FlxGroup;
 		protected var _cosmetic_fires:FlxGroup;
+		protected var _flammables:FlxGroup;
 		protected var _diseases:FlxGroup;
 		protected var _waters:FlxGroup;
 		protected var _bubbles:FlxGroup;
@@ -134,6 +135,7 @@ package
 			
 			_cosmetic_fires = new FlxGroup();
 			_drunk_bubbles = new FlxGroup();
+			_flammables = new FlxGroup();
 			
 			_players = new FlxGroup();
 			for(i = 0; i < 32; i++)
@@ -141,26 +143,28 @@ package
 				s = new Player(_playerStart.x, _playerStart.y, _players, _cosmetic_fires, _drunk_bubbles);
 				s.exists = false;
 				_players.add(s);
+				_flammables.add(s);
 			}
 			//activatePlayers(numHydra);
 			add(_players);
-			add(_cosmetic_fires);
 			
 			_enemies = new FlxGroup();
 			for(i = 0; i < 64; i++)
 			{
-				s = new Enemy( -100, -100);
+				s = new Enemy( -100, -100, _cosmetic_fires);
 				s.exists = false;
 				_enemies.add(s);
+				_flammables.add(s);
 			}
 			add(_enemies);
 			
 			_dinos = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
-				s = new Dino( -100, -100);
+				s = new Dino( -100, -100, _cosmetic_fires);
 				s.exists = false;
 				_dinos.add(s);
+				_flammables.add(s);
 			}
 			add(_dinos);
 			
@@ -172,6 +176,8 @@ package
 				_burrowers.add(s);
 			}
 			add(_burrowers);
+			
+			add(_cosmetic_fires);
 			
 			_waters = new FlxGroup();
 			add(_waters);
@@ -282,9 +288,10 @@ package
 			FlxU.overlap(_players, _waters, playerFloat);
 			FlxU.overlap(_players, _goal, hitGoal);
 			FlxU.overlap(_players, _diseases, setOnDisease);
-			FlxU.overlap(_players, _meteor_fires, setOnFire);
+			FlxU.overlap(_flammables, _meteor_fires, setOnFire);
 			FlxU.overlap(_trees, _meteor_fires, setOnFire);
 			FlxU.overlap(_players, _players, playerContagion);
+			FlxU.overlap(_flammables, _flammables, fireSharing);
 			FlxU.collide(_players, _goal);
 			FlxU.collide(_players, _tileMap);
 			FlxU.collide(_enemies, _tileMap);
@@ -295,9 +302,6 @@ package
 			//FlxU.collide(_players, _blocks);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
-			
-			FlxU.overlap(_players, _trees, setOnFireTree);
-			FlxU.overlap(_trees, _players, setOnFirePlayer);
 			
 			FlxU.collide(_meteors, _tileMap);
 			FlxU.collide(_meteor_fires, _tileMap);
@@ -397,39 +401,26 @@ package
 			}
 		}
 		
-		protected function setOnFireTree(a:FlxObject, b:FlxObject):void
+		protected function fireSharing(a:FlxObject, b:FlxObject):void
 		{
-			if (a is Player && Tree(b).onFire)
+			if (a is Flammable && b is Flammable)
 			{
-				Player(a).ignite();
-			}
-			else if (a is Tree && Tree(b).onFire)
-			{
-				Tree(a).ignite();
-			}
-		}
-		
-		protected function setOnFirePlayer(a:FlxObject, b:FlxObject):void
-		{
-			if (a is Tree && Player(b).onFire)
-			{
-				Tree(a).ignite();
+				if (Flammable(b).fire_time() > 0.5)
+				{
+					Flammable(a).ignite();
+				}
+				if (Flammable(a).fire_time() > 0.5)
+				{
+					Flammable(b).ignite();
+				}
 			}
 		}
 		
 		protected function setOnFire(a:FlxObject, b:FlxObject):void
 		{
-			if (a is Player)
+			if (a is Flammable)
 			{
-				Player(a).ignite();
-			}
-			else if (b is Player)
-			{
-				Player(b).ignite();
-			}
-			else if (a is Tree)
-			{
-				Tree(a).ignite();
+				Flammable(a).ignite();
 			}
 		}
 		
@@ -449,11 +440,6 @@ package
 		{
 			if (a is Player && b is Player)
 			{
-				if (Player(a).fire_time() > 0.5 || Player(b).fire_time() > 0.5)
-				{
-					Player(a).ignite();
-					Player(b).ignite();
-				}
 				if (Player(a).on_disease() || Player(b).on_disease())
 				{
 					Player(a).near_plague();

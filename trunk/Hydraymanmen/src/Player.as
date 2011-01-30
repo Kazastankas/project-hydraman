@@ -114,10 +114,6 @@ public class Player extends Flammable
 	{
 		if (health > 0)
 		{
-			if (onFire)
-			{
-				deflame();
-			}
 			splitTimer = 5;
 			animationTime = .5;
 			play("die");
@@ -128,7 +124,10 @@ public class Player extends Flammable
 	override public function update():void
 	{
 		if (!onScreen())
+		{
+			deflame();
 			kill();
+		}
 		
 		acceleration.x = 0;
 		maxVelocity.x = runSpeed;
@@ -136,6 +135,7 @@ public class Player extends Flammable
 		// dealing with death animation
 		if (animationTime < .05 && health <= 0)
 		{
+			deflame();
 			kill();
 		}
 		
