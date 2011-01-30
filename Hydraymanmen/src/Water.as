@@ -13,7 +13,7 @@ public class Water extends FlxSprite
 		if (top)
 		{
 			loadGraphic(Img, true, true);
-			addAnimation("idle", [0,1,2,3,4,5,6,7], 5);
+			addAnimation("idle", [0, 1, 2, 3, 4, 5, 6, 7], 5);
 		}
 		else
 		{
