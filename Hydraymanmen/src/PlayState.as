@@ -14,6 +14,7 @@ package
 		[Embed(source = 'levels/map2.txt', mimeType = "application/octet-stream")] private var Map:Class;
 		[Embed(source = "data/cambrian-bg.png")] private var bgImg:Class;
 		[Embed(source = "data/icegibs.png")] private var iceGibs:Class;
+		[Embed(source = "data/shatter.mp3")] protected var shatterSnd:Class;
 		protected var _players:FlxGroup;//the players
 		protected var _camMan:CameraMan;//what the camera centers on
 		protected var _tileMap:FlxTilemap;//the tile
@@ -220,7 +221,7 @@ package
 			_cavemen = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
-				s = new Human( -100, -100,_meteor_fires,_camMan, _iceGibs);
+				s = new Human( -100, -100,_meteor_fires,_camMan, _iceGibs, shatterSnd);
 				s.exists = false;
 				_cavemen.add(s);
 			}
@@ -615,6 +616,7 @@ package
 						_iceGibs.at(b);
 						_iceGibs.start(true, 0, 0);
 						_gibbing = 0.5;
+						FlxG.play(shatterSnd);
 					}
 				}
 			}

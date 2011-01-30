@@ -21,8 +21,9 @@ package
 		public var drowned:Boolean;
 		public var drownTimer:Number;
 		protected var gibs:FlxEmitter;
+		protected var shatterSound:Class;
 		
-		public function Human(X:Number, Y:Number,fires:FlxGroup,target:FlxObject, gibs:FlxEmitter)
+		public function Human(X:Number, Y:Number,fires:FlxGroup,target:FlxObject, gibs:FlxEmitter, shatterSound:Class)
 		{
 			super(X, Y);
 			runSpeed = Math.random() * 10 + 30;
@@ -46,6 +47,7 @@ package
 			this.target = target;
 			this.fires = fires;
 			this.gibs = gibs;
+			this.shatterSound = shatterSound;
 		}
 		
 		override public function update():void
@@ -67,6 +69,7 @@ package
 					gibs.y = this.y;
 					gibs.at(this);
 					gibs.start(true, 0, 0);
+					FlxG.play(shatterSound);
 				}
 			}
 			else
@@ -92,6 +95,7 @@ package
 						makeFire(x,y-30,velocity.x*3+Math.random()*20-10);
 						animationTime = .5;
 						velocity.y = -50;
+						
 					}
 				}
 				else if (AImode == 2)
