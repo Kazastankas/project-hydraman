@@ -546,7 +546,7 @@ package
 		
 		protected function meltBlock(a:FlxObject, b:FlxObject):void
 		{
-			_tileMap.setTile(a.x/32, a.y/32, 0, true);
+			_tileMap.setTile(b.x/32, b.y/32, 0, true);
 		}
 		
 		protected function calcCenter(group:FlxGroup):FlxPoint
