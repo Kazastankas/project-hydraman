@@ -15,6 +15,7 @@ package levels
 		[Embed(source = "../grafixxx/postapoc-bg.png")] protected var bgImg:Class;
 		[Embed(source = "../data/rock.png")] private var rockImg:Class;
 		protected var zTriggers:FlxGroup;
+		protected var bolts:FlxGroup;
 		protected var bolt:Lightning;
 		protected var lightningCount:int;
 		
@@ -27,6 +28,7 @@ package levels
 			_playerStart = new FlxPoint(48*32, 44*32);
 			_goalPos = new FlxPoint(200, 100);
 			lightningCount = -1;
+			bolts = new FlxGroup();
 			super.create();
 			activatePlayers(Math.max(1, PlayState.numInGoal));
 			
@@ -104,6 +106,7 @@ package levels
 			
 			if ((_camMan.x > 100 && _camMan.x < 200) && (_camMan.y > 300 && _camMan.y < 350) && (lightningCount == -1))
 			{
+				_resetFlag = false;
 				lightningCount = 30;
 			}
 			
@@ -111,6 +114,7 @@ package levels
 			{
 				for (var i:Number = 0; i < _players.members.length; i++) {
 					bolt = add(new Lightning()) as Lightning;
+					bolts.add(bolt);
 					var boltPoint:FlxPoint = _players.members[i].getScreenXY();
 					bolt.SetTarget(new FlxPoint(boltPoint.x, boltPoint.y - 400));
 					bolt.SetOrigin(boltPoint);
@@ -123,6 +127,10 @@ package levels
 				while (_players.members.length > 1) {
 					var hydra:Player = _players.members.pop();
 					hydra.kill();
+				}
+				
+				for (var i:Number = 0; i < bolts.members.length; i++) {
+					bolts.members[i].kill();
 				}
 				
 				if (_players.members.length == 1) {
