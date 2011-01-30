@@ -6,7 +6,8 @@ package
 	{
 		[Embed(source = "data/jump.mp3")] protected var JumpSnd:Class;
 		[Embed(source = "data/quake.mp3")] protected var QuakeSnd:Class;
-		[Embed(source = "data/alltiles1.png")] protected var ImgTiles:Class;
+		//[Embed(source = "data/alltiles1.png")] protected var ImgTiles:Class;
+		[Embed(source = "grafixxx/alltilesfinal.png")] protected var ImgTiles:Class;
 		[Embed(source = "data/caveback.png")] protected var goalBackImg:Class;
 		[Embed(source = "data/cavefront.png")] protected var goalFrontImg:Class;
 		[Embed(source = "data/fire.png")] protected var fireImg:Class;
@@ -125,10 +126,9 @@ package
 			_trees = new FlxGroup();
 			add(_trees);
 			
-			/*_tileMap = new FlxTilemap();
-			_tileMap.loadMap(new Map,ImgTiles,32,32);
-			_tileMap.follow();
-			add(_tileMap);*/
+			
+			loadMap();
+			
 			
 			_goalBack = new FlxSprite(_goalPos.x, _goalPos.y);
 			_goalBack.loadGraphic(goalBackImg, false, true, 79, 41);
@@ -312,13 +312,9 @@ package
 			add(bg);
 		}
 		
-		protected function loadMap(map:Class):void
+		protected function loadMap():void
 		{
-			_tileMap = new FlxTilemap();
-			_tileMap.loadMap(new map,ImgTiles,32,32);
-			_tileMap.follow();
-			add(_tileMap);
-			FlxG.followBounds( -32, -32, _tileMap.width + 32, _tileMap.height + 32);
+			
 		}
 		
 		protected function activatePlayers(num:int):void

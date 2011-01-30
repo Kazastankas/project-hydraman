@@ -10,9 +10,10 @@ package levels
 	 */
 	public class LevelFuture extends PlayState 
 	{
-		[Embed(source = 'map4.txt', mimeType = "application/octet-stream")] private var map:Class;
-		[Embed(source = "../data/tribalViolin.mp3")] protected var Music:Class;
+		[Embed(source = 'map4-final.txt', mimeType = "application/octet-stream")] private var map:Class;
+		[Embed(source = "../data/thingViolin.mp3")] protected var Music:Class;
 		[Embed(source = "../grafixxx/postapoc-bg.png")] protected var bgImg:Class;
+		[Embed(source = "../grafixxx/alltilesfinal.png")] protected var tiles:Class;
 		[Embed(source = "../data/rock.png")] private var rockImg:Class;
 		protected var zTriggers:FlxGroup;
 		protected var bolts:FlxGroup;
@@ -36,7 +37,7 @@ package levels
 			add(zTriggers);
 			
 			addPlagueBot(980, 1400);
-			addPlagueBot(930, 1400);
+			//addPlagueBot(930, 1400);
 			addPlagueBot(830, 1400);
 			addPlagueBot(412, 1218);
 			addPlagueBot(780, 740);
@@ -80,7 +81,6 @@ package levels
 			zTriggers.add(new ZombieTrigger(23, 10, 28, 10, 10));
 			
 			
-			loadMap(map);
 		}
 		
 		override protected function addBackSprites():void
@@ -89,6 +89,13 @@ package levels
 			bg.scrollFactor.x = bg.scrollFactor.y = 0;
 			bg.fixed = true;
 			add(bg);
+			
+			_tileMap = new FlxTilemap();
+			_tileMap.loadMap(new map, ImgTiles, 32, 32);
+			_tileMap.collideIndex = 57;
+			_tileMap.follow();
+			add(_tileMap);
+			FlxG.followBounds( -32, -32, _tileMap.width + 32, _tileMap.height + 32);
 		}
 		
 		override public function update():void

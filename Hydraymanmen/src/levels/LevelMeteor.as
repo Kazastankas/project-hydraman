@@ -4,6 +4,7 @@ package levels
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxTilemap;
 	
 	/**
 	 * ...
@@ -11,7 +12,7 @@ package levels
 	 */
 	public class LevelMeteor extends PlayState 
 	{
-		[Embed(source = 'map1.txt', mimeType = "application/octet-stream")] private var map:Class;
+		[Embed(source = 'map1-final.txt', mimeType = "application/octet-stream")] private var map:Class;
 		[Embed(source = "../data/cambrian-bg.png")] private var bgImg:Class;
 		[Embed(source = "../data/rock.png")] private var rockImg:Class;
 		[Embed(source = "../data/bigrock.png")] private var bigRockImg:Class;
@@ -36,7 +37,6 @@ package levels
 			enemySpawnTarget = new FlxObject(300, 1539);
 			
 			super.create();
-			loadMap(map);
 			
 			addEnemy(1272, 1412);
 			addEnemy(613, 1263);
@@ -64,6 +64,13 @@ package levels
 			var spawnBigRock:FlxSprite = new FlxSprite(enemySpawnTarget.x - 20, enemySpawnTarget.y + 8);
 			spawnBigRock.loadGraphic(bigRockImg , false, false, 68, 37);
 			add(spawnBigRock);
+			
+			_tileMap = new FlxTilemap();
+			_tileMap.loadMap(new map, ImgTiles, 32, 32);
+			_tileMap.collideIndex = 57;
+			_tileMap.follow();
+			add(_tileMap);
+			FlxG.followBounds( -32, -32, _tileMap.width + 32, _tileMap.height + 32);
 		}
 		
 		override public function update():void
