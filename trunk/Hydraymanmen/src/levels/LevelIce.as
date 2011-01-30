@@ -84,11 +84,20 @@ package levels
 				addQuake(1197, 333);
 				part = 2;
 			}
-			if (((_camMan.x > 1150 && _camMan.x < 1280) && (_camMan.y > 0 && _camMan.y < 500)) && (part == 2))
+			if (((_camMan.x > 1100 && _camMan.x < 1280) && (_camMan.y > 0 && _camMan.y < 500)) && (part == 2))
 			{
 				addQuake(1230, 368);
 				addQuake(1230, 333);
 				part = 3;
+			}
+			if (((_camMan.x > 1180 && _camMan.x < 1280) && (_camMan.y > 0 && _camMan.y < 500)) && (part == 3))
+			{
+				addQuake(1263, 368);
+				addQuake(1263, 333);
+				addQuake(1289, 333);
+				addQuake(1227, 400);
+				addQuake(1204, 395);
+				part = 4;
 			}
 			/*
 			if (((_camMan.x > 400 && _camMan.x < 600) && (_camMan.y > 700 && _camMan.y < 900)) && (part == 3))
@@ -108,6 +117,7 @@ package levels
 				addQuake(880, 717);
 				part = 5;
 			}
+			*/
 		}
 		
 		override protected function resetLevel():void
