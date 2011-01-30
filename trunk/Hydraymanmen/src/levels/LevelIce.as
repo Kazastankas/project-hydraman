@@ -47,7 +47,6 @@ package levels
 			addShark(61, 1336);
 			addShark(48, 1070);
 			addShark(167, 845);
-			addShark(167, 675);
 			addShark(74, 473);
 			addShark(238, 395);
 			addShark(463, 489);
