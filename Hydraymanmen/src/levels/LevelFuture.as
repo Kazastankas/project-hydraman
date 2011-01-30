@@ -129,8 +129,8 @@ package levels
 					hydra.kill();
 				}
 				
-				for (var i:Number = 0; i < bolts.members.length; i++) {
-					bolts.members[i].kill();
+				for (var j:Number = 0; j < bolts.members.length; j++) {
+					bolts.members[j].kill();
 				}
 				
 				if (_players.members.length == 1) {
