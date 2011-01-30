@@ -23,7 +23,7 @@ package levels
 			super.create();
 			activatePlayers(Math.max(1, PlayState.numInGoal));
 			addHuman(690, 1339, 2);
-			addHuman(690, 1339, 1);
+			addHuman(1300, 1380, 1);
 			addHut(250, 1150);
 			addHuman(330, 1150, 1);
 			addHuman(400, 1150, 3);
@@ -32,7 +32,13 @@ package levels
 			addWater(25, 45, 4, 3);
 			addWater(30, 39, 3, 9);
 			addWater(34, 45, 7, 3);
-			
+			addWater(17, 26, 3, 1);
+			addHuman(300, 780, 1);
+			addHuman(380, 780, 3);
+			addHuman(260, 780, 2);
+			addHuman(200, 780, 2);
+			addHut(320, 780);
+			addHut(450, 780);
 			
 			loadMap(map);
 		}
