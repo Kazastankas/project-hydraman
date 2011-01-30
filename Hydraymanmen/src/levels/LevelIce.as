@@ -58,6 +58,10 @@ package levels
 			addTree(1165, 352);
 			addTree(1195, 352);
 			addTree(1262, 352);
+			addTree(1395, 352);
+			addTree(1462, 352);
+			addBurrower(566, 797);
+			addBurrower(461, 508);
 			
 			
 			loadMap(map);
