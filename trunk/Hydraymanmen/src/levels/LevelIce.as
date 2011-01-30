@@ -108,7 +108,6 @@ package levels
 				addQuake(880, 717);
 				part = 5;
 			}
-			*/
 		}
 		
 		override protected function resetLevel():void
