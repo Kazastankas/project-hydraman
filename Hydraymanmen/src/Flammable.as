@@ -4,7 +4,6 @@ import org.flixel.*;
 
 public class Flammable extends FlxSprite
 {
-	[Embed(source = "data/fire.png")] protected var FireImg:Class;
 	protected var fireTimer:Number = 0;
 	public var onFire:Boolean;
 	protected var fireSprites:FlxGroup;
@@ -29,7 +28,7 @@ public class Flammable extends FlxSprite
 	{
 		if (!onFire)
 		{
-			fireSprite = new Fire(x - width / 2, y - height / 2, 5, false);
+			fireSprite = new Fire(x + (width / 2) - 12, y + (height / 2) - 12, 5, false);
 			fireSprites.add(fireSprite);
 		}
 		onFire = true;
@@ -53,8 +52,8 @@ public class Flammable extends FlxSprite
 		if (onFire)
 		{
 			fireTimer += FlxG.elapsed;
-			fireSprite.x = x - width / 2;
-			fireSprite.y = y - height / 2;
+			fireSprite.x = x + (width / 2) - 12;
+			fireSprite.y = y + (height / 2) - 12;
 			if (fireTimer > 5)
 			{
 				deflame();

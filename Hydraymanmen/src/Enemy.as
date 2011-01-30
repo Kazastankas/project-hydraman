@@ -2,7 +2,7 @@ package
 {
 	import org.flixel.*;
 	
-	public class Enemy extends FlxSprite
+	public class Enemy extends Flammable
 	{
 		[Embed(source = "data/hydra-trilobite.png")] protected var myImage:Class;
 		public var AItimer:Number;
@@ -10,9 +10,9 @@ package
 		public var moving:uint;
 		protected var runSpeed:Number = 50;
 		
-		public function Enemy(X:Number, Y:Number)
+		public function Enemy(X:Number, Y:Number, fireHairs:FlxGroup)
 		{
-			super(X, Y);
+			super(X, Y, fireHairs);
 			loadGraphic(myImage,true,true);
 			addAnimation("idle", [0], 5, true);
 			addAnimation("go", [0,1,2,3], 10, true);
@@ -78,6 +78,7 @@ package
 		
 		public function create(x:Number,y:Number):void
 		{
+			deflame();
 			velocity.x = velocity.y = 0;
 			health = 20;
 			reset(x, y);
