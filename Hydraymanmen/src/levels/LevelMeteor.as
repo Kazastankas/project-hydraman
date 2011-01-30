@@ -63,9 +63,6 @@ package levels
 		{
 			super.update();
 			
-			if (FlxG.keys.justPressed("RBRACKET"))
-				nextLevel();
-			
 			// lightning for either you or enemy
 			if (_updateCount >= 30 && _updateCount < 60)
 			{

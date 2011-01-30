@@ -19,7 +19,8 @@ package levels
 			
 			var i:int;
 			_playerStart = new FlxPoint(8*32, 48*32);
-			_goalPos = new FlxPoint(200, 100);
+			_goalPos = new FlxPoint(1479, 759);
+			
 			super.create();
 			activatePlayers(Math.max(1, PlayState.numInGoal));
 			addHuman(690, 1339, 2);
@@ -95,9 +96,9 @@ package levels
 		{
 			if (!_changingLevel)
 			{
-				trace("Changing to levelDino");
+				trace("Changing to levelFuture");
 				_changingLevel = true;
-				FlxG.fade.start(0xff000000, 0.4, function():void { _changingLevel = false; FlxG.state = new LevelIce(); } );
+				FlxG.fade.start(0xff000000, 0.4, function():void { _changingLevel = false; FlxG.state = new LevelFuture(); } );
 			}
 		}
 	}
