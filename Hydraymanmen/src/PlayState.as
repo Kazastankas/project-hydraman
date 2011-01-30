@@ -412,7 +412,7 @@ package
 			FlxU.overlap(_players, _cavemen, playerHit);
 			FlxU.overlap(_players, _burrowers, processBurrower);
 			FlxU.overlap(_players, _sharks, playerHit);
-			FlxU.overlap(_players, _anglers, playerHit);
+			//FlxU.overlap(_players, _anglers, playerHit);
 			//FlxU.overlap(_players, _plagueBots, playerHit);
 			
 			if (FlxG.keys.justPressed('T'))

@@ -32,6 +32,10 @@ package levels
 			addPlagueBot(830, 1400);
 			addPlagueBot(412, 1218);
 			addPlagueBot(780, 740);
+			addPlagueBot(430, 1094);
+			addPlagueBot(348, 997);
+			addPlagueBot(516, 1002);
+			
 			addAngler(1380, 876);
 			addAngler(350, 855);
 			
