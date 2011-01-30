@@ -8,6 +8,7 @@ public class Flammable extends FlxSprite
 	public var onFire:Boolean;
 	protected var fireSprites:FlxGroup;
 	protected var fireSprite:Vector.<FlxSprite>;
+	protected var killable:Boolean = true;
 	
 	public function Flammable(X:int,Y:int,fireSprites:FlxGroup)
 	{

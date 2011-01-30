@@ -32,10 +32,10 @@ package levels
 			addWater(25, 45, 4, 3);
 			addWater(30, 39, 3, 9);
 			addWater(34, 45, 7, 3);
-			addWater(17, 26, 3, 1);
+			addWater(17, 26, 5, 1);
 			addWater(43, 43, 0, 0);
 			addHuman(300, 780, 1);
-			addHuman(380, 780, 3);
+			addHuman(500, 780, 1);
 			addHuman(260, 780, 2);
 			addHuman(200, 780, 2);
 			addHut(320, 780);
@@ -50,6 +50,14 @@ package levels
 			addMelter(18, 26);
 			addMelter(19, 26);
 			addMelter(20, 26);
+			addMelter(21, 26);
+			addMelter(22, 26);
+			addMelter(38, 17);
+			addMelter(38, 18);
+			addMelter(38, 19);
+			addMelter(38, 20);
+			addMelter(38, 21);
+			addMelter(38, 22);
 			
 			loadMap(map);
 		}
