@@ -867,13 +867,13 @@ package
 			}
 		}
 
-		protected function addAngler(x:Number, y:Number):void
+		protected function addAngler(x:Number, y:Number, coeff:Number = 1):void
 		{
 			var s:Angler;
 			s = (_anglers.getFirstAvail() as Angler);
 			if (s != null)
 			{
-				s.create(x, y);
+				s.create(x, y, coeff);
 			}
 		}
 		

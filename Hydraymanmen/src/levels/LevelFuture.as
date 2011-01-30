@@ -29,6 +29,17 @@ package levels
 			addPlagueBot(780, 740);
 			addAngler(1380, 876);
 			addAngler(350, 855);
+			
+			for (i = 0; i < 10; i++)
+			{
+				addPlagueBot((2 * i + 9) * 32, 18 * 32);
+			}
+			addAngler(18 * 32, 12 * 32, 2.0);
+			addAngler(21 * 32, 12 * 32, 2.0);
+			
+			addAngler(32 * 32, 17 * 32, -2.0);
+			addAngler(36 * 32, 17 * 32, -2.0);
+			
 			loadMap(map);
 		}
 		
