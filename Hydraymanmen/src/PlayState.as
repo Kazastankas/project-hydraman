@@ -368,6 +368,11 @@ package
 				nextLevel();
 			}
 			
+			if (FlxG.keys.justPressed('T'))
+			{
+				addTree(FlxG.mouse.x, FlxG.mouse.y);
+			}
+			
 			if (FlxG.keys.justPressed('Q'))
 			{
 				trace("X: " + FlxG.mouse.x + " Y: " + FlxG.mouse.y);
