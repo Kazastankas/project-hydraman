@@ -55,6 +55,7 @@ package levels
 			addMelter(25, 38);
 			addMelter(42, 40);
 			addMelter(42, 41);
+			addMelter(42, 42);
 			addMelter(17, 26);
 			addMelter(18, 26);
 			addMelter(19, 26);
