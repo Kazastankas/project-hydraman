@@ -4,7 +4,7 @@ import org.flixel.*;
 
 public class Disease extends FlxSprite
 {
-	[Embed(source = "data/disease.png")] protected var Img:Class;
+	[Embed(source = "data/diseasecloud.png")] protected var Img:Class;
 	public var maxLife:Number;
 	public var life:Number;
 	public var initAlpha:Number;
@@ -12,14 +12,14 @@ public class Disease extends FlxSprite
 	public function Disease(X:int,Y:int, maxLife:Number = 3)
 	{
 		super(X, Y);
-		loadGraphic(Img, true, true);
+		loadGraphic(Img, true, true, 25, 25);
 				
-		addAnimation("idle", [0], 5);
-		play("idle");
+		//addAnimation("idle", [0], 5);
+		//play("idle");
 		
 		this.maxLife = maxLife;
 		this.life = maxLife;
-		this.initAlpha = 0.6;
+		this.initAlpha = 0.8;
 	}
 	
 	public function create(x:Number,y:Number):void

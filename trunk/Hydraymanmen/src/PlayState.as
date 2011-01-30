@@ -46,6 +46,7 @@ package
 		protected var _trees:FlxGroup;
 		protected var _melters:FlxGroup;
 		protected var _plagueBots:FlxGroup;
+		protected var _walkBots:FlxGroup;
 		static public var _firePlaying:Number = 0;
 		static public var _fireSound:FlxSound;
 		
@@ -224,6 +225,16 @@ package
 				_anglers.add(s);
 			}
 			add(_anglers);
+			
+			_walkBots = new FlxGroup();
+			for (i = 0; i < 32; i++)
+			{
+				s = new WalkBot( -100, -100);
+				s.exists = false;
+				_walkBots.add(s);
+			}
+			add(_walkBots);
+			
 			FlxG.followAdjust(0, 0);
 			
 			_diseases = new FlxGroup();
@@ -357,6 +368,7 @@ package
 			FlxU.collide(_sharks, _tileMap);
 			FlxU.collide(_anglers, _tileMap);
 			FlxU.collide(_plagueBots, _tileMap);
+			FlxU.collide(_walkBots, _tileMap);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
 			
@@ -373,12 +385,6 @@ package
 			FlxU.overlap(_players, _sharks, playerHit);
 			FlxU.overlap(_players, _anglers, playerHit);
 			FlxU.overlap(_players, _plagueBots, playerHit);
-			
-			//end condition
-			if (_goalCounter > 1)
-			{
-				nextLevel();
-			}
 			
 			if (FlxG.keys.justPressed('T'))
 			{
@@ -447,10 +453,18 @@ package
 			{
 				addPlagueBot(FlxG.mouse.x, FlxG.mouse.y);
 			}
+			if (FlxG.keys.justPressed('O'))
+			{
+				addWalkBot(FlxG.mouse.x, FlxG.mouse.y);
+			}
 			if (FlxG.keys.justPressed('CONTROL'))
 			{
 				_players.getFirstAlive().kill();
 				addPlayer(FlxG.mouse.x, FlxG.mouse.y);
+			}
+			if (FlxG.keys.justPressed("RBRACKET"))
+			{
+				nextLevel();
 			}
 			
 			_updateCount++;
@@ -809,6 +823,16 @@ package
 		{
 			var s:Angler;
 			s = (_anglers.getFirstAvail() as Angler);
+			if (s != null)
+			{
+				s.create(x, y);
+			}
+		}
+		
+		protected function addWalkBot(x:Number, y:Number):void
+		{
+			var s:WalkBot;
+			s = (_walkBots.getFirstAvail() as WalkBot);
 			if (s != null)
 			{
 				s.create(x, y);
