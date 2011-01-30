@@ -83,8 +83,8 @@
 							factor = .001;
 						lungeVector.x = lungeVector.x / factor;
 						lungeVector.y = lungeVector.y / factor;
-						lungeVector.x *= maxVelocity.x;
-						lungeVector.y *= maxVelocity.y;
+						lungeVector.x *= maxVelocity.x - (Math.random() * 20);
+						lungeVector.y *= maxVelocity.y + (Math.random() * 40);
 						moveIndex++;
 					}
 
