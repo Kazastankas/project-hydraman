@@ -22,9 +22,9 @@ package levels
 			_goalPos = new FlxPoint(200, 100);
 			super.create();
 			activatePlayers(1);
-			addDino(1272, 1412);
+			addDino(1230, 960);
 			addWater(39, 38, 5, 11);
-			addWater(45, 33, 3, 16);
+			addWater(45, 31, 3, 16);
 			addTree(100,100);
 		}
 		
