@@ -338,6 +338,7 @@ public class Player extends FlxSprite
 				return;
 			}
 		}
+			
 		super.hitRight(Contact, Velocity);
 	}
 	
@@ -350,7 +351,8 @@ public class Player extends FlxSprite
 				Contact.x = x;
 				return;
 			}
-		}
+		}		
+		
 		super.hitLeft(Contact, Velocity);
 	}
 	

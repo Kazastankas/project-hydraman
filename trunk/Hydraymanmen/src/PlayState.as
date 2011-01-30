@@ -44,6 +44,7 @@ package
 		public static var numHydra:int = 1;
 		protected var _enemies:FlxGroup;
 		protected var _tornados:FlxGroup;
+		protected var _sharks:FlxGroup;
 		
 		protected var _block:Block;
 		
@@ -196,6 +197,15 @@ package
 			}
 			add(_cavemen);
 			
+			_sharks = new FlxGroup();
+			for (i = 0; i < 32; i++)
+			{
+				s = new Shark( -100, -100);
+				s.exists = false;
+				_sharks.add(s);
+			}
+			add(_sharks);
+			
 			//_block = new Block(50, 50, 5);
 			//_players.add(_block);
 			
@@ -271,6 +281,8 @@ package
 			FlxU.collide(_dinos, _tileMap);
 			FlxU.collide(_cavemen, _tileMap);
 			FlxU.collide(_players, _players);
+			FlxU.collide(_players, _tileMap);
+			//FlxU.collide(_players, _blocks);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
 			
@@ -285,6 +297,7 @@ package
 			FlxU.overlap(_players, _dinos, playerHit);
 			FlxU.overlap(_players, _cavemen, playerHit);
 			FlxU.overlap(_players, _burrowers, processBurrower);
+			FlxU.overlap(_players, _sharks, playerHit);
 			
 			//end condition
 			if (_goalCounter > 1)
@@ -342,6 +355,11 @@ package
 			{
 				addBurrower(FlxG.mouse.x, FlxG.mouse.y);
 			}
+			if (FlxG.keys.justPressed('M'))
+			{
+				addShark(FlxG.mouse.x, FlxG.mouse.y);
+			}
+			
 			
 			_updateCount++;
 		}
@@ -604,6 +622,17 @@ package
 					_waters.add(new Water(i, j));
 				}
 			}
+		}
+		
+		protected function addShark(x:Number, y:Number):void
+		{
+			var s:Shark;
+			s = (_sharks.getFirstAvail() as Shark);
+			if (s != null)
+			{
+				s.create(x, y);
+			}
+			
 		}
 		
 		protected function addDisease(x:Number, y:Number):void
