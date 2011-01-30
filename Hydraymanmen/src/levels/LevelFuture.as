@@ -75,7 +75,7 @@ package levels
 				{
 					addZombie(480+Math.random()*100,998+Math.random()*30);
 				}
-				addQuake(466, 1040)
+				addQuake(466, 1040);
 				addQuake(485, 1040);
 				addQuake(525, 1040);
 				addQuake(555, 1040);
@@ -85,9 +85,9 @@ package levels
 			{
 				for (i = 0; i < 7; i++ )
 				{
-					addZombie(1214+Math.random()*100,700+Math.random()*30);
+					addZombie(1200+Math.random()*100,700+Math.random()*30);
 				}
-				addQuake(1190, 670)
+				addQuake(1190, 670);
 				addQuake(1210, 670);
 				addQuake(1240, 670);
 				part = 4;
