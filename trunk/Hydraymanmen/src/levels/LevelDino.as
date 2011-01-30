@@ -44,8 +44,8 @@ package levels
 			addHuman(500, 780, 1);
 			addHuman(260, 780, 2);
 			addHuman(200, 780, 2);
-			addHut(320, 800);
-			addHut(450, 800);
+			addHut(370, 800);
+			//addHut(450, 800);
 			addMelter(24, 37);
 			addMelter(25, 37);
 			addMelter(24, 38);
