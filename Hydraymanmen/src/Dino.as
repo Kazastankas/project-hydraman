@@ -24,7 +24,9 @@ package
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = 200;
 			offset.y = 10;
-			height -= 10;
+			height -= 10; // originally -=10
+			offset.x = 15 //new!
+			width -= 15; // new!
 			AImode = 1;
 			AItimer = 2;
 			health = 10;
