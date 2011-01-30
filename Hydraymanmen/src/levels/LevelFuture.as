@@ -166,6 +166,7 @@ package levels
 			
 			if (finaleCountingDown)
 			{
+				var lhydra:Player;
 				if (finalSpawnTimer > 0)
 				{
 					finalSpawnTimer -= FlxG.elapsed;
@@ -203,7 +204,7 @@ package levels
 			
 			if (lightningCount > 0)
 			{
-				var lhydra:Player = _players.getFirstAlive() as Player;
+				lhydra = _players.getFirstAlive() as Player;
 				if (lhydra)
 				{
 					var hpos:FlxPoint = lhydra.getScreenXY();
@@ -221,7 +222,7 @@ package levels
 				if (!postFinale)
 				{
 					FlxG.flash.start();
-					var lhydra:Player = _players.getFirstAlive() as Player;
+					lhydra = _players.getFirstAlive() as Player;
 					if (lhydra)
 					{
 						lhydra.invincible = false;
@@ -236,7 +237,7 @@ package levels
 					postFinaleTimer -= FlxG.elapsed;
 					if (postFinaleTimer < 0)
 					{
-						FlxG.fade.start(0xff000000, 1.4, function():void { _changingLevel = false; FlxG.state = new EndState(); } );
+						FlxG.fade.start(0xff000000, 1.4, function():void { _changingLevel = false; FlxG.state = new LevelLast(); } );
 					}
 				}
 			}
