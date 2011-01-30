@@ -608,7 +608,7 @@ package
 		{
 			if (a is Player)
 			{
-				Player(a).near_plague();
+				Player(a).near_zombie();
 			}
 		}
 		

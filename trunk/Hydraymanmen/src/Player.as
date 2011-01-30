@@ -11,6 +11,7 @@ public class Player extends Flammable
 	protected var diseaseTimer:Number = 0;
 	protected var onDisease:Boolean;
 	protected var nearPlague:Boolean;
+	protected var nearZombie:Boolean;
 	protected var players:FlxGroup;
 	protected var drunkBubbles:FlxGroup;
 	protected var aliveCount:int = 0;
@@ -85,6 +86,11 @@ public class Player extends Flammable
 		nearPlague = true;
 	}
 	
+	public function near_zombie():void
+	{
+		nearZombie = true;
+	}
+	
 	public function create(x:Number,y:Number):void
 	{
 		deflame();
@@ -94,6 +100,7 @@ public class Player extends Flammable
 		diseaseTimer = 0;
 		onDisease = false;
 		nearPlague = false;
+		nearZombie = false;
 		color = 0xFFFFFF;
 		reset(x, y);
 		play("grow");
@@ -108,6 +115,7 @@ public class Player extends Flammable
 		{
 			s.create(x, y);
 			if (onDisease) s.plague();
+			else if (nearZombie && Math.random() <= 0.6) s.plague();
 			else if (nearPlague && Math.random() <= 0.2) s.plague();
 		}
 	}
