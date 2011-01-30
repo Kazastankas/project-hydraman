@@ -19,7 +19,7 @@ public class Player extends Flammable
 	protected var landVelocity:FlxPoint;
 	protected var animationTime:Number = 0;
 	
-	public static const EPS:Number = 0.02;
+	public static const EPS:Number = 0.1;
 	
 	public var pushing:Boolean;
 	
@@ -141,6 +141,11 @@ public class Player extends Flammable
 		
 		acceleration.x = 0;
 		maxVelocity.x = runSpeed;
+		
+		if (nearZombie && Math.random() < 0.2)
+		{
+			die();
+		}
 		
 		// dealing with death animation
 		if (animationTime < .05 && health <= 0)
