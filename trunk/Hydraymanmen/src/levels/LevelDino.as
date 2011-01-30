@@ -61,6 +61,10 @@ package levels
 			addMelter(38, 20);
 			addMelter(38, 21);
 			addMelter(38, 22);
+			addMelter(16, 22);
+			addMelter(17, 22);
+			addMelter(18, 22);
+			addMelter(19, 22);
 			addTree(504, 539);
 			addTree(710, 572);
 			addTree(981, 603);
