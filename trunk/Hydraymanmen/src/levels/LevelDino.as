@@ -39,6 +39,10 @@ package levels
 			addHuman(200, 780, 2);
 			addHut(320, 780);
 			addHut(450, 780);
+			addMelter(24, 37);
+			addMelter(25, 37);
+			addMelter(24, 38);
+			addMelter(25, 38);
 			
 			loadMap(map);
 		}

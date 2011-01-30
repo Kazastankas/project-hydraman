@@ -4,7 +4,7 @@ import org.flixel.*;
 
 public class Tornado extends FlxSprite
 {
-	[Embed(source = "data/tornado.png")] protected var Img:Class;
+	[Embed(source = "data/tornado2.png")] protected var Img:Class;
 	[Embed(source = "data/tornado.mp3")] protected var Snd:Class;
 	private var _timer:Number;
 
@@ -16,7 +16,7 @@ public class Tornado extends FlxSprite
 		maxVelocity.x = maxVelocity.y = 200;
 		
 		//animations
-		addAnimation("idle", [0,1,2],5);
+		addAnimation("idle", [0,1,2],10);
 		play("idle");
 	}
 	

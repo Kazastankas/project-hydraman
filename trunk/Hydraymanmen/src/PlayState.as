@@ -44,6 +44,7 @@ package
 		protected var _resetFlag:Boolean;
 		protected var _updateCount:int;
 		protected var _trees:FlxGroup;
+		protected var _melters:FlxGroup;
 		static public var _firePlaying:Number = 0;
 		static public var _fireSound:FlxSound;
 		
@@ -128,6 +129,8 @@ package
 			
 			_huts = new FlxGroup();
 			add(_huts);
+			
+			_melters = new FlxGroup();
 			
 			_trees = new FlxGroup();
 			add(_trees);
@@ -320,6 +323,7 @@ package
 				}
 			}
 			_goalCounter = 0;
+			FlxU.overlap(_meteor_fires, _melters, meltBlock);
 			FlxU.overlap(_waters, _meteor_fires, douseFire);
 			FlxU.overlap(_cavemen, _waters, drownCavemen);
 			FlxU.overlap(_players, _goal, hitGoal);
@@ -540,6 +544,11 @@ package
 			}
 		}
 		
+		protected function meltBlock(a:FlxObject, b:FlxObject):void
+		{
+			_tileMap.setTile(a.x/32, a.y/32, 0, true);
+		}
+		
 		protected function calcCenter(group:FlxGroup):FlxPoint
 		{
 			var avgPos:FlxPoint = new FlxPoint(0, 0);
@@ -694,6 +703,11 @@ package
 			_huts.add(new Hut(x, y, _cavemen));
 		}
 		
+		protected function addMelter(x:Number, y:Number):void
+		{
+			_melters.add(new Melter(x, y));
+		}
+		
 		protected function addTree(x:Number, y:Number):void
 		{
 			_trees.add(new Tree(x, y,_cosmetic_fires));
@@ -728,7 +742,6 @@ package
 			{
 				s.create(x, y);
 			}
-			
 		}
 		
 		protected function addDisease(x:Number, y:Number):void
