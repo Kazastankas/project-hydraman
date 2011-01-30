@@ -11,7 +11,7 @@ package levels
 	public class LevelDino extends PlayState 
 	{
 		[Embed(source = 'map3.txt', mimeType = "application/octet-stream")] private var map:Class;
-		[Embed(source = "../data/tribalthing.mp3")] protected var Music:Class;
+		[Embed(source = "../data/thingOnIce.mp3")] protected var Music:Class;
 		private var part:int = 1;
 		
 		override public function create():void
