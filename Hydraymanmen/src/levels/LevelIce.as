@@ -33,6 +33,8 @@ package levels
 			addWater(30, 12, 1, 0);
 			addWater(44, 12, 0, 0);
 			addWater(37, 12, 1, 0);
+			addWater(44, 18, 2, 0);
+			addWater(28, 21, 1, 0);
 			addShark(406,1160);
 			addShark(285, 1199);
 			addShark(61, 1336);
@@ -68,7 +70,7 @@ package levels
 			}
 			super.update();
 			
-			if (((_camMan.x > 500) && (_camMan.y > 0 && _camMan.y < 700)))
+			if (((_camMan.x > 500) && (_camMan.y > 0 && _camMan.y < 650)))
 			{
 				if (mTimer <= 0)
 				{
@@ -99,6 +101,33 @@ package levels
 				addQuake(1227, 400);
 				addQuake(1204, 395);
 				part = 4;
+			}
+			if (((_camMan.x > 1390 && _camMan.x < 1500) && (_camMan.y > 0 && _camMan.y < 500)) && (part == 4))
+			{
+				addQuake(1458, 400);
+				addQuake(1491, 431);
+				addQuake(1491, 400);
+				addQuake(1517, 400);
+				addQuake(1549, 400);
+				part = 5;
+			}
+			if (((_camMan.x > 1200 && _camMan.x < 1300) && (_camMan.y > 0 && _camMan.y < 900)) && (part == 5))
+			{
+				addQuake(1252, 400);
+				addQuake(1288, 400);
+				addQuake(973, 424);
+				addQuake(1012, 424);
+				addQuake(1035, 400);
+				addQuake(1045, 428);
+				addQuake(1229, 425);
+				addQuake(1203, 430);
+				addQuake(1151, 400);
+				addQuake(1123, 395);
+				addQuake(1087, 400);
+				addQuake(1061, 400);
+				addQuake(1035, 387);
+				addQuake(1267, 391);
+				part = 6;
 			}
 			/*
 			if (((_camMan.x > 400 && _camMan.x < 600) && (_camMan.y > 700 && _camMan.y < 900)) && (part == 3))
