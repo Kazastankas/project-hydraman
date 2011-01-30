@@ -25,7 +25,6 @@ package levels
 			addPlagueBot(900, 1400);
 			addPlagueBot(930, 1400);
 			addPlagueBot(960, 1400);
-			addPlagueBot(980, 1400);
 			addPlagueBot(412, 1218);
 			loadMap(map);
 		}
