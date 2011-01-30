@@ -11,7 +11,7 @@ package levels
 	public class LevelFuture extends PlayState 
 	{
 		[Embed(source = 'map4.txt', mimeType = "application/octet-stream")] private var map:Class;
-		private var part:int = 1;
+		private var part:int = 0;
 		
 		override public function create():void
 		{
@@ -46,6 +46,29 @@ package levels
 		override public function update():void
 		{
 			super.update();
+			var i:int;
+			if (((_camMan.x > 400 && _camMan.x <500) && (_camMan.y > 1350 && _camMan.y < 1600)) && (part == 0))
+			{
+				for (i = 0; i < 7; i++ )
+				{
+					addZombie(600+Math.random()*100,1400+Math.random()*30);
+				}
+				for (i = 0; i < 7; i++ )
+				{
+					addZombie(200+Math.random()*100,1500+Math.random()*30);
+				}
+				part = 1;
+				addQuake(300, 1518);
+				addQuake(300, 1550);
+			}
+			if (((_camMan.x > 30 && _camMan.x <200) && (_camMan.y > 1250 && _camMan.y < 1300)) && (part == 1))
+			{
+				for (i = 0; i < 7; i++ )
+				{
+					addZombie(43+Math.random()*100,1220+Math.random()*30);
+				}
+				part = 2;
+			}
 		}
 		
 		override protected function resetLevel():void
