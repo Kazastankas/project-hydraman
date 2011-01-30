@@ -291,7 +291,6 @@ package
 			}
 			_goalCounter = 0;
 			FlxU.overlap(_waters, _meteor_fires, douseFire);
-			FlxU.overlap(_players, _waters, playerFloat);
 			FlxU.overlap(_players, _goal, hitGoal);
 			FlxU.overlap(_players, _diseases, setOnDisease);
 			FlxU.overlap(_flammables, _waters, lessFire);
@@ -309,6 +308,8 @@ package
 			//FlxU.collide(_players, _blocks);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
+			
+			FlxU.overlap(_players, _waters, playerFloat);
 			
 			FlxU.collide(_meteors, _tileMap);
 			FlxU.collide(_meteor_fires, _tileMap);
