@@ -454,11 +454,13 @@ package
 		
 		protected function playerFloat(a:FlxObject, b:FlxObject):void
 		{
+			
 			inWater(a, b);
 			if (!Player(a).floating)
 			{
 				Player(a).floating = true;
 			}
+			
 		}
 		
 		protected function inWater(a:FlxObject, b:FlxObject):void
