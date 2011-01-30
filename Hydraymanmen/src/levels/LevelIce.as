@@ -11,7 +11,11 @@ package levels
 	public class LevelIce extends PlayState 
 	{
 		[Embed(source = 'map2.txt', mimeType = "application/octet-stream")] private var map:Class;
+<<<<<<< .mine
+		[Embed(source = "../data/thingDino.mp3")] protected var Music:Class;
+=======
 		[Embed(source = "../data/tribalDino.mp3")] protected var Music:Class;
+>>>>>>> .r257
 		[Embed(source = "../grafixxx/volcano-bg.png")] protected var bgImg:Class;
 		private var part:int = 1;
 		private var mTimer:Number = 1;
