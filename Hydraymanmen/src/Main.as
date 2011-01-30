@@ -9,7 +9,7 @@ package
 	{
 		public function Main()
 		{
-			super(320,240,LevelMeteor);
+			super(320,240,MenuState);
 			//showLogo = false;
 		}
 	}
