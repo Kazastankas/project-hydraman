@@ -152,6 +152,7 @@ package
 			_cosmetic_fires = new FlxGroup();
 			_drunk_bubbles = new FlxGroup();
 			_flammables = new FlxGroup();
+			_flammables.add(_trees);
 			
 			_players = new FlxGroup();
 			for(i = 0; i < 32; i++)
