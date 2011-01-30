@@ -33,11 +33,11 @@
 			
 			//drag.x = runSpeed * 8;
 			//drag.y = runSpeed * 8;
-			acceleration.y = 200;
+			//acceleration.y = 200;
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = runSpeed;
-			offset.y = 10;
-			height -= 10;
+			//offset.y = 10;
+			//height -= 10;
 			playerCenter = PlayerCenter;
 			lungeVector = new FlxPoint();
 			
@@ -57,7 +57,14 @@
 			if (moveTimer < 0)
 			{
 				moveTimer = patrolSpeed;
-				velocity.x = -velocity.x;
+				if (facing == RIGHT)
+				{
+					velocity.x = -maxVelocity.x;
+				}
+				else if (facing == LEFT)
+				{
+					velocity.x = maxVelocity.x;
+				}
 			}
 			
 			/*
