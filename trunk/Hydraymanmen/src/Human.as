@@ -122,18 +122,16 @@ package
 						}
 					}
 				}
-				
-				if (target.x - x > 50 && target.x - x < 150 )
+				if (target.y - y > -50 && target.y -y < 50)
 				{
-					moving = 1;
-				}
-				else if (target.x - x < -50 && target.x - x > -150 )
-				{
-					moving = 2;
-				}
-				else if (target.x -x < 50 && target.x - x > -50)
-				{
-					moving = 0;
+					if (target.x - x > 50 && target.x - x < 150 )
+					{
+						moving = 1;
+					}
+					else if (target.x - x < -50 && target.x - x > -150 )
+					{
+						moving = 2;
+					}
 				}
 				
 				if (animationTime <= 0)
