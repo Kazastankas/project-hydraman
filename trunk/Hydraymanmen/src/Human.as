@@ -20,8 +20,9 @@ package
 		protected var target:FlxObject;
 		public var drowned:Boolean;
 		public var drownTimer:Number;
+		protected var gibs:FlxEmitter;
 		
-		public function Human(X:Number, Y:Number,fires:FlxGroup,target:FlxObject)
+		public function Human(X:Number, Y:Number,fires:FlxGroup,target:FlxObject, gibs:FlxEmitter)
 		{
 			super(X, Y);
 			runSpeed = Math.random() * 10 + 30;
@@ -44,6 +45,7 @@ package
 			drownTimer = 0;
 			this.target = target;
 			this.fires = fires;
+			this.gibs = gibs;
 		}
 		
 		override public function update():void
@@ -58,9 +60,13 @@ package
 			if (drowned)
 			{
 				drownTimer += FlxG.elapsed;
-				if (drownTimer > 5)
+				if (drownTimer > 2)
 				{
 					kill();
+					gibs.x = this.x;
+					gibs.y = this.y;
+					gibs.at(this);
+					gibs.start(true, 0, 0);
 				}
 			}
 			else
