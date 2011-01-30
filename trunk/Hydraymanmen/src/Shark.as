@@ -37,7 +37,7 @@
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = runSpeed;
 			//offset.y = 10;
-			//height -= 10;
+			height = 33;
 			playerCenter = PlayerCenter;
 			lungeVector = new FlxPoint();
 			
