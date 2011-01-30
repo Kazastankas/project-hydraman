@@ -210,7 +210,7 @@ package
 			_sharks = new FlxGroup();
 			for (i = 0; i < 32; i++)
 			{
-				s = new Shark( -100, -100);
+				s = new Shark( -100, -100, _camMan);
 				s.exists = false;
 				_sharks.add(s);
 			}
@@ -291,7 +291,7 @@ package
 			FlxU.collide(_dinos, _tileMap);
 			FlxU.collide(_cavemen, _tileMap);
 			FlxU.collide(_players, _players);
-			FlxU.collide(_players, _tileMap);
+			FlxU.collide(_sharks, _tileMap);
 			//FlxU.collide(_players, _blocks);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
