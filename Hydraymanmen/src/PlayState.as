@@ -54,6 +54,7 @@ package
 		protected var _enemies:FlxGroup;
 		protected var _tornados:FlxGroup;
 		protected var _sharks:FlxGroup;
+		protected var _anglers:FlxGroup;
 		
 		override public function create():void
 		{
@@ -253,6 +254,14 @@ package
 			}
 			add(_sharks);
 			
+			_anglers = new FlxGroup();
+			for (i = 0; i < 32; i++)
+			{
+				s = new Angler( -100, -100, _players);
+				s.exists = false;
+				_anglers.add(s);
+			}
+			add(_anglers);
 			FlxG.followAdjust(0, 0);
 			
 			_resetFlag = true;
@@ -335,6 +344,7 @@ package
 			FlxU.collide(_cavemen, _tileMap);
 			FlxU.collide(_players, _players);
 			FlxU.collide(_sharks, _tileMap);
+			FlxU.collide(_anglers, _tileMap);
 			FlxU.overlap(_players, _tornados, blowAway);
 			FlxU.overlap(_meteor_fires, _tornados, blowAway);
 			
@@ -349,6 +359,7 @@ package
 			FlxU.overlap(_players, _cavemen, playerHit);
 			FlxU.overlap(_players, _burrowers, processBurrower);
 			FlxU.overlap(_players, _sharks, playerHit);
+			FlxU.overlap(_players, _anglers, playerHit);
 			
 			//end condition
 			if (_goalCounter > 1)
@@ -405,6 +416,10 @@ package
 			if (FlxG.keys.justPressed('W'))
 			{
 				addBurrower(FlxG.mouse.x, FlxG.mouse.y);
+			}
+			if (FlxG.keys.justPressed('E'))
+			{
+				addAngler(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			if (FlxG.keys.justPressed('M'))
 			{
@@ -762,6 +777,16 @@ package
 		{
 			var s:Burrower;
 			s = (_burrowers.getFirstAvail() as Burrower);
+			if (s != null)
+			{
+				s.create(x, y);
+			}
+		}
+
+		protected function addAngler(x:Number, y:Number):void
+		{
+			var s:Angler;
+			s = (_anglers.getFirstAvail() as Angler);
 			if (s != null)
 			{
 				s.create(x, y);
