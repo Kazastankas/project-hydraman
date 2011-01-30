@@ -52,6 +52,11 @@ package levels
 		
 		override protected function addBackSprites():void
 		{
+			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
+			bg.scrollFactor.x = bg.scrollFactor.y = 0;
+			bg.fixed = true;
+			add(bg);
+			
 			var spawnRock:FlxSprite = new FlxSprite(_playerStart.x - 18, _playerStart.y + 8);
 			spawnRock.loadGraphic(rockImg , false, false, 36, 22);
 			add(spawnRock);

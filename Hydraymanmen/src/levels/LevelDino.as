@@ -12,6 +12,7 @@ package levels
 	{
 		[Embed(source = 'map3.txt', mimeType = "application/octet-stream")] private var map:Class;
 		[Embed(source = "../data/thingOnIce.mp3")] protected var Music:Class;
+		[Embed(source = "../grafixxx/glacial-bg.png")] protected var bgImg:Class;
 		private var part:int = 1;
 		
 		override public function create():void
@@ -82,6 +83,14 @@ package levels
 			addHuman(79, 515, 1);
 			addHuman(143, 526, 1);
 			loadMap(map);
+		}
+		
+		override protected function addBackSprites():void
+		{
+			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
+			bg.scrollFactor.x = bg.scrollFactor.y = 0;
+			bg.fixed = true;
+			add(bg);
 		}
 		
 		override public function update():void

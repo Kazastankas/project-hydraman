@@ -12,6 +12,7 @@ package levels
 	{
 		[Embed(source = 'map4.txt', mimeType = "application/octet-stream")] private var map:Class;
 		[Embed(source = "../data/tribalthing.mp3")] protected var Music:Class;
+		[Embed(source = "../grafixxx/postapoc-bg.png")] protected var bgImg:Class;
 		[Embed(source = "../data/rock.png")] private var rockImg:Class;
 		protected var zTriggers:FlxGroup;
 		protected var bolt:Lightning;
@@ -78,6 +79,14 @@ package levels
 			
 			
 			loadMap(map);
+		}
+		
+		override protected function addBackSprites():void
+		{
+			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
+			bg.scrollFactor.x = bg.scrollFactor.y = 0;
+			bg.fixed = true;
+			add(bg);
 		}
 		
 		override public function update():void
