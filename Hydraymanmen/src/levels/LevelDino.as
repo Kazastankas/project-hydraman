@@ -25,7 +25,7 @@ package levels
 			//addDino(1230, 960);
 			addWater(25, 45, 4, 3);
 			addWater(30, 39, 3, 9);
-			addWater(35, 45, 6, 3);
+			addWater(34, 45, 7, 3);
 			
 			
 			loadMap(map);
