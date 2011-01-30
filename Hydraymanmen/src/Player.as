@@ -148,10 +148,6 @@ public class Player extends Flammable
 		// dealing with floating
 		if (floating)
 		{
-			if (onFire)
-			{
-				deflame();
-			}
 			maxVelocity.x = 100;
 			maxVelocity.y = 100;
 			acceleration.y = 0;

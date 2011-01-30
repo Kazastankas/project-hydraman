@@ -288,6 +288,7 @@ package
 			FlxU.overlap(_players, _waters, playerFloat);
 			FlxU.overlap(_players, _goal, hitGoal);
 			FlxU.overlap(_players, _diseases, setOnDisease);
+			FlxU.overlap(_flammables, _waters, lessFire);
 			FlxU.overlap(_flammables, _meteor_fires, setOnFire);
 			FlxU.overlap(_trees, _meteor_fires, setOnFire);
 			FlxU.overlap(_players, _players, playerContagion);
@@ -398,6 +399,14 @@ package
 			else if (b is Fire)
 			{
 				b.kill();
+			}
+		}
+		
+		protected function lessFire(a:FlxObject, b:FlxObject):void
+		{
+			if (a is Flammable)
+			{
+				Flammable(a).deflame();
 			}
 		}
 		
