@@ -118,6 +118,12 @@ public class Zombie extends Flammable
 	
 	override public function update():void
 	{		
+		getScreenXY(_point);
+		if ((_point.x + width < -(FlxG.width / 2)) || (_point.x > (FlxG.width * 1.5)) || (_point.y + height < -(FlxG.height / 2)) || (_point.y > (FlxG.height * 1.5)))
+		{
+			kill();
+		}
+		
 		acceleration.x = 0;
 		maxVelocity.x = runSpeed;
 		
