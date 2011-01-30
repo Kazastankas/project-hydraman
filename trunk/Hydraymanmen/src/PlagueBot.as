@@ -41,7 +41,7 @@ package
 			{
 				if (AItimer < 0)
 				{
-					AItimer = 1;
+					AItimer = 1 * (1 + 0.3*(Math.random()-0.5));
 					if (moving == 1)
 					{
 						moving = 2;
@@ -51,7 +51,7 @@ package
 						moving = 1;
 					}
 					
-					if (Math.random() < 0.3)
+					if (Math.random() < 0.6)
 					{
 						var s:Disease;
 						s = (diseases.getFirstAvail() as Disease);

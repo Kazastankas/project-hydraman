@@ -11,8 +11,9 @@ package
 		protected var runSpeed:Number = 50;
 		public var players:FlxGroup;
 		public var power:uint;
+		protected var coeff:Number;
 		
-		public function Angler(X:Number, Y:Number, power:uint, players:FlxGroup)
+		public function Angler(X:Number, Y:Number, power:uint, players:FlxGroup, coeff:Number = 1.0)
 		{
 			super(X, Y);
 			loadGraphic(myImage,true,true);
@@ -32,6 +33,7 @@ package
 			AImode = 1;
 			AItimer = 1;
 			health = 10;
+			this.coeff = coeff;
 		}
 		
 		override public function update():void
@@ -82,18 +84,19 @@ package
 				if (Player(players.members[i]).health <= 0) continue;
 				var dist:Number = Math.sqrt(Math.pow(Player(players.members[i]).x - x, 2) +
 											Math.pow(Player(players.members[i]).y - y, 2));
-				Player(players.members[i]).velocity.x += (x - Player(players.members[i]).x) * power / Math.pow(dist, 3);
-				Player(players.members[i]).velocity.y += (y - Player(players.members[i]).y) * power / Math.pow(dist, 3);
+				Player(players.members[i]).velocity.x += coeff * (x - Player(players.members[i]).x) * power / Math.pow(dist, 3);
+				Player(players.members[i]).velocity.y += coeff * (y - Player(players.members[i]).y) * power / Math.pow(dist, 3);
 			}
 			
 			super.update();
 		}
 		
-		public function create(x:Number,y:Number):void
+		public function create(x:Number,y:Number, coeff:Number = 1.0):void
 		{
 			velocity.x = velocity.y = 0;
 			health = 20;
 			reset(x, y);
+			this.coeff = coeff;
 		}
 	}
 }

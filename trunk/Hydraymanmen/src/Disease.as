@@ -36,10 +36,11 @@ public class Disease extends FlxSprite
 		
 		life -= FlxG.elapsed;
 		
-		if (life < 0)
+		if (life < 0 && maxLife != 0)
 			this.kill();
 		
-		this.alpha = initAlpha * (life / maxLife);
+		if (maxLife > 0)
+			this.alpha = initAlpha * (life / maxLife);
 		
 		var seed:Number = Math.random();
 		if (seed < 0.5)
