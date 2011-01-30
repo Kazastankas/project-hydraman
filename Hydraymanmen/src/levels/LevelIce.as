@@ -90,6 +90,7 @@ package levels
 				addQuake(1230, 333);
 				part = 3;
 			}
+			/*
 			if (((_camMan.x > 400 && _camMan.x < 600) && (_camMan.y > 700 && _camMan.y < 900)) && (part == 3))
 			{
 				addQuake(652,839);
