@@ -15,6 +15,7 @@
 		private var targetY:int;
 		private var originX:int;
 		private var originY:int;
+		private var glowColor:uint;
 		
 		public function Lightning():void
 		{
@@ -42,6 +43,11 @@
 			if (visibleTimer <= 0)
 				this.kill();
 			super.update();
+		}
+		
+		public function SetGlowColor(color:uint):void
+		{
+			glowColor = color;
 		}
 		
 		override public function render():void
@@ -89,7 +95,10 @@
 				canvas.graphics.endFill();
 				
 				var glow:GlowFilter = new GlowFilter;
-				glow.color = 0x3333FF;
+				if (!glowColor)
+					glow.color = 0x3333FF;
+				else
+					glow.color = glowColor;
 				glow.strength = 6;
 				glow.blurX = 24;
 				glow.blurY = 24;

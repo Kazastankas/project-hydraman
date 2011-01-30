@@ -19,10 +19,13 @@ package levels
 			trace("Creating ice level");
 			
 			var i:int;
-			_playerStart = new FlxPoint(29*32, 37*32);
-			_goalPos = new FlxPoint(200, 100);
+			_playerStart = new FlxPoint(29 * 32, 37 * 32);
+			_goalPos = new FlxPoint(850, 630);
+			_goalFlipped = true;
 			super.create();
+			
 			activatePlayers(Math.max(1, PlayState.numInGoal));
+			
 			addDino(1230, 960);
 			addDino(750, 800);
 			addDino(1200, 545);
@@ -35,7 +38,7 @@ package levels
 			addWater(44, 12, 0, 0);
 			addWater(37, 12, 1, 0);
 			addWater(44, 18, 2, 0);
-			addWater(28, 21, 1, 0);
+			addWater(26, 20, 6, 0);
 			addShark(406,1160);
 			addShark(285, 1199);
 			addShark(61, 1336);

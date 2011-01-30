@@ -3,6 +3,7 @@ package levels
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSprite;
 	
 	/**
 	 * ...
@@ -12,6 +13,8 @@ package levels
 	{
 		[Embed(source = 'map1.txt', mimeType = "application/octet-stream")] private var map:Class;
 		[Embed(source = "../data/cambrian-bg.png")] private var bgImg:Class;
+		[Embed(source = "../data/rock.png")] private var rockImg:Class;
+		[Embed(source = "../data/bigrock.png")] private var bigRockImg:Class;
 		protected var part:int = 0;
 		protected var spawnTarget:FlxObject;
 		protected var bolt:Lightning;
@@ -25,7 +28,10 @@ package levels
 			
 			var i:int;
 			_playerStart = new FlxPoint(100, 1539);
-			_goalPos = new FlxPoint(450, 1400);
+			_goalPos = new FlxPoint(1010, 663);
+			//_goalPos = new FlxPoint(200, 1530);
+			spawnTarget = new FlxObject(_playerStart.x, _playerStart.y);
+			enemySpawnTarget = new FlxObject(300, 1539);
 			
 			super.create();
 			loadMap(map);
@@ -35,13 +41,22 @@ package levels
 			addEnemy(1393, 1031);
 			addEnemy(1121, 1223);
 			addEnemy(999, 1102);
-			addTree(100, 1540);
-			addTree(120, 1540);
+			addTree(120, 1532);
+			addTree(220, 1532);
 			
 			_resetFlag = false;
-			spawnTarget = new FlxObject(_playerStart.x, _playerStart.y);
-			enemySpawnTarget = new FlxObject(300, 1539);
 			//activatePlayers(PlayState.numHydra);
+		}
+		
+		override protected function addBackSprites():void
+		{
+			var spawnRock:FlxSprite = new FlxSprite(_playerStart.x - 18, _playerStart.y + 8);
+			spawnRock.loadGraphic(rockImg , false, false, 36, 22);
+			add(spawnRock);
+			
+			var spawnBigRock:FlxSprite = new FlxSprite(enemySpawnTarget.x - 20, enemySpawnTarget.y + 8);
+			spawnBigRock.loadGraphic(bigRockImg , false, false, 68, 37);
+			add(spawnBigRock);
 		}
 		
 		override public function update():void
@@ -80,6 +95,7 @@ package levels
 			{
 				bolt = add(new Lightning()) as Lightning;
 				var enemyBoltPoint:FlxPoint = enemySpawnTarget.getScreenXY();
+				bolt.SetGlowColor(0xFF3333);
 				bolt.SetTarget(new FlxPoint(enemyBoltPoint.x, enemyBoltPoint.y - 400));
 				bolt.SetOrigin(enemyBoltPoint);
 				bolt.strike(enemyBoltPoint.x, enemyBoltPoint.y - 400);
