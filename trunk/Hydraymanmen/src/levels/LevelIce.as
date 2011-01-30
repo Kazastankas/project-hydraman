@@ -12,6 +12,7 @@ package levels
 	{
 		[Embed(source = 'map2.txt', mimeType = "application/octet-stream")] private var map:Class;
 		[Embed(source = "../data/tribalthing.mp3")] protected var Music:Class;
+		[Embed(source = "../grafixxx/volcano-bg.png")] protected var bgImg:Class;
 		private var part:int = 1;
 		private var mTimer:Number = 1;
 		
@@ -70,6 +71,14 @@ package levels
 			
 			
 			loadMap(map);
+		}
+		
+		override protected function addBackSprites():void
+		{
+			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
+			bg.scrollFactor.x = bg.scrollFactor.y = 0;
+			bg.fixed = true;
+			add(bg);
 		}
 		
 		override public function update():void

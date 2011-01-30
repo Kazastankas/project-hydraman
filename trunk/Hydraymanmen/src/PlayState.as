@@ -68,11 +68,6 @@ package
 			var i:int;
 			var s:FlxSprite;
 			
-			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
-			bg.scrollFactor.x = bg.scrollFactor.y = 0;
-			bg.fixed = true;
-			add(bg);
-			
 			addBackSprites();
 			
 			_tornados = new FlxGroup();
@@ -311,7 +306,10 @@ package
 		
 		protected function addBackSprites():void
 		{
-			trace("Add backgrond sprites");
+			var bg:FlxSprite = new FlxSprite(0, 0, bgImg);
+			bg.scrollFactor.x = bg.scrollFactor.y = 0;
+			bg.fixed = true;
+			add(bg);
 		}
 		
 		protected function loadMap(map:Class):void
