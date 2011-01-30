@@ -10,7 +10,7 @@ package levels
 	 */
 	public class LevelMeteor extends PlayState 
 	{
-		[Embed(source = 'map1.txt', mimeType = "application/octet-stream")] private var Map:Class;
+		[Embed(source = 'map1.txt', mimeType = "application/octet-stream")] private var map:Class;
 		[Embed(source = "../data/cambrian-bg.png")] private var bgImg:Class;
 		protected var part:int = 0;
 		protected var spawnTarget:FlxObject;
@@ -26,7 +26,10 @@ package levels
 			var i:int;
 			_playerStart = new FlxPoint(100, 1539);
 			_goalPos = new FlxPoint(200, 100);
+			
 			super.create();
+			loadMap(map);
+			
 			addEnemy(1272, 1412);
 			addEnemy(613, 1263);
 			addEnemy(1393, 1031);
@@ -44,6 +47,9 @@ package levels
 		override public function update():void
 		{
 			super.update();
+			
+			if (FlxG.keys.justPressed("PLUS"))
+				nextLevel();
 			
 			// lightning for either you or enemy
 			if (_updateCount >= 30 && _updateCount < 60)

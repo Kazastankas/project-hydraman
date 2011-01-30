@@ -120,10 +120,10 @@ package
 			_trees = new FlxGroup();
 			add(_trees);
 			
-			_tileMap = new FlxTilemap();
+			/*_tileMap = new FlxTilemap();
 			_tileMap.loadMap(new Map,ImgTiles,32,32);
 			_tileMap.follow();
-			add(_tileMap);
+			add(_tileMap);*/
 			
 			_goal = new FlxSprite(_goalPos.x,_goalPos.y, goalImg);
 			_goal.fixed = true;
@@ -191,10 +191,18 @@ package
 			//_players.add(_block);
 			
 			FlxG.followAdjust(0, 0);
-			FlxG.followBounds( -32, -32, _tileMap.width + 32, _tileMap.height + 32);
 			
 			_resetFlag = true;
 			_updateCount = 0;
+		}
+		
+		protected function loadMap(map:Class):void
+		{
+			_tileMap = new FlxTilemap();
+			_tileMap.loadMap(new map,ImgTiles,32,32);
+			_tileMap.follow();
+			add(_tileMap);
+			FlxG.followBounds( -32, -32, _tileMap.width + 32, _tileMap.height + 32);
 		}
 		
 		protected function activatePlayers(num:int):void
