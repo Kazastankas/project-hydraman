@@ -86,7 +86,10 @@ public class Flammable extends FlxSprite
 			if (fireTimer > 5)
 			{
 				deflame();
-				kill();
+				if (killable)
+				{
+					kill();
+				}
 			}
 		}
 
