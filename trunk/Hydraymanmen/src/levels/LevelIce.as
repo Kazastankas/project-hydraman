@@ -23,9 +23,12 @@ package levels
 			super.create();
 			activatePlayers(1);
 			addDino(1230, 960);
-			addDino(790, 820);
+			addDino(750, 800);
 			addWater(39, 38, 5, 11);
-			addWater(45, 31, 3, 16);
+			addWater(45, 31, 3, 17);
+			addWater(7, 27, 8, 16);
+			addWater(1, 10, 4, 32);
+			addWater(6,10,17,6);
 			addTree(100, 100);
 			loadMap(map);
 		}
