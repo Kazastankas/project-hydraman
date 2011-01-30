@@ -52,12 +52,10 @@
 			
 			if (moveTimer <= 0)
 			{
-				moveTimer = 5 + Math.random() * .7;
-				//moveTimer = 1;
-				//move = moveArray[moveIndex++]
-				//if (moveIndex >= moveArray.length)
-				//	moveIndex = 0;
-				move = Math.random() * 4;
+				moveTimer = 1;
+				move = moveArray[moveIndex++]
+				if (moveIndex >= moveArray.length)
+					moveIndex = 0;
 			}
 			
 			if (velocity.x > 0)
