@@ -11,7 +11,7 @@ package levels
 	public class LevelFuture extends PlayState 
 	{
 		[Embed(source = 'map4.txt', mimeType = "application/octet-stream")] private var map:Class;
-		[Embed(source = "../data/tribalthing.mp3")] protected var Music:Class;
+		[Embed(source = "../data/tribalViolin.mp3")] protected var Music:Class;
 		[Embed(source = "../grafixxx/postapoc-bg.png")] protected var bgImg:Class;
 		[Embed(source = "../data/rock.png")] private var rockImg:Class;
 		protected var zTriggers:FlxGroup;
