@@ -61,9 +61,9 @@ package levels
 			addMelter(38, 20);
 			addMelter(38, 21);
 			addMelter(38, 22);
-			addTree(498, 554);
-			addTree(714, 589);
-			addTree(1002, 618);
+			addTree(498, 522);
+			addTree(714, 557);
+			addTree(1002, 590);
 			addHuman(79, 515, 1);
 			addHuman(143, 526, 1);
 			loadMap(map);
