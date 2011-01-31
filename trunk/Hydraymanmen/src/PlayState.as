@@ -50,6 +50,7 @@ package
 		protected var _melters:FlxGroup;
 		protected var _plagueBots:FlxGroup;
 		protected var _walkBots:FlxGroup;
+		protected var _checkPoints:FlxGroup;
 		static public var _firePlaying:Number = 0;
 		static public var _fireSound:FlxSound;
 		
@@ -62,6 +63,18 @@ package
 		protected var _anglers:FlxGroup;
 		protected var _iceGibs:FlxEmitter;
 		protected var _gibbing:Number = -1;
+		
+		override public function PlayState(start:FlxPoint=null):void
+		{
+			if (start)
+			{
+				_playerStart = start;
+			}
+			else
+			{
+				_playerStart = new FlxPoint(0, 0);
+			}
+		}
 		
 		override public function create():void
 		{
