@@ -51,6 +51,7 @@ package levels
 			addWater(28, 20, 1, 0);
 			addWater(42, 23, 0, 0);
 			addWater(21, 39, 0, 0);
+			addWater(5,33, 1, 0);
 			addHuman(300, 780, 1);
 			addHuman(500, 780, 1);
 			addHuman(260, 780, 2);
@@ -91,6 +92,10 @@ package levels
 			addTree(981, 603);
 			addHuman(79, 515, 1);
 			addHuman(143, 526, 1);
+			
+			addCheckPoint(1388, 1388);
+			addCheckPoint(247, 1043);
+			addCheckPoint(1178, 719);
 		}
 		
 		override protected function addBackSprites():void

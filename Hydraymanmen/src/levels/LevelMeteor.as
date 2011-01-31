@@ -54,6 +54,13 @@ package levels
 			addTree(120, 1532);
 			addTree(220, 1532);
 			
+			addCheckPoint(396, 1489);
+			addCheckPoint(1393, 1294);
+			addCheckPoint(1088, 1237);
+			addCheckPoint(415, 1167);
+			addCheckPoint(1245, 1069);
+			addCheckPoint(630,689);
+			
 			if (_playerStart.x != 100)
 			{
 				activatePlayers(PlayState.numHydra);
