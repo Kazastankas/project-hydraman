@@ -306,7 +306,6 @@ package
 			add(_drunk_bubbles);
 			
 			_checkPoints = new FlxGroup();
-			_checkPoints.add(new Checkpoint(396, 1489));
 			add(_checkPoints);
 			
 			_sharks = new FlxGroup();
@@ -978,6 +977,11 @@ package
 				PlayState._fireSound.volume = coeff;
 				//trace("Fires: " + numFires + ", vol coeff: " + coeff + ", accum: " + sndAccum);
 			}
+		}
+		
+		public function addCheckPoint(x:Number, y:Number):void
+		{
+			_checkPoints.add(new Checkpoint(x,y));
 		}
 	}
 }
