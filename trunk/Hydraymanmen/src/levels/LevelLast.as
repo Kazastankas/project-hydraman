@@ -24,6 +24,11 @@ package levels
 		protected var enemyLightningCount:int = -1;
 		protected var spawnedFirstEnemy:Boolean = false;
 		
+		override public function LevelLast(start:FlxPoint=null):void
+		{
+			super(start);
+		}
+		
 		override public function create():void
 		{
 			trace("Creating meteor level");
