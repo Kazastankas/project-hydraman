@@ -1,0 +1,5 @@
+0 - not activated
+
+1-5 - activating
+
+6,7,6,7,6,5,4,5 - activated, doin shit
