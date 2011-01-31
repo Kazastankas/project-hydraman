@@ -76,6 +76,9 @@ package levels
 			addBurrower(566, 797);
 			addBurrower(461, 508);
 			
+			addCheckPoint(486, 817);
+			addCheckPoint(978, 396);
+			addCheckPoint(650,308);
 			
 		}
 		

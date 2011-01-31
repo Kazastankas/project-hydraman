@@ -76,6 +76,10 @@ package levels
 			addAngler(32 * 32, 17 * 32, -2.0);
 			addAngler(36 * 32, 17 * 32, -2.0);
 			
+			addCheckPoint(593, 758);
+			addCheckPoint(940, 534);
+			addCheckPoint(1509,464);
+			
 			
 			zTriggers.add(new ZombieTrigger(42, 42, 44, 42, 10));
 			zTriggers.add(new ZombieTrigger(16, 48, 18, 48, 10));
