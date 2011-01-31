@@ -432,11 +432,13 @@ package
 			{
 				addTree(FlxG.mouse.x, FlxG.mouse.y);
 			}
+			*/
 			
 			if (FlxG.keys.justPressed('Q'))
 			{
 				trace("X: " + FlxG.mouse.x + " Y: " + FlxG.mouse.y);
 			}
+			/*
 			
 			if (FlxG.keys.justPressed('X'))
 			{
@@ -503,6 +505,7 @@ package
 			{
 				addZombie(FlxG.mouse.x, FlxG.mouse.y);
 			}
+			*/
 			if (FlxG.keys.justPressed('CONTROL'))
 			{
 				var h:Player = _players.getFirstAlive() as Player;
@@ -514,7 +517,7 @@ package
 			{
 				nextLevel();
 			}
-			*/
+			
 			
 			if (_gibbing > 0)
 				_gibbing -= FlxG.elapsed;

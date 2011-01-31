@@ -22,8 +22,8 @@ package
 			acceleration.y = 420;
 			maxVelocity.x = runSpeed;
 			maxVelocity.y = 200;
-			offset.y = 10;
-			height -= 10;
+			offset.y = 20;
+			height -= 20;
 			AImode = 1;
 			AItimer = 1;
 			health = 10;
