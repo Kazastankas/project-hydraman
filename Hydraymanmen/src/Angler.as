@@ -4,7 +4,7 @@ package
 	
 	public class Angler extends FlxSprite
 	{
-		[Embed(source = "grafixxx/fanbot.png")] protected var myImage:Class;
+		[Embed(source = "data/fanbot2.png")] protected var myImage:Class;
 		public var AItimer:Number;
 		public var AImode:int;
 		public var moving:uint;

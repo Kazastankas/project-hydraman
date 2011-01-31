@@ -6,7 +6,7 @@ package
 	
 	public class PlagueBot extends FlxSprite
 	{
-		[Embed(source = "grafixxx/plaguebot.png")] protected var myImage:Class;
+		[Embed(source = "data/plaguebot2.png")] protected var myImage:Class;
 		public var AImode:int;
 		public var AItimer:Number;
 		public var moving:uint;
