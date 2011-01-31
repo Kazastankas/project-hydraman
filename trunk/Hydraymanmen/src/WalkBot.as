@@ -6,7 +6,7 @@ package
 	
 	public class WalkBot extends FlxSprite
 	{
-		[Embed(source = "grafixxx/WalkBot.png")] protected var myImage:Class;
+		[Embed(source = "data/walkbot2.png")] protected var myImage:Class;
 		public var AImode:int;
 		public var AItimer:Number;
 		public var moving:uint;
