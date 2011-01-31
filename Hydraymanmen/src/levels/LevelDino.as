@@ -122,7 +122,7 @@ package levels
 		{
 			super.resetLevel();
 			trace("Reset LevelDino");
-			FlxG.state = new LevelDino();
+			FlxG.state = new LevelDino(_playerStart);
 		}
 		
 		override protected function nextLevel():void
