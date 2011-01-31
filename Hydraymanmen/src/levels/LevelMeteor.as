@@ -30,7 +30,10 @@ package levels
 			FlxG.playMusic(Music);
 			
 			var i:int;
-			_playerStart = new FlxPoint(100, 1539);
+			if (_playerStart.x == 0)
+			{
+				_playerStart = new FlxPoint(100, 1539);
+			}
 			_goalPos = new FlxPoint(1010, 663);
 			//_goalPos = new FlxPoint(200, 1530);
 			spawnTarget = new FlxObject(_playerStart.x, _playerStart.y);
@@ -47,7 +50,11 @@ package levels
 			addTree(220, 1532);
 			
 			_resetFlag = false;
-			//activatePlayers(PlayState.numHydra);
+			if (_playerStart.x != 100)
+			{
+				activatePlayers(PlayState.numHydra);
+				_updateCount = 100;
+			}
 		}
 		
 		override protected function addBackSprites():void
@@ -160,7 +167,7 @@ package levels
 		override protected function resetLevel():void
 		{
 			super.resetLevel();
-			FlxG.state = new LevelMeteor();
+			FlxG.state = new LevelMeteor(_playerStart);
 		}
 		
 		override protected function nextLevel():void

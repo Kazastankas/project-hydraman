@@ -35,7 +35,10 @@ package levels
 			FlxG.playMusic(Music);
 			
 			var i:int;
-			_playerStart = new FlxPoint(48*32, 44*32);
+			if (_playerStart.x == 0)
+			{
+				_playerStart = new FlxPoint(48 * 32, 44 * 32);
+			}
 			_goalPos = new FlxPoint(200, 100);
 			lightningCount = -1;
 			super.create();
