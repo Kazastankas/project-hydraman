@@ -46,7 +46,7 @@ package levels
 			
 			super.create();
 			
-			addEnemy(1272, 1412);
+			addEnemy(1290, 1412);
 			addEnemy(613, 1263);
 			addEnemy(1393, 1031);
 			addEnemy(1121, 1223);
