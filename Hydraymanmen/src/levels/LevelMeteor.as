@@ -24,6 +24,11 @@ package levels
 		protected var enemyLightningCount:int = -1;
 		protected var spawnedFirstEnemy:Boolean = false;
 		
+		override public function LevelMeteor(start:FlxPoint=null):void
+		{
+			super(start);
+		}
+		
 		override public function create():void
 		{
 			trace("Creating meteor level");
@@ -49,11 +54,14 @@ package levels
 			addTree(120, 1532);
 			addTree(220, 1532);
 			
-			_resetFlag = false;
 			if (_playerStart.x != 100)
 			{
 				activatePlayers(PlayState.numHydra);
 				_updateCount = 100;
+			}
+			else
+			{
+				_resetFlag = false;
 			}
 		}
 		

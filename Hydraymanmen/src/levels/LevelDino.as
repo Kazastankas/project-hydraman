@@ -15,6 +15,11 @@ package levels
 		[Embed(source = "../grafixxx/glacial-bg.png")] protected var bgImg:Class;
 		private var part:int = 1;
 		
+		override public function LevelDino(start:FlxPoint=null):void
+		{
+			super(start);
+		}
+		
 		override public function create():void
 		{
 			trace("Creating dino level");

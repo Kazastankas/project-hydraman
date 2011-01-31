@@ -29,6 +29,11 @@ package levels
 		protected var postFinaleTimer:Number;
 		protected var postFinale:Boolean;
 		
+		override public function LevelFuture(start:FlxPoint=null):void
+		{
+			super(start);
+		}
+		
 		override public function create():void
 		{
 			trace("Creating future level");

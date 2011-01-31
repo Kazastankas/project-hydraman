@@ -68,12 +68,13 @@ package
 		{
 			if (start)
 			{
-				_playerStart = start;
+				_playerStart = new FlxPoint(start.x,start.y);
 			}
 			else
 			{
 				_playerStart = new FlxPoint(0, 0);
 			}
+			super();
 		}
 		
 		override public function create():void
@@ -304,6 +305,10 @@ package
 			}
 			add(_drunk_bubbles);
 			
+			_checkPoints = new FlxGroup();
+			_checkPoints.add(new Checkpoint(396, 1489));
+			add(_checkPoints);
+			
 			_sharks = new FlxGroup();
 			for (i = 0; i < 32; i++)
 			{
@@ -418,6 +423,8 @@ package
 			FlxU.overlap(_players, _burrowers, processBurrower);
 			FlxU.overlap(_players, _sharks, playerHit);
 			FlxU.overlap(_players, _walkBots, playerHit);
+			
+			FlxU.overlap(_players, _checkPoints, save);
 			//FlxU.overlap(_players, _anglers, playerHit);
 			//FlxU.overlap(_players, _plagueBots, playerHit);
 			
@@ -535,6 +542,17 @@ package
 					PlayState.numInGoal++;
 					trace("Landed in goal: " + numInGoal);
 				}
+			}
+		}
+		
+		protected function save(a:FlxObject, b:FlxObject):void
+		{
+			if (!Checkpoint(b).acting)
+			{
+				FlxG.log("saved");
+				_playerStart.x = a.x;
+				_playerStart.y = a.y;
+				Checkpoint(b).activate();
 			}
 		}
 		
@@ -720,7 +738,7 @@ package
 			for each(var member:FlxObject in _players.members)
 			{
 				var player:Player = member as Player;
-				if (player && !player.dead && player.active && player.exists)
+				if (player && player.exists)
 				{
 					numAlive++;
 				}

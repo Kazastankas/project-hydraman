@@ -4,8 +4,9 @@ import org.flixel.*;
 
 public class Checkpoint extends FlxSprite
 {
-	[Embed(source = "data/checkpoint.png")] protected var Img:Class;
-	protected var animationTime:Number = .5;
+	[Embed(source = "data/doom.png")] protected var Img:Class;
+	protected var animationTime:Number = -1;
+	public var acting:Boolean = false;
 	
 	public function Checkpoint(X:int,Y:int)
 	{
@@ -23,7 +24,7 @@ public class Checkpoint extends FlxSprite
 	
 	public function create(x:Number,y:Number):void
 	{
-		animationTime = .5;
+		animationTime = -1;
 		reset(x, y);
 	}
 	
@@ -31,12 +32,26 @@ public class Checkpoint extends FlxSprite
 	{
 		super.update();
 		
-		animationTime -= FlxG.elapsed;
-		
-		if (animationTime < 0&& animationTime > -1)
+		if (animationTime > 0)
 		{
-			play("end");
+			animationTime -= FlxG.elapsed;
 		}
+		
+		if (!acting)
+		{
+			if (animationTime < 0&&animationTime > -1)
+			{
+				play("end");
+				animationTime = -1;
+			}
+		}
+	}
+	
+	public function activate():void
+	{
+		animationTime = .5;
+		play("change");
+		acting = true;
 	}
 }
 }

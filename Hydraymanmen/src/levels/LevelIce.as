@@ -16,6 +16,11 @@ package levels
 		private var part:int = 1;
 		private var mTimer:Number = 1;
 		
+		override public function LevelIce(start:FlxPoint=null):void
+		{
+			super(start);
+		}
+		
 		override public function create():void
 		{
 			trace("Creating ice level");
