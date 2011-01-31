@@ -197,7 +197,7 @@ package levels
 		{
 			super.resetLevel();
 			trace("Reset LevelIce");
-			FlxG.state = new LevelIce();
+			FlxG.state = new LevelIce(_playerStart);
 		}
 		
 		override protected function nextLevel():void

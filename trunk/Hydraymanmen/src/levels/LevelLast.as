@@ -171,7 +171,7 @@ package levels
 		override protected function resetLevel():void
 		{
 			super.resetLevel();
-			FlxG.state = new LevelMeteor();
+			FlxG.state = new LevelLast(_playerStart);
 		}
 		
 		override protected function nextLevel():void

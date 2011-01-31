@@ -335,7 +335,7 @@ package levels
 		{
 			super.resetLevel();
 			trace("Reset LevelFuture");
-			FlxG.state = new LevelFuture();
+			FlxG.state = new LevelFuture(_playerStart);
 		}
 		
 		override protected function nextLevel():void
