@@ -159,6 +159,9 @@ package
 			_flammables = new FlxGroup();
 			_flammables.add(_trees);
 			
+			_checkPoints = new FlxGroup();
+			add(_checkPoints);
+			
 			_players = new FlxGroup();
 			for(i = 0; i < 32; i++)
 			{
@@ -304,9 +307,6 @@ package
 				_drunk_bubbles.add(s);
 			}
 			add(_drunk_bubbles);
-			
-			_checkPoints = new FlxGroup();
-			add(_checkPoints);
 			
 			_sharks = new FlxGroup();
 			for (i = 0; i < 32; i++)
@@ -740,7 +740,7 @@ package
 			for each(var member:FlxObject in _players.members)
 			{
 				var player:Player = member as Player;
-				if (player && player.exists)
+				if (player && !player.dead && player.active && player.exists)
 				{
 					numAlive++;
 				}
