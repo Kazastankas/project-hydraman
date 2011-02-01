@@ -740,7 +740,7 @@ package
 			for each(var member:FlxObject in _players.members)
 			{
 				var player:Player = member as Player;
-				if (player && !player.dead && player.active && player.exists)
+				if (player && !player.dead && player.active && player.exists && !player.onDisease)
 				{
 					numAlive++;
 				}
