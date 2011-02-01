@@ -10,7 +10,7 @@ public class Checkpoint extends FlxSprite
 	
 	public function Checkpoint(X:int,Y:int)
 	{
-		super(Math.floor(X/32)*32, Math.floor(Y/32)*32);
+		super(int(Math.floor(X/32))*32+4, int(Math.floor(Y/32))*32+4);
 		loadGraphic(Img, true, true);
 		
 		maxVelocity.x = maxVelocity.y = 200;
