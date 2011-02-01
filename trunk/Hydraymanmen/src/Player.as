@@ -9,7 +9,7 @@ public class Player extends Flammable
 	protected var runSpeed:Number = 100;
 	protected var splitTimer:Number = 0;
 	protected var diseaseTimer:Number = 0;
-	protected var onDisease:Boolean;
+	public var onDisease:Boolean;
 	protected var nearPlague:Boolean;
 	protected var nearZombie:Boolean;
 	protected var players:FlxGroup;
